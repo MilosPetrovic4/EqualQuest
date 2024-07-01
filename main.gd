@@ -23,9 +23,17 @@ func _ready():
 		num_instance.init_number(player_data["numbers"][i])
 		num_instance.position = Vector2(i * 100 + 200, 0)
 		add_child(num_instance)
+		num_instance.connect("number_clicked", self, "_on_number_clicked")
 		
+	for i in range(2):
+		var op_instance = load("res://operator.tscn").instance()
+		op_instance.init_operator(player_data["operators"][i])
+		op_instance.position = Vector2(i * 100 + 200, 200)
+		add_child(op_instance)
+		op_instance.connect("operator_clicked", self, "_on_operator_clicked")
 
 
+# evaluate expression to see if it is true
 func _on_Button_pressed():
 	
 	var equality_sides = equality.split("=")
@@ -40,11 +48,17 @@ func _on_Button_pressed():
 		print("true")
 	else:
 		print("false")
-	
-	expression.parse(equality)
-	#var result = expression.execute()
-	#print("Result: ", result)
-	
 
 
+func _on_operator_clicked(var value):
+	print("added to expression:", value)
+	equality += value
+	var label = $equality
+	label.set_text(equality)
 
+
+func _on_number_clicked(var value):
+	print("added to expression:", value)
+	equality += value
+	var label = $equality
+	label.set_text(equality)

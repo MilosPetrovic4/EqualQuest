@@ -1,17 +1,19 @@
 extends StaticBody2D
 
-signal number_clicked
-var value = "0";
+signal operator_clicked
+var op_type = "NA";
 
 func _ready():
 	pass
 
-func init_number(var num):
-	value = str(num)
+func init_operator(var op):
+	op_type = op
 	var text = $text
-	text.set_text(value)
+	text.set_text(op_type)
 
-func _on_Number_input_event(viewport, event, shape_idx):
+func _on_operator_input_event(viewport, event, shape_idx):
+	
+	print("test")
 	if event is InputEventMouseButton:
 		var mouse_button = event.button_index
 		
@@ -19,9 +21,9 @@ func _on_Number_input_event(viewport, event, shape_idx):
 		
 			if mouse_button == BUTTON_LEFT:
 				
-				print("Value: " , value)
+				print("Value: " , op_type)
 				
-				emit_signal("number_clicked", value)
+				emit_signal("operator_clicked", op_type)
 				
 				
 				
@@ -31,4 +33,3 @@ func _on_Number_input_event(viewport, event, shape_idx):
 				#print("Result: ", result)
 				
 				
-
