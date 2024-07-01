@@ -25,10 +25,10 @@ func _ready():
 		add_child(num_instance)
 		num_instance.connect("number_clicked", self, "_on_number_clicked")
 		
-	for i in range(2):
+	for j in range(2):
 		var op_instance = load("res://operator.tscn").instance()
-		op_instance.init_operator(player_data["operators"][i])
-		op_instance.position = Vector2(i * 100 + 200, 200)
+		op_instance.init_operator(player_data["operators"][j])
+		op_instance.position = Vector2(j * 100 + 200, 200)
 		add_child(op_instance)
 		op_instance.connect("operator_clicked", self, "_on_operator_clicked")
 

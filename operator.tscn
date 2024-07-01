@@ -4,7 +4,7 @@
 [ext_resource path="res://operator.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 28.5, 29.5 )
+extents = Vector2( 29.5, 31 )
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -14,17 +14,18 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="operator" type="StaticBody2D"]
+[node name="Operator" type="StaticBody2D"]
+input_pickable = true
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.5, -1.5 )
+[node name="Shape" type="CollisionShape2D" parent="."]
+position = Vector2( 0.5, 0 )
 shape = SubResource( 2 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 
 [node name="text" type="RichTextLabel" parent="."]
@@ -34,4 +35,4 @@ margin_right = 40.0
 margin_bottom = 69.0
 text = "operator"
 
-[connection signal="input_event" from="." to="." method="_on_operator_input_event"]
+[connection signal="input_event" from="." to="." method="_on_Operator_input_event"]

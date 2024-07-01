@@ -10,10 +10,15 @@ func init_operator(var op):
 	op_type = op
 	var text = $text
 	text.set_text(op_type)
+	print("init operator")
 
-func _on_operator_input_event(viewport, event, shape_idx):
-	
-	print("test")
+
+
+
+
+
+func _on_Operator_input_event(viewport, event, shape_idx):
+
 	if event is InputEventMouseButton:
 		var mouse_button = event.button_index
 		
@@ -24,12 +29,3 @@ func _on_operator_input_event(viewport, event, shape_idx):
 				print("Value: " , op_type)
 				
 				emit_signal("operator_clicked", op_type)
-				
-				
-				
-				#var expression = Expression.new()
-				#expression.parse("20+15 / 5")
-				#var result = expression.execute()
-				#print("Result: ", result)
-				
-				
