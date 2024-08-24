@@ -6,39 +6,41 @@ var operator_arr = []
 var number_arr = []
 
 func _ready():
-	var level_data = ResourceLoader.load(level_path)  
+	#var level_data = ResourceLoader.load(level_path)  
 	
-	level_data = JSON.parse(level_data.get_string())
-	#{
-#		"numbers": ["1", "1", "2"],
-#		"num_nums": 3,
-#		"operators": ["+", "="],
-#		"num_ops":2,
-#		"expected": "1+1=2",
-#	}
+	
+	var level_data = {
+		"numbers": ["1", "1", "2"],
+		"num_nums": 3,
+		"operators": ["+", "="],
+		"num_ops":2,
+		"expected": "1+1=2",
+	}
+	
+	#level_data = JSON.parse(level_data.get_string())
 
 	print(level_data)
 	
 	# Access and print data
-	print("Number: ", level_data["level1"]["numbers"][2])
-	print("Operator: ", level_data["level1"]["operators"][1])
+	print("Number: ", level_data["numbers"][2])
+	print("Operator: ", level_data["operators"][1])
 
 	# Convert data to JSON string
 	var json_str = JSON.print(level_data)
 	print("JSON String:", json_str)
 	
-	for i in range(level_data["level1"]["num_nums"]):
+	for i in range(level_data["num_nums"]):
 		var num_instance = load("res://number.tscn").instance()
-		num_instance.init_number(level_data["level1"]["numbers"][i])
+		num_instance.init_number(level_data["numbers"][i])
 		num_instance.position = Vector2(i * 100 + 200, 0)
 		add_child(num_instance)
 		num_instance.connect("number_clicked", self, "_on_number_clicked")
 		number_arr.append(num_instance)
 		
 		
-	for j in range(level_data["level1"]["num_ops"]):
+	for j in range(level_data["num_ops"]):
 		var op_instance = load("res://operator.tscn").instance()
-		op_instance.init_operator(level_data["level1"]["operators"][j])
+		op_instance.init_operator(level_data["operators"][j])
 		op_instance.position = Vector2(j * 100 + 200, 200)
 		add_child(op_instance)
 		op_instance.connect("operator_clicked", self, "_on_operator_clicked")

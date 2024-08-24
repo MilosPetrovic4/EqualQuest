@@ -3,6 +3,7 @@ extends StaticBody2D
 signal number_clicked
 var value = "0";
 var selected = false
+var lifted = false
 
 func _ready():
 	#self.connect("clear_sig", self, "_on_clear_pressed")
@@ -12,22 +13,32 @@ func init_number(var num):
 	value = str(num)
 	var text = $text
 	text.set_text(value)
+	
+func _unhandled_input(event):
+	if event is InputEventMouseButton and not event.pressed:
+		lifted = false
+	if lifted and event is InputEventMouseMotion:
+		position += event.relative
 
 func _on_Number_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		var mouse_button = event.button_index
 		
 		if event.pressed && mouse_button == BUTTON_LEFT:
-				
+
 				if selected == false:
 					print("Value: " , value)
 					emit_signal("number_clicked", value)	
 					selected=true
-					
-					
+
+
 				else:
 					print("already selected")
 					
+		if event.pressed && mouse_button == BUTTON_LEFT:
+			lifted = true
+
+
 func clear():
 	print("test")
 	if selected == true:
