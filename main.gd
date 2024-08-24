@@ -7,7 +7,7 @@ var number_arr = []
 
 func _ready():
 	#var level_data = ResourceLoader.load(level_path)  
-	
+	#hello its me ian im commenting
 	
 	var level_data = {
 		"numbers": ["1", "1", "2"],
