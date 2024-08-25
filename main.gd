@@ -80,14 +80,18 @@ func _on_evaluate_pressed():
 		equality = ""
 		update_label()
 		# Deletes operators that were selected when expression evaluated to true
-		for i in range(operator_arr.size()):
+		for i in range(operator_arr.size()-1, -1, -1):
 			if (operator_arr[i].getSelected()):
-				operator_arr[i].queue_free()
-		
+				var temp_op = operator_arr[i]
+				operator_arr.remove(i)
+				temp_op.queue_free()
+				
 		# Deletes numbers that were selected when expression evaluated to true
-		for j in range(number_arr.size()):
+		for j in range(number_arr.size()-1, -1, -1):
 			if (number_arr[j].getSelected()):
-				number_arr[j].queue_free()
+				var temp_num = number_arr[j]
+				number_arr.remove(j)
+				temp_num.queue_free()
 		
 		solved_chars += total_selected
 		
