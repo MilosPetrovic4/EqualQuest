@@ -6,7 +6,6 @@ var selected = false
 var lifted = false
 
 func _ready():
-	#self.connect("clear_sig", self, "_on_clear_pressed")
 	pass
 
 func init_number(var num):
@@ -26,16 +25,15 @@ func _on_Number_input_event(viewport, event, shape_idx):
 		
 		if event.pressed && mouse_button == BUTTON_LEFT:
 
-				if selected == false:
-					print("Value: " , value)
-					emit_signal("number_clicked", value)	
-					selected=true
+			if selected == false:
+				print("Value: " , value)
+				emit_signal("number_clicked", value)	
+				selected=true
 
 
-				else:
-					print("already selected")
+			else:
+				print("already selected")
 					
-		if event.pressed && mouse_button == BUTTON_LEFT:
 			lifted = true
 
 
