@@ -80,12 +80,19 @@ func _on_operator_deselect(pos_in_arr : int):
 	selected_order.remove(pos_in_arr)
 	for i in range(pos_in_arr, selected_order.size(), 1):
 		selected_order[i].setSelectedPos(i)
-	
+	if pos_in_arr >= 0 and pos_in_arr < equality.length():
+		equality = equality.substr(0, pos_in_arr) + equality.substr(pos_in_arr + 1, equality.length() - pos_in_arr - 1)
+		update_label()
+
 func _on_number_deselect(pos_in_arr : int):
 	total_selected -= 1
 	selected_order.remove(pos_in_arr)
 	for i in range(pos_in_arr, selected_order.size(), 1):
 		selected_order[i].setSelectedPos(i)
+		
+	if pos_in_arr >= 0 and pos_in_arr < equality.length():
+		equality = equality.substr(0, pos_in_arr) + equality.substr(pos_in_arr + 1, equality.length() - pos_in_arr - 1)
+		update_label()
 
 # evaluate expression button
 func _on_evaluate_pressed():
