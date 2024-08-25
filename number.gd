@@ -1,20 +1,31 @@
 extends StaticBody2D
 
 signal number_clicked
-var value = "0";
-var selected = false
-var dragging = false
-var snap = 64
+signal number_deselect
+
+var value = "0"
+var selected : bool
+var dragging : bool
 var of = Vector2(0,0)
-var default_modulate : Color
-var selected_modulate : Color
+var select_pos = -1
+const snap = 64
+const default_modulate = Color(1, 1, 1, 1)
+const selected_modulate = Color(1, 1, 1, 0.5)
 
 func _ready():
-	default_modulate = Color(1, 1, 1, 1)
-	selected_modulate = Color(1, 1, 1, 0.5)
+	selected = false
+	dragging = false
 
 func getSelected():
 	return selected
+	
+func getSelectedPos():
+	return select_pos
+	
+func setSelectedPos(pos : int):
+	select_pos = pos
+	print("SELECTING: ")
+	print(pos)
 
 func init_number(var num):
 	value = str(num)
@@ -35,11 +46,13 @@ func _on_Number_input_event(viewport, event, shape_idx):
 		elif event.pressed && mouse_button == BUTTON_LEFT:
 			if selected == false:
 				print("Value: " , value)
-				emit_signal("number_clicked", value)	
-				selected=true
+				selected = true
+				emit_signal("number_clicked", value, self)	
 				modulate = selected_modulate
 			else:
-				print("already selected")
+				selected = false
+				modulate = default_modulate
+				emit_signal("number_deselect", select_pos)
 		else:
 			dragging = false
 
@@ -50,7 +63,7 @@ func clear():
 		modulate = default_modulate
 		
 # NOT IN USE CURRENTLY , TRYING TO IMPLEMENT THE SNAPPED METHOD THAT WAS ADDED IN GODOT 4
-func snap(vector: Vector2, grid_size: int) -> Vector2:
-	var snapped_x = round(vector.x / grid_size) * grid_size
-	var snapped_y = round(vector.y / grid_size) * grid_size
-	return Vector2(snapped_x, snapped_y)
+#func snap(vector: Vector2, grid_size: int) -> Vector2:
+#	var snapped_x = round(vector.x / grid_size) * grid_size
+#	var snapped_y = round(vector.y / grid_size) * grid_size
+#	return Vector2(snapped_x, snapped_y)

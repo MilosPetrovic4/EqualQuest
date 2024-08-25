@@ -1,12 +1,11 @@
 extends Node2D
 
-var level_path = "res://Data/levels.json"
-var equality = ""
+#var level_path = "res://Data/levels.json"
+var equality : String
 var operator_arr = []
 var number_arr = []
-
-# Current level that is being played
-var current_level
+var selected_order = []
+var current_level = 1
 
 # The number of characters in the level
 var total_chars
@@ -18,6 +17,9 @@ var solved_chars = 0
 var total_selected = 0
 
 func _ready():
+	
+	equality = ""
+	
 	var level_data = {
 		"numbers": ["1", "1", "2"],
 		"num_nums": 3,
@@ -40,6 +42,7 @@ func _ready():
 		num_instance.position = Vector2(i * 100 + 200, 0)
 		add_child(num_instance)
 		num_instance.connect("number_clicked", self, "_on_number_clicked")
+		num_instance.connect("number_deselect", self, "_on_number_deselect")
 		number_arr.append(num_instance)
 	
 	# Based on level data generate operator characters
@@ -49,21 +52,40 @@ func _ready():
 		op_instance.position = Vector2(j * 100 + 200, 200)
 		add_child(op_instance)
 		op_instance.connect("operator_clicked", self, "_on_operator_clicked")
+		op_instance.connect("operator_deselect", self, "_on_operator_deselect")
 		operator_arr.append(op_instance)
 
 # signal received from operator instance being clicked
-func _on_operator_clicked(var value):
-	print("added to expression:", value)
+func _on_operator_clicked(var value, var this):
 	equality += value
 	total_selected += 1
+	var pos_in_queue = total_selected - 1
+	selected_order.push_back(this)
+	print(selected_order)
+	this.setSelectedPos(pos_in_queue)
 	update_label()
 
 # signal received from number instance being clicked
-func _on_number_clicked(var value):
-	print("added to expression:", value)
+func _on_number_clicked(var value, var this):
 	equality += value
 	total_selected += 1
+	var pos_in_queue = total_selected - 1
+	selected_order.push_back(this)
+	print(selected_order)
+	this.setSelectedPos(pos_in_queue)
 	update_label()
+	
+func _on_operator_deselect(pos_in_arr : int):
+	total_selected -= 1
+	selected_order.remove(pos_in_arr)
+	for i in range(pos_in_arr, selected_order.size(), 1):
+		selected_order[i].setSelectedPos(i)
+	
+func _on_number_deselect(pos_in_arr : int):
+	total_selected -= 1
+	selected_order.remove(pos_in_arr)
+	for i in range(pos_in_arr, selected_order.size(), 1):
+		selected_order[i].setSelectedPos(i)
 
 # evaluate expression button
 func _on_evaluate_pressed():
