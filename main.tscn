@@ -28,5 +28,12 @@ margin_right = 919.0
 margin_bottom = 418.0
 text = "Clear"
 
+[node name="restart" type="Button" parent="."]
+margin_left = 939.0
+margin_top = 18.0
+margin_right = 997.0
+margin_bottom = 82.0
+
 [connection signal="pressed" from="evaluate" to="." method="_on_evaluate_pressed"]
 [connection signal="pressed" from="clear" to="." method="_on_clear_pressed"]
+[connection signal="pressed" from="restart" to="." method="_on_restart_pressed"]

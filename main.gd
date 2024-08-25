@@ -18,7 +18,6 @@ var solved_chars = 0
 var total_selected = 0
 
 func _ready():
-
 	var level_data = {
 		"numbers": ["1", "1", "2"],
 		"num_nums": 3,
@@ -118,3 +117,22 @@ func _on_clear_pressed():
 func update_label():
 	var label = $equality
 	label.set_text(equality)
+
+func clear_level():
+	# Iterates through every child in the scene and removes if not label or button
+	for child in get_children():
+		if child is Button or child is Label:
+			continue
+		else:
+			child.queue_free()
+	
+	# Reset arrays and variables
+	operator_arr.clear()
+	number_arr.clear()
+	equality = ""
+	total_selected = 0
+	solved_chars = 0
+
+func _on_restart_pressed():
+	clear_level()
+	_ready()
