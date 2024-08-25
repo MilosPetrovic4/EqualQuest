@@ -6,6 +6,12 @@ var selected = false
 var dragging = false
 var snap = 64
 var of = Vector2(0,0)
+var default_modulate : Color
+var selected_modulate : Color
+
+func _ready():
+	default_modulate = Color(1, 1, 1, 1)
+	selected_modulate = Color(1, 1, 1, 0.5)
 
 func getSelected():
 	return selected
@@ -15,12 +21,6 @@ func init_operator(var op):
 	var text = $text
 	text.set_text(op_type)
 	print("init operator")
-#
-#func _unhandled_input(event):
-#	if event is InputEventMouseButton and not event.pressed:
-#		lifted = false
-#	if lifted and event is InputEventMouseMotion:
-#		position += event.relative
 
 func _process(delta):
 	if dragging:
@@ -36,6 +36,7 @@ func _on_Operator_input_event(viewport, event, shape_idx):
 				if selected == false:
 					print("Value: " , op_type)
 					selected = true
+					modulate = selected_modulate
 					emit_signal("operator_clicked", op_type)
 				else:
 					print("already selected")
@@ -47,3 +48,4 @@ func clear():
 	print("test")
 	if selected == true:
 		selected = false
+		modulate = default_modulate

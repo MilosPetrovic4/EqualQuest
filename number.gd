@@ -6,6 +6,12 @@ var selected = false
 var dragging = false
 var snap = 64
 var of = Vector2(0,0)
+var default_modulate : Color
+var selected_modulate : Color
+
+func _ready():
+	default_modulate = Color(1, 1, 1, 1)
+	selected_modulate = Color(1, 1, 1, 0.5)
 
 func getSelected():
 	return selected
@@ -31,6 +37,7 @@ func _on_Number_input_event(viewport, event, shape_idx):
 				print("Value: " , value)
 				emit_signal("number_clicked", value)	
 				selected=true
+				modulate = selected_modulate
 			else:
 				print("already selected")
 		else:
@@ -40,6 +47,7 @@ func clear():
 	print("test")
 	if selected == true:
 		selected = false
+		modulate = default_modulate
 		
 # NOT IN USE CURRENTLY , TRYING TO IMPLEMENT THE SNAPPED METHOD THAT WAS ADDED IN GODOT 4
 func snap(vector: Vector2, grid_size: int) -> Vector2:

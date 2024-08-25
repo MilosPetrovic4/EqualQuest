@@ -77,7 +77,8 @@ func _on_evaluate_pressed():
 	
 	if (expression_ls.execute() == expression_rs.execute()):
 		print("true")
-		
+		equality = ""
+		update_label()
 		# Deletes operators that were selected when expression evaluated to true
 		for i in range(operator_arr.size()):
 			if (operator_arr[i].getSelected()):
