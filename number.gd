@@ -5,8 +5,8 @@ var value = "0";
 var selected = false
 var lifted = false
 
-func _ready():
-	pass
+func getSelected():
+	return selected
 
 func init_number(var num):
 	value = str(num)
@@ -22,20 +22,15 @@ func _unhandled_input(event):
 func _on_Number_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		var mouse_button = event.button_index
-		
 		if event.pressed && mouse_button == BUTTON_LEFT:
-
 			if selected == false:
 				print("Value: " , value)
 				emit_signal("number_clicked", value)	
 				selected=true
-
-
 			else:
 				print("already selected")
 					
 			lifted = true
-
 
 func clear():
 	print("test")

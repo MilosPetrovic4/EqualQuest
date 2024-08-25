@@ -5,8 +5,8 @@ var op_type = "NA";
 var selected = false
 var lifted = false
 
-func _ready():
-	pass
+func getSelected():
+	return selected
 
 func init_operator(var op):
 	op_type = op
@@ -20,14 +20,12 @@ func _unhandled_input(event):
 	if lifted and event is InputEventMouseMotion:
 		position += event.relative
 
-
 func _on_Operator_input_event(viewport, event, shape_idx):
 
 	if event is InputEventMouseButton:
 		var mouse_button = event.button_index
 		
 		if event.pressed && mouse_button == BUTTON_LEFT:
-
 				if selected == false:
 					print("Value: " , op_type)
 					selected = true
