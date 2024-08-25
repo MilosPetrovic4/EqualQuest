@@ -28,9 +28,6 @@ shape = SubResource( 1 )
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
 
-[node name="Particles2D" type="Particles2D" parent="."]
-visible = false
-
 [node name="text" type="RichTextLabel" parent="."]
 margin_left = -17.0
 margin_top = 31.0

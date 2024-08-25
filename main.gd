@@ -5,6 +5,9 @@ var equality = ""
 var operator_arr = []
 var number_arr = []
 
+# Current level that is being played
+var current_level
+
 # The number of characters in the level
 var total_chars
 
