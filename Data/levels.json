@@ -1,9 +1,39 @@
 {
-    "level1" : {
+    "0" : {
+
+        "numbers" : [1, 1, 5, 6, 7, 8, 9],
+        "num_nums" : 7,
+        "operators" : ["+", "-", "=", "="],
+        "num_ops" : 4,
+        "num_chars": 11,
+		"expected": "15-6=9, 1+7=8"
+    },
+    "1" : {
 
         "numbers" : [1, 1, 2],
         "num_nums" : 3,
         "operators" : ["+", "="],
-        "num_ops" : 2
+        "num_ops" : 2,
+        "num_chars": 5,
+		"expected": "1+1=2"
+    },
+    "2" : {
+
+        "numbers" : [1, 2, 4, 3],
+        "num_nums" : 4,
+        "operators" : ["*", "="],
+        "num_ops" : 2,
+        "num_chars": 6,
+		"expected": "4x3=12"
+    },
+    "3" : {
+
+        "numbers" : [1, 1, 1, 1],
+        "num_nums" : 4,
+        "operators" : ["="],
+        "num_ops" : 1,
+        "num_chars": 5,
+		"expected": "11=11"
+
     }
 }
