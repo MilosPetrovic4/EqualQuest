@@ -1,11 +1,11 @@
 extends Node2D
 
-#var level_path = "res://Data/levels.json"
+var level_path = "res://Data/levels.json"
 var equality : String
 var operator_arr = []
 var number_arr = []
 var selected_order = []
-#var level_data_arr = []
+
 var current_level = 0
 var level_data
 
@@ -21,41 +21,10 @@ var total_selected = 0
 func _ready():
 	
 	# load the json file
-	var file_path = "res://Data/levels.json"
-	var level_data = load_json(file_path)
-	if level_data:
-		print(level_data)
-	else:
-		print("Failed to load or parse JSON file.")
-	
+	var level_data = load_json(level_path)
 	equality = ""
-	
-#	var level_data1 = {
-#		"numbers": ["1", "1", "2"],
-#		"num_nums": 3,
-#		"operators": ["+", "="],
-#		"num_ops":2,
-#		"num_chars":5,
-#		"expected": "1+1=2"
-#	}
-#
-#	var level_data2 = {
-#		"numbers": ["1", "2", "4", "8"],
-#		"num_nums": 4,
-#		"operators": ["+", "="],
-#		"num_ops":2,
-#		"num_chars":6,
-#		"expected": "12=4+8"
-#	}
-#
-#	level_data_arr.push_back(level_data["1"])
-#	level_data_arr.push_back(level_data["2"])
 	total_chars = level_data[str(current_level)]["num_chars"]
-#	total_chars = level_data_arr[current_level]["num_chars"]
-	
-#	total_chars = level_data["num_chars"]
-	# Convert data to JSON string
-#	var json_str = JSON.print(level_data)
+
 	var json_str = JSON.print(level_data[str(current_level)])
 	print("JSON String:", json_str)
 	
