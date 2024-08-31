@@ -107,8 +107,21 @@ func _on_number_deselect(pos_in_arr : int) -> void:
 		equality = equality.substr(0, pos_in_arr) + equality.substr(pos_in_arr + 1, equality.length() - pos_in_arr - 1)
 		update_label()
 
+# Checks that expression is valid
+func validate_expression(expression : String) -> bool:
+	var pattern = "^\\d+(\\s*[\\+\\-\\*/]\\s*\\d+)*\\s*=\\s*\\d+$"
+	var regex = RegEx.new()
+	regex.compile(pattern)
+	return regex.search(expression) != null
+
 # evaluate expression button
 func _on_evaluate_pressed() -> void:
+	
+	# stops the function if equation is not valid
+	var valid = validate_expression(equality)
+	if !valid:
+		return
+	
 	var equality_sides = equality.split("=") #ISSUE: using split(=) if we want to use > < 
 	var expression_ls = Expression.new()
 	var expression_rs = Expression.new()
