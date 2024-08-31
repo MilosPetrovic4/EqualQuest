@@ -6,7 +6,7 @@ var operator_arr = []
 var number_arr = []
 var selected_order = []
 
-var current_level = 0
+var level
 var level_data
 
 # The number of characters in the level
@@ -20,18 +20,20 @@ var total_selected = 0
 
 func _ready():
 	
+	level = get_tree().get_root().get_meta("cur_lvl")
+	
+#	if level:
+#		level -= 1
+	
 	# load the json file
 	var level_data = load_json(level_path)
 	equality = ""
-	total_chars = level_data[str(current_level)]["num_chars"]
-
-	var json_str = JSON.print(level_data[str(current_level)])
-	print("JSON String:", json_str)
+	total_chars = level_data[str(level)]["num_chars"]
 	
 	# Based on level data generate number characters
-	for i in range(level_data[str(current_level)]["num_nums"]):
+	for i in range(level_data[str(level)]["num_nums"]):
 		var num_instance = load("res://number.tscn").instance()
-		num_instance.init_number(level_data[str(current_level)]["numbers"][i])
+		num_instance.init_number(level_data[str(level)]["numbers"][i])
 		num_instance.position = Vector2(i * 100 + 200, 0)
 		add_child(num_instance)
 		num_instance.connect("number_clicked", self, "_on_number_clicked")
@@ -39,9 +41,9 @@ func _ready():
 		number_arr.append(num_instance)
 	
 	# Based on level data generate operator characters
-	for j in range(level_data[str(current_level)]["num_ops"]):
+	for j in range(level_data[str(level)]["num_ops"]):
 		var op_instance = load("res://operator.tscn").instance()
-		op_instance.init_operator(level_data[str(current_level)]["operators"][j])
+		op_instance.init_operator(level_data[str(level)]["operators"][j])
 		op_instance.position = Vector2(j * 100 + 200, 200)
 		add_child(op_instance)
 		op_instance.connect("operator_clicked", self, "_on_operator_clicked")
@@ -124,7 +126,8 @@ func _on_evaluate_pressed():
 		if (solved_chars == total_chars):
 			print("Complete")
 			clear_level()
-			current_level += 1
+			level += 1
+			get_tree().get_root().set_meta("cur_lvl", level)
 			_ready()
 	else:
 		print("false")
