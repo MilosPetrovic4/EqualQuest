@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ESC.gd" type="Script" id=1]
+
+[node name="ESC" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 332.0
+margin_bottom = 601.0
+color = Color( 0.25098, 0.392157, 0.196078, 1 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = 24.0
+margin_top = 144.0
+margin_right = 313.0
+margin_bottom = 199.0
+text = "levels"
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

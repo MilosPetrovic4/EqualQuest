@@ -5,6 +5,8 @@ var equality : String
 var operator_arr = []
 var number_arr = []
 var selected_order = []
+var popup_menu : bool = false
+var menu : Node = null
 
 var level
 var level_data
@@ -18,12 +20,13 @@ var solved_chars = 0
 # Temporary variable representing number of currently selected characters
 var total_selected = 0
 
-func _ready():
+func _ready() -> void:
 	
-	level = get_tree().get_root().get_meta("cur_lvl")
+	level = Global.cur_lvl
 	
-#	if level:
-#		level -= 1
+	# To line up variable with array , the first element is at pos 0
+	if level:
+		level -= 1
 	
 	# load the json file
 	var level_data = load_json(level_path)
@@ -49,9 +52,24 @@ func _ready():
 		op_instance.connect("operator_clicked", self, "_on_operator_clicked")
 		op_instance.connect("operator_deselect", self, "_on_operator_deselect")
 		operator_arr.append(op_instance)
+		
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		if menu:
+			menu.queue_free()
+			menu = null
+		else:
+			instance_popup_scene()
+
+func instance_popup_scene() -> void:
+	var popup: PackedScene = preload("res://ESC.tscn")
+	menu = popup.instance()
+	add_child(menu)
+
+#	menu.position = Vector2(500, 0)  # Example position (adjust as needed)
 
 # signal received from operator instance being clicked
-func _on_operator_clicked(var value, var this):
+func _on_operator_clicked(var value, var this) -> void:
 	equality += value
 	total_selected += 1
 	var pos_in_queue = total_selected - 1
@@ -61,7 +79,7 @@ func _on_operator_clicked(var value, var this):
 	update_label()
 
 # signal received from number instance being clicked
-func _on_number_clicked(var value, var this):
+func _on_number_clicked(var value, var this) -> void:
 	equality += value
 	total_selected += 1
 	var pos_in_queue = total_selected - 1
@@ -70,7 +88,7 @@ func _on_number_clicked(var value, var this):
 	this.setSelectedPos(pos_in_queue)
 	update_label()
 	
-func _on_operator_deselect(pos_in_arr : int):
+func _on_operator_deselect(pos_in_arr : int) -> void:
 	total_selected -= 1
 	selected_order.remove(pos_in_arr)
 	for i in range(pos_in_arr, selected_order.size(), 1):
@@ -79,7 +97,7 @@ func _on_operator_deselect(pos_in_arr : int):
 		equality = equality.substr(0, pos_in_arr) + equality.substr(pos_in_arr + 1, equality.length() - pos_in_arr - 1)
 		update_label()
 
-func _on_number_deselect(pos_in_arr : int):
+func _on_number_deselect(pos_in_arr : int) -> void:
 	total_selected -= 1
 	selected_order.remove(pos_in_arr)
 	for i in range(pos_in_arr, selected_order.size(), 1):
@@ -90,7 +108,7 @@ func _on_number_deselect(pos_in_arr : int):
 		update_label()
 
 # evaluate expression button
-func _on_evaluate_pressed():
+func _on_evaluate_pressed() -> void:
 	var equality_sides = equality.split("=") #ISSUE: using split(=) if we want to use > < 
 	var expression_ls = Expression.new()
 	var expression_rs = Expression.new()
@@ -126,14 +144,21 @@ func _on_evaluate_pressed():
 		if (solved_chars == total_chars):
 			print("Complete")
 			clear_level()
-			level += 1
-			get_tree().get_root().set_meta("cur_lvl", level)
+			
+			# Increments current level
+			level += 2
+			Global.next_lvl()
+			
+			# Checks if we should unlock next level
+			if level > Global.unlkd:
+				Global.unlock()
+			
 			_ready()
 	else:
 		print("false")
 
 # clear button
-func _on_clear_pressed():
+func _on_clear_pressed() -> void:
 	equality = ""
 	update_label()
 	total_selected = 0
@@ -146,11 +171,11 @@ func _on_clear_pressed():
 	for j in range(operator_arr.size()):
 		operator_arr[j].clear()
 	
-func update_label():
+func update_label() -> void:
 	var label = $equality
 	label.set_text(equality)
 
-func clear_level():
+func clear_level() -> void:
 	# Iterates through every child in the scene and removes if not label or button
 	for child in get_children():
 		if child is Button or child is Label:
@@ -166,7 +191,7 @@ func clear_level():
 	total_selected = 0
 	solved_chars = 0
 
-func _on_restart_pressed():
+func _on_restart_pressed() -> void:
 	clear_level()
 	_ready()
 	
