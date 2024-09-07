@@ -108,11 +108,48 @@ func _on_number_deselect(pos_in_arr : int) -> void:
 		update_label()
 
 # Checks that expression is valid
-func validate_expression(expression : String) -> bool:
-	var pattern = "^\\d+(\\s*[\\+\\-\\*/]\\s*\\d+)*\\s*=\\s*\\d+$"
-	var regex = RegEx.new()
-	regex.compile(pattern)
-	return regex.search(expression) != null
+func validate_expression(equation : String) -> bool:
+#	var pattern = "^\\d+(\\s*[\\+\\-\\*/]\\s*\\d+)*\\s*=\\s*\\d+$"
+#	var regex = RegEx.new()
+#	regex.compile(pattern)
+#	return regex.search(expression) != null
+	var equals_count = 0
+	var equals = ["=", ">", "<"]
+	var operators = ["=", ">", "+", "-", "*"]
+	var digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+	var last_char_op = false
+	
+	print("length: ")
+	print(equation.length())
+	
+	# Checks first and last characters are digits
+	if !(equation[0] in digits) || !(equation[equation.length() - 1] in digits):
+		return false
+		
+	for i in range(1, equation.length() - 1):
+		var curr_char = equation[i]
+		
+		if curr_char in operators && last_char_op == true:
+			print("two ops in a row")
+			return false
+		
+		elif curr_char in operators && last_char_op == false:
+			print("found operator")
+			last_char_op = true
+			if curr_char in equals:
+				equals_count += 1
+			
+		else:
+			print("no operator")
+			last_char_op = false
+	
+	# Checks that there is only 1 equality oeprator
+	if equals_count != 1:
+		return false
+	
+	# All tests passed return true
+	return true
+		
 
 # evaluate expression button
 func _on_evaluate_pressed() -> void:
@@ -120,6 +157,7 @@ func _on_evaluate_pressed() -> void:
 	# stops the function if equation is not valid
 	var valid = validate_expression(equality)
 	if !valid:
+		print("invalid")
 		return
 	
 	var equality_sides = equality.split("=") #ISSUE: using split(=) if we want to use > < 

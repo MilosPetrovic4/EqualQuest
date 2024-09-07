@@ -2,21 +2,21 @@
 {
     "0" : {
 
-        "numbers" : [1, 1, 1, 1, 2, 2, 3, 6, 7, 8],
-        "num_nums" : 10,
-        "operators" : ["-", "*", "=", "="],
-        "num_ops" : 4,
-        "num_chars": 14,
-		"expected": "18-7=11, 31x2=62"
-    },
-    "1" : {
-
         "numbers" : [0, 2, 3, 5, 5],
         "num_nums" : 5,
         "operators" : ["-", "*", "="],
         "num_ops" : 3,
         "num_chars": 8,
 		"expected": "20-5x3=5"
+    },
+    "1" : {
+
+        "numbers" : [1, 1, 1, 1, 2, 2, 3, 6, 7, 8],
+        "num_nums" : 10,
+        "operators" : ["-", "*", "=", "="],
+        "num_ops" : 4,
+        "num_chars": 14,
+		"expected": "18-7=11, 31x2=62"
     },
     "2" : {
 
