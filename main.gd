@@ -109,18 +109,11 @@ func _on_number_deselect(pos_in_arr : int) -> void:
 
 # Checks that expression is valid
 func validate_expression(equation : String) -> bool:
-#	var pattern = "^\\d+(\\s*[\\+\\-\\*/]\\s*\\d+)*\\s*=\\s*\\d+$"
-#	var regex = RegEx.new()
-#	regex.compile(pattern)
-#	return regex.search(expression) != null
 	var equals_count = 0
 	var equals = ["=", ">", "<"]
 	var operators = ["=", ">", "+", "-", "*"]
 	var digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 	var last_char_op = false
-	
-	print("length: ")
-	print(equation.length())
 	
 	# Checks first and last characters are digits
 	if !(equation[0] in digits) || !(equation[equation.length() - 1] in digits):
@@ -130,17 +123,14 @@ func validate_expression(equation : String) -> bool:
 		var curr_char = equation[i]
 		
 		if curr_char in operators && last_char_op == true:
-			print("two ops in a row")
 			return false
 		
 		elif curr_char in operators && last_char_op == false:
-			print("found operator")
 			last_char_op = true
 			if curr_char in equals:
 				equals_count += 1
 			
 		else:
-			print("no operator")
 			last_char_op = false
 	
 	# Checks that there is only 1 equality oeprator
@@ -149,7 +139,6 @@ func validate_expression(equation : String) -> bool:
 	
 	# All tests passed return true
 	return true
-		
 
 # evaluate expression button
 func _on_evaluate_pressed() -> void:
@@ -229,7 +218,7 @@ func update_label() -> void:
 func clear_level() -> void:
 	# Iterates through every child in the scene and removes if not label or button
 	for child in get_children():
-		if child is Button or child is Label:
+		if child is TextureButton or child is Label:
 			continue
 		else:
 			child.queue_free()
@@ -254,3 +243,5 @@ func load_json(path: String):
 	var parsed_json: JSONParseResult = JSON.parse(content)
 	if not parsed_json.error:
 		return parsed_json.result
+
+

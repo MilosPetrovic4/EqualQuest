@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/equals_sign.png-643bdba61716a084adb3af477938fa81.stex"
+path="res://.import/restart-button-clicked.png-e99d2409131fb1fd942c85dd80ce3ad8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/equals_sign.png"
-dest_files=[ "res://.import/equals_sign.png-643bdba61716a084adb3af477938fa81.stex" ]
+source_file="res://Art/Buttons/restart-button-clicked.png"
+dest_files=[ "res://.import/restart-button-clicked.png-e99d2409131fb1fd942c85dd80ce3ad8.stex" ]
 
 [params]
 

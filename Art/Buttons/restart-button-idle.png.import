@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/plus_sign.png-647319b386dd6a95f5e44a05e4fc61dc.stex"
+path="res://.import/restart-button-idle.png-266914a99a415e79006407e698b24b29.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/plus_sign.png"
-dest_files=[ "res://.import/plus_sign.png-647319b386dd6a95f5e44a05e4fc61dc.stex" ]
+source_file="res://Art/Buttons/restart-button-idle.png"
+dest_files=[ "res://.import/restart-button-idle.png-266914a99a415e79006407e698b24b29.stex" ]
 
 [params]
 
