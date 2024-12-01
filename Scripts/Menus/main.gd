@@ -35,9 +35,9 @@ func _ready() -> void:
 	
 	# Based on level data generate number characters
 	for i in range(level_data[str(level)]["num_nums"]):
-		var num_instance = load("res://number.tscn").instance()
+		var num_instance = load("res://Scenes/Objects/number.tscn").instance()
 		num_instance.init_number(level_data[str(level)]["numbers"][i])
-		num_instance.position = Vector2(i * 100 + 200, 0)
+		num_instance.position = Vector2(i * 64 + 160, 96)
 		add_child(num_instance)
 		num_instance.connect("number_clicked", self, "_on_number_clicked")
 		num_instance.connect("number_deselect", self, "_on_number_deselect")
@@ -45,9 +45,9 @@ func _ready() -> void:
 	
 	# Based on level data generate operator characters
 	for j in range(level_data[str(level)]["num_ops"]):
-		var op_instance = load("res://operator.tscn").instance()
+		var op_instance = load("res://Scenes/Objects/operator.tscn").instance()
 		op_instance.init_operator(level_data[str(level)]["operators"][j])
-		op_instance.position = Vector2(j * 100 + 200, 200)
+		op_instance.position = Vector2(j * 64 + 160, 170)
 		add_child(op_instance)
 		op_instance.connect("operator_clicked", self, "_on_operator_clicked")
 		op_instance.connect("operator_deselect", self, "_on_operator_deselect")
@@ -62,7 +62,7 @@ func _input(event: InputEvent) -> void:
 			instance_popup_scene()
 
 func instance_popup_scene() -> void:
-	var popup: PackedScene = preload("res://ESC.tscn")
+	var popup: PackedScene = preload("res://Scenes/Menus/ESC.tscn")
 	menu = popup.instance()
 	add_child(menu)
 
@@ -218,7 +218,7 @@ func update_label() -> void:
 func clear_level() -> void:
 	# Iterates through every child in the scene and removes if not label or button
 	for child in get_children():
-		if child is TextureButton or child is Label:
+		if child is TextureButton or child is Button or child is Label or child is CanvasLayer:
 			continue
 		else:
 			child.queue_free()
@@ -228,6 +228,7 @@ func clear_level() -> void:
 	number_arr.clear()
 	selected_order.clear()
 	equality = ""
+	update_label()
 	total_selected = 0
 	solved_chars = 0
 

@@ -6,5 +6,5 @@ func _input(event):
 		start_game()
 
 func start_game():
-	var next_scene = preload("res://levels.tscn")
+	var next_scene = preload("res://Scenes//Menus/levels.tscn")
 	get_tree().change_scene_to(next_scene)

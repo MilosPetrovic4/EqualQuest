@@ -1,0 +1,15 @@
+50 levels for the game
+
+1-5: very basic 1+1=2 problems to familiarize the player with the concept
+5-10: introduce '-' very basic problems
+10-20: introduce multiplication , still simple problems with only one equals operator
+20-30:
+30-40:
+40-45:
+
+
+Game Theme: School math theme , calculator
+
+
+Story Ideas:
+1. You are adventuring through a dense forest when you come across an ominous tower , as you approach you notice that 

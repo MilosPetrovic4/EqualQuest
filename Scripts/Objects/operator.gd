@@ -29,12 +29,23 @@ func getSelected():
 
 func init_operator(var op):
 	op_type = op
-	var text = $text
+	var text = $char
 	text.set_text(op_type)
 
 func _process(delta):
 	if dragging:
 		position  = get_global_mouse_position() - of
+		
+		if position.x < 160:
+			position.x = 160
+		elif position.x > 800:
+			position.x = 800
+			
+		if position.y < 96:
+			position.y = 96
+		elif position.y > 480:
+			position.y = 480
+		
 
 func _on_Operator_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:

@@ -11,16 +11,23 @@ config_version=4
 [application]
 
 config/name="coolmathgames-game-godot"
-run/main_scene="res://Menu.tscn"
+run/main_scene="res://Scenes/Menus/Menu.tscn"
 config/icon="res://Art/icon.png"
 
 [autoload]
 
-Global="*res://Global.gd"
+Global="*res://Scripts/Standalone/Global.gd"
 
 [display]
 
 window/size/height=576
+window/size/resizable=false
+window/stretch/mode="viewport"
+
+[global]
+
+fulls=false
+fullscreen=false
 
 [gui]
 
