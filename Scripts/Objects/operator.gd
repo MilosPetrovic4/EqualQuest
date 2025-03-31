@@ -21,9 +21,7 @@ func getSelectedPos():
 	
 func setSelectedPos(pos : int):
 	select_pos = pos
-	print("SELECTING: ")
-	print(pos)
-	
+
 func getSelected():
 	return selected
 
@@ -34,18 +32,29 @@ func init_operator(var op):
 
 func _process(delta):
 	if dragging:
-		position  = get_global_mouse_position() - of
+		var oldx: int = position.x
+		var oldy: int = position.y
+
+		var mouse = get_global_mouse_position()
+
+		var moved: bool = Positions.move(oldx, oldy, stepify(mouse.x - of.x, snap), stepify(mouse.y - of.y, snap))
 		
-		if position.x < 160:
-			position.x = 160
-		elif position.x > 800:
-			position.x = 800
-			
-		if position.y < 96:
-			position.y = 96
-		elif position.y > 480:
-			position.y = 480
+		if (moved):
+			position.x  = stepify(mouse.x - of.x, snap)
+			position.y  = stepify(mouse.y - of.y, snap)
 		
+
+
+#		if position.x < 128:
+#			position.x = 128
+#		elif position.x > 896:
+#			position.x = 896
+#
+#		if position.y < 128:
+#			position.y = 128
+#		elif position.y > 448:
+#			position.y = 448
+
 
 func _on_Operator_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:

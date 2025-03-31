@@ -17,6 +17,7 @@ config/icon="res://Art/icon.png"
 [autoload]
 
 Global="*res://Scripts/Standalone/Global.gd"
+Positions="*res://Scripts/Standalone/Positions.gd"
 
 [display]
 

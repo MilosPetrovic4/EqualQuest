@@ -20,6 +20,20 @@ var solved_chars = 0
 # Temporary variable representing number of currently selected characters
 var total_selected = 0
 
+#GRID
+func _draw() -> void:
+	for z in range(0, 576, 64):
+		draw_line(Vector2(0, z), Vector2(1024, z), Color(1, 0, 0), 1.0)
+		
+	for k in range(0, 1024, 64):
+		draw_line(Vector2(k, 0), Vector2(k, 576), Color(1, 0, 0), 1.0)
+		
+	# Rules, TODO: Remove when done
+	#draw_line(Vector2(0, 128), Vector2(1024, 128), Color(1, 0, 0), 1.0)
+	#draw_line(Vector2(0, 448), Vector2(1024, 448), Color(1, 0, 0), 1.0)
+	#draw_line(Vector2(128, 0), Vector2(128, 576), Color(1, 0, 0), 1.0)
+	#draw_line(Vector2(896, 0), Vector2(896, 576), Color(1, 0, 0), 1.0)
+
 func _ready() -> void:
 	
 	level = Global.cur_lvl
@@ -37,7 +51,8 @@ func _ready() -> void:
 	for i in range(level_data[str(level)]["num_nums"]):
 		var num_instance = load("res://Scenes/Objects/number.tscn").instance()
 		num_instance.init_number(level_data[str(level)]["numbers"][i])
-		num_instance.position = Vector2(i * 64 + 160, 96)
+		num_instance.position = Vector2(i * 64 + 192, 128)
+		Positions.add_position(i * 64 + 192, 128)
 		add_child(num_instance)
 		num_instance.connect("number_clicked", self, "_on_number_clicked")
 		num_instance.connect("number_deselect", self, "_on_number_deselect")
@@ -47,7 +62,8 @@ func _ready() -> void:
 	for j in range(level_data[str(level)]["num_ops"]):
 		var op_instance = load("res://Scenes/Objects/operator.tscn").instance()
 		op_instance.init_operator(level_data[str(level)]["operators"][j])
-		op_instance.position = Vector2(j * 64 + 160, 170)
+		op_instance.position = Vector2(j * 64 + 192, 192)
+		Positions.add_position(j * 64 + 192, 192)
 		add_child(op_instance)
 		op_instance.connect("operator_clicked", self, "_on_operator_clicked")
 		op_instance.connect("operator_deselect", self, "_on_operator_deselect")
@@ -65,8 +81,6 @@ func instance_popup_scene() -> void:
 	var popup: PackedScene = preload("res://Scenes/Menus/ESC.tscn")
 	menu = popup.instance()
 	add_child(menu)
-
-#	menu.position = Vector2(500, 0)  # Example position (adjust as needed)
 
 # signal received from operator instance being clicked
 func _on_operator_clicked(var value, var this) -> void:
@@ -199,6 +213,7 @@ func _on_evaluate_pressed() -> void:
 
 # clear button
 func _on_clear_pressed() -> void:
+	
 	equality = ""
 	update_label()
 	total_selected = 0

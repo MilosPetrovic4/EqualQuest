@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scripts/Menus/levels.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Menus/levels.gd" type="Script" id=1]
 [ext_resource path="res://Art/digital-illustration-journey-around-medieval-260nw-2070380681.webp" type="Texture" id=2]
 
 [node name="levels" type="Control"]

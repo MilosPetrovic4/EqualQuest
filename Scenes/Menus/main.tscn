@@ -1,11 +1,15 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scripts/Menus/main.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Menus/main.gd" type="Script" id=1]
 [ext_resource path="res://Art/Buttons/restart-button-idle.png" type="Texture" id=2]
 [ext_resource path="res://Art/Buttons/restart-button-clicked.png" type="Texture" id=3]
 
 [node name="game" type="Node2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 128.0, 448.0 ],
+"_edit_vertical_guides_": [ 128.0, 896.0 ]
+}
 
 [node name="equality" type="Label" parent="."]
 margin_left = 296.0
@@ -16,10 +20,9 @@ align = 1
 valign = 1
 
 [node name="restart" type="TextureButton" parent="."]
-margin_left = 888.0
-margin_top = 8.0
-margin_right = 1024.0
-margin_bottom = 136.0
+margin_left = 896.0
+margin_right = 1032.0
+margin_bottom = 128.0
 texture_normal = ExtResource( 2 )
 texture_hover = ExtResource( 3 )
 expand = true
@@ -41,9 +44,6 @@ margin_top = 536.0
 margin_right = 1009.0
 margin_bottom = 556.0
 text = "Evaluate"
-
-[node name="Line2D" type="Line2D" parent="."]
-points = PoolVector2Array( 128, 56, 128, 512, 832, 512, 832, 64, 128, 64 )
 
 [connection signal="pressed" from="restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="clear" to="." method="_on_clear_pressed"]
