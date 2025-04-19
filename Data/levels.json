@@ -1,6 +1,14 @@
 
 {
     "0" : {
+        "numbers" : [1, 1, 2],
+        "num_nums" : 3,
+        "operators" : ["-", "="],
+        "num_ops" : 2,
+        "num_chars": 5,
+		"expected": "1+1=2"
+    },
+    "1" : {
 
         "numbers" : [0, 2, 3, 5, 5],
         "num_nums" : 5,
@@ -9,7 +17,7 @@
         "num_chars": 8,
 		"expected": "20-5x3=5"
     },
-    "1" : {
+    "2" : {
 
         "numbers" : [1, 1, 1, 1, 2, 2, 3, 6, 7, 8],
         "num_nums" : 10,
@@ -18,7 +26,7 @@
         "num_chars": 14,
 		"expected": "18-7=11, 31x2=62"
     },
-    "2" : {
+    "3" : {
 
         "numbers" : [1, 1, 5, 6, 7, 8, 9],
         "num_nums" : 7,
@@ -27,7 +35,7 @@
         "num_chars": 11,
 		"expected": "15-6=9, 1+7=8"
     },
-    "3" : {
+    "4" : {
 
         "numbers" : [1, 1, 2],
         "num_nums" : 3,
@@ -36,7 +44,7 @@
         "num_chars": 5,
 		"expected": "1+1=2"
     },
-    "4" : {
+    "5" : {
 
         "numbers" : [1, 2, 4, 3],
         "num_nums" : 4,
@@ -45,7 +53,7 @@
         "num_chars": 6,
 		"expected": "4x3=12"
     },
-    "5" : {
+    "6" : {
 
         "numbers" : [1, 1, 1, 1],
         "num_nums" : 4,

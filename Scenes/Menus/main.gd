@@ -1,12 +1,11 @@
 extends Node2D
 
 var level_path = "res://Data/levels.json"
-var equality : String
-var operator_arr = []
-var number_arr = []
+var puzzle_pieces = []
 var selected_order = []
 var popup_menu : bool = false
 var menu : Node = null
+const TILE_SIZE = 64
 
 var level
 var level_data
@@ -22,10 +21,10 @@ var total_selected = 0
 
 #GRID
 func _draw() -> void:
-	for z in range(0, 576, 64):
+	for z in range(32, 576, 64):
 		draw_line(Vector2(0, z), Vector2(1024, z), Color(1, 0, 0), 1.0)
 		
-	for k in range(0, 1024, 64):
+	for k in range(32, 1024, 64):
 		draw_line(Vector2(k, 0), Vector2(k, 576), Color(1, 0, 0), 1.0)
 		
 	# Rules, TODO: Remove when done
@@ -44,7 +43,6 @@ func _ready() -> void:
 	
 	# load the json file
 	var level_data = load_json(level_path)
-	equality = ""
 	total_chars = level_data[str(level)]["num_chars"]
 	
 	# Based on level data generate number characters
@@ -54,9 +52,8 @@ func _ready() -> void:
 		num_instance.position = Vector2(i * 64 + 192, 128)
 		Positions.add_position(i * 64 + 192, 128)
 		add_child(num_instance)
-		num_instance.connect("number_clicked", self, "_on_number_clicked")
-		num_instance.connect("number_deselect", self, "_on_number_deselect")
-		number_arr.append(num_instance)
+		num_instance.connect("number_dropped", self, "_on_number_dropped")
+		puzzle_pieces.append(num_instance)
 	
 	# Based on level data generate operator characters
 	for j in range(level_data[str(level)]["num_ops"]):
@@ -65,9 +62,8 @@ func _ready() -> void:
 		op_instance.position = Vector2(j * 64 + 192, 192)
 		Positions.add_position(j * 64 + 192, 192)
 		add_child(op_instance)
-		op_instance.connect("operator_clicked", self, "_on_operator_clicked")
-		op_instance.connect("operator_deselect", self, "_on_operator_deselect")
-		operator_arr.append(op_instance)
+		op_instance.connect("operator_dropped", self, "_on_operator_dropped")
+		puzzle_pieces.append(op_instance)
 		
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -81,45 +77,14 @@ func instance_popup_scene() -> void:
 	var popup: PackedScene = preload("res://Scenes/Menus/ESC.tscn")
 	menu = popup.instance()
 	add_child(menu)
-
-# signal received from operator instance being clicked
-func _on_operator_clicked(var value, var this) -> void:
-	equality += value
-	total_selected += 1
-	var pos_in_queue = total_selected - 1
-	selected_order.push_back(this)
-	print(selected_order)
-	this.setSelectedPos(pos_in_queue)
-	update_label()
-
-# signal received from number instance being clicked
-func _on_number_clicked(var value, var this) -> void:
-	equality += value
-	total_selected += 1
-	var pos_in_queue = total_selected - 1
-	selected_order.push_back(this)
-	print(selected_order)
-	this.setSelectedPos(pos_in_queue)
-	update_label()
 	
-func _on_operator_deselect(pos_in_arr : int) -> void:
-	total_selected -= 1
-	selected_order.remove(pos_in_arr)
-	for i in range(pos_in_arr, selected_order.size(), 1):
-		selected_order[i].setSelectedPos(i)
-	if pos_in_arr >= 0 and pos_in_arr < equality.length():
-		equality = equality.substr(0, pos_in_arr) + equality.substr(pos_in_arr + 1, equality.length() - pos_in_arr - 1)
-		update_label()
-
-func _on_number_deselect(pos_in_arr : int) -> void:
-	total_selected -= 1
-	selected_order.remove(pos_in_arr)
-	for i in range(pos_in_arr, selected_order.size(), 1):
-		selected_order[i].setSelectedPos(i)
-		
-	if pos_in_arr >= 0 and pos_in_arr < equality.length():
-		equality = equality.substr(0, pos_in_arr) + equality.substr(pos_in_arr + 1, equality.length() - pos_in_arr - 1)
-		update_label()
+func _on_operator_dropped(var pos: Vector2, var this):
+	for obj in puzzle_pieces:
+		evaluate(obj)
+	
+func _on_number_dropped(var pos: Vector2, var this):
+	for obj in puzzle_pieces:
+		evaluate(obj)
 
 # Checks that expression is valid
 func validate_expression(equation : String) -> bool:
@@ -129,6 +94,9 @@ func validate_expression(equation : String) -> bool:
 	var digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 	var last_char_op = false
 	
+	if equation.length() == 0:
+		return false
+	
 	# Checks first and last characters are digits
 	if !(equation[0] in digits) || !(equation[equation.length() - 1] in digits):
 		return false
@@ -136,10 +104,10 @@ func validate_expression(equation : String) -> bool:
 	for i in range(1, equation.length() - 1):
 		var curr_char = equation[i]
 		
-		if curr_char in operators && last_char_op == true:
+		if curr_char in operators && last_char_op:
 			return false
 		
-		elif curr_char in operators && last_char_op == false:
+		elif curr_char in operators && !last_char_op:
 			last_char_op = true
 			if curr_char in equals:
 				equals_count += 1
@@ -154,81 +122,96 @@ func validate_expression(equation : String) -> bool:
 	# All tests passed return true
 	return true
 
+# utility method to get puzzle piece at certain position
+func get_piece_at_position(pos: Vector2) -> Node:
+	for obj in get_tree().get_nodes_in_group("piece"):
+		if obj.global_position.distance_to(pos) < 1.0:
+			return obj
+	return null
+	
+func build_expression_from(start_piece: Node, adjacent_arr: Array) -> String:
+	var expression = ""
+	var current_pos = start_piece.global_position
+
+	# Step 1: Go left from the start
+	var pos_left = current_pos - Vector2(TILE_SIZE, 0)
+	while true:
+		var piece = get_piece_at_position(pos_left)
+		if piece == null:
+			break
+		expression = str(piece.getValue()) + expression
+		pos_left -= Vector2(TILE_SIZE, 0)
+		adjacent_arr.append(piece)
+
+	# Step 2: Add the center piece
+	expression += str(start_piece.getValue())
+	adjacent_arr.append(start_piece)
+
+	# Step 3: Go right from the start
+	var pos_right = current_pos + Vector2(TILE_SIZE, 0)
+	while true:
+		var piece = get_piece_at_position(pos_right)
+		if piece == null:
+			break
+		expression += str(piece.getValue())
+		pos_right += Vector2(TILE_SIZE, 0)
+		adjacent_arr.append(piece)
+
+	return expression
+
 # evaluate expression button
-func _on_evaluate_pressed() -> void:
+func evaluate(var piece) -> void:
+	var adjacent_objects = []
+	var eq = build_expression_from(piece, adjacent_objects)
 	
 	# stops the function if equation is not valid
-	var valid = validate_expression(equality)
+	var valid = validate_expression(eq)
 	if !valid:
-		print("invalid")
+		for i in range(adjacent_objects.size()):
+			adjacent_objects[i].setNotCompleted()
 		return
 	
-	var equality_sides = equality.split("=") #ISSUE: using split(=) if we want to use > < 
+	var equality_sides = eq.split("=") #ISSUE: using split(=) if we want to use > < 
 	var expression_ls = Expression.new()
 	var expression_rs = Expression.new()
 	
 	expression_ls.parse(equality_sides[0])
 	expression_rs.parse(equality_sides[1])
 	
+	# Expression holds true
 	if (expression_ls.execute() == expression_rs.execute()):
-		print("true")
-		equality = ""
-		update_label()
-		# Deletes operators that were selected when expression evaluated to true
-		for i in range(operator_arr.size()-1, -1, -1):
-			if (operator_arr[i].getSelected()):
-				var temp_op = operator_arr[i]
-				operator_arr.remove(i)
-				temp_op.queue_free()
+		
+		for i in range(adjacent_objects.size()):
+			adjacent_objects[i].setCompleted()
+		
+
+		for obj in puzzle_pieces:
+			if !obj.getCompleted():
+				return
 				
-		# Deletes numbers that were selected when expression evaluated to true
-		for j in range(number_arr.size()-1, -1, -1):
-			if (number_arr[j].getSelected()):
-				var temp_num = number_arr[j]
-				number_arr.remove(j)
-				temp_num.queue_free()
+		clear_level()
 		
-		solved_chars += total_selected
-		total_selected = 0
+		# Increments current level
+		level += 2
+		Global.next_lvl()
 		
-		print("solved_chars: ")
-		print(solved_chars)
+		# Checks if we should unlock next level
+		if level > Global.unlkd:
+			Global.unlock()
 		
-		# Level complete when solved_chars == total_chars
-		if (solved_chars == total_chars):
-			print("Complete")
-			clear_level()
-			
-			# Increments current level
-			level += 2
-			Global.next_lvl()
-			
-			# Checks if we should unlock next level
-			if level > Global.unlkd:
-				Global.unlock()
-			
-			_ready()
+		_ready()
 	else:
-		print("false")
+		for i in range(adjacent_objects.size()):
+			adjacent_objects[i].setNotCompleted()
 
 # clear button
 func _on_clear_pressed() -> void:
-	
-	equality = ""
-	update_label()
+
 	total_selected = 0
 	solved_chars = 0
-	
-	# Sets number & operator class 'selected' variable back to false
-	for i in range(number_arr.size()):
-		number_arr[i].clear()
-		
-	for j in range(operator_arr.size()):
-		operator_arr[j].clear()
-	
-func update_label() -> void:
-	var label = $equality
-	label.set_text(equality)
+
+	for j in range(puzzle_pieces.size()):
+		puzzle_pieces[j].clear()
 
 func clear_level() -> void:
 	# Iterates through every child in the scene and removes if not label or button
@@ -239,11 +222,9 @@ func clear_level() -> void:
 			child.queue_free()
 	
 	# Reset arrays and variables
-	operator_arr.clear()
-	number_arr.clear()
+	puzzle_pieces.clear()
+	Positions.clear()
 	selected_order.clear()
-	equality = ""
-	update_label()
 	total_selected = 0
 	solved_chars = 0
 

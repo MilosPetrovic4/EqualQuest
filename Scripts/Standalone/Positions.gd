@@ -6,6 +6,9 @@ var positions = []
 func add_position(x: float, y: float):
 	positions.append(Vector2(x, y))
 	
+func clear():
+	positions.clear()
+	
 func remove_position(x: float, y: float):
 	var check_pos = Vector2(x, y)
 	if positions.has(check_pos):

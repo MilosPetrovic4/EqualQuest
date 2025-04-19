@@ -1,29 +1,45 @@
 extends StaticBody2D
 
-signal operator_clicked
-signal operator_deselect
+signal operator_dropped
 
 var op_type = "NA";
-var selected = false
-var dragging = false
+var dragging : bool
+var completed : bool
 var snap = 64
 var select_pos = -1
 var of = Vector2(0,0)
-var default_modulate : Color
-var selected_modulate : Color
+
+const knob = 1
+const hole = 0
+
+var UP = knob
+var DOWN = knob
+var RIGHT = knob
+var left = knob
 
 func _ready():
-	default_modulate = Color(1, 1, 1, 1)
-	selected_modulate = Color(1, 1, 1, 0.5)
+	dragging = false
+	completed = false
+
+func setCompleted():
+	completed = true
+	modulate = Color(1, 1, 1, 0.5)
+
+func setNotCompleted():
+	completed = false
+	modulate = Color(1, 1, 1, 1)
+
+func getCompleted():
+	return completed
+
+func getValue():
+	return op_type
 
 func getSelectedPos():
 	return select_pos
 	
 func setSelectedPos(pos : int):
 	select_pos = pos
-
-func getSelected():
-	return selected
 
 func init_operator(var op):
 	op_type = op
@@ -42,42 +58,16 @@ func _process(delta):
 		if (moved):
 			position.x  = stepify(mouse.x - of.x, snap)
 			position.y  = stepify(mouse.y - of.y, snap)
-		
-
-
-#		if position.x < 128:
-#			position.x = 128
-#		elif position.x > 896:
-#			position.x = 896
-#
-#		if position.y < 128:
-#			position.y = 128
-#		elif position.y > 448:
-#			position.y = 448
-
 
 func _on_Operator_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		var mouse_button = event.button_index
-		if event.pressed && mouse_button == BUTTON_RIGHT:
-			dragging = true
-			of = get_global_mouse_position() - global_position
-		elif event.pressed && mouse_button == BUTTON_LEFT:
-			if selected == false:
-				print("Value: " , op_type)
-				selected = true
-				modulate = selected_modulate
-				emit_signal("operator_clicked", op_type, self)
-			else:
-				selected = false
-				modulate = default_modulate
-				emit_signal("operator_deselect", select_pos)
-		else:
-			dragging = false
-					
+		if event.pressed && (mouse_button == BUTTON_RIGHT || mouse_button == BUTTON_LEFT):
+			dragging = !dragging
+			if !dragging:
+				emit_signal("operator_dropped", position, self)
+			else: # smooth out the selection so it doesn't matter where you click the object
+				var mouse = get_global_mouse_position()
+				position.x  = stepify(mouse.x - of.x, snap)
+				position.y  = stepify(mouse.y - of.y, snap)
 
-func clear():
-	print("test")
-	if selected == true:
-		selected = false
-		modulate = default_modulate

@@ -11,14 +11,6 @@ __meta__ = {
 "_edit_vertical_guides_": [ 128.0, 896.0 ]
 }
 
-[node name="equality" type="Label" parent="."]
-margin_left = 296.0
-margin_top = 488.0
-margin_right = 686.0
-margin_bottom = 601.0
-align = 1
-valign = 1
-
 [node name="restart" type="TextureButton" parent="."]
 margin_left = 896.0
 margin_right = 1032.0
@@ -27,24 +19,4 @@ texture_normal = ExtResource( 2 )
 texture_hover = ExtResource( 3 )
 expand = true
 
-[node name="clear" type="Button" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 952.0
-margin_top = 496.0
-margin_right = 996.0
-margin_bottom = 516.0
-text = "Clear"
-
-[node name="evaluate" type="Button" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 944.0
-margin_top = 536.0
-margin_right = 1009.0
-margin_bottom = 556.0
-text = "Evaluate"
-
 [connection signal="pressed" from="restart" to="." method="_on_restart_pressed"]
-[connection signal="pressed" from="clear" to="." method="_on_clear_pressed"]
-[connection signal="pressed" from="evaluate" to="." method="_on_evaluate_pressed"]
