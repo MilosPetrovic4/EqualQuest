@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Menus/levels.gd" type="Script" id=1]
-[ext_resource path="res://Art/digital-illustration-journey-around-medieval-260nw-2070380681.webp" type="Texture" id=2]
+[ext_resource path="res://Art/level-button/level-button-clicked.png" type="Texture" id=2]
+[ext_resource path="res://Art/level-button/level-button.png" type="Texture" id=3]
+[ext_resource path="res://Art/wp2.png" type="Texture" id=4]
 
 [node name="levels" type="Control"]
 anchor_right = 1.0
@@ -10,23 +12,39 @@ script = ExtResource( 1 )
 
 [node name="grid" type="GridContainer" parent="."]
 modulate = Color( 1, 1, 1, 0.854902 )
-margin_left = 39.0
-margin_top = 47.0
-margin_right = 1006.0
-margin_bottom = 554.0
-columns = 10
+margin_left = 32.0
+margin_top = 24.0
+margin_right = 944.0
+margin_bottom = 536.0
+columns = 9
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-margin_left = -49.0
-margin_top = -38.0
-margin_right = 1066.0
-margin_bottom = 618.0
+visible = false
+margin_right = 960.0
+margin_bottom = 544.0
+color = Color( 0.0862745, 0.768627, 0.498039, 1 )
 
-[node name="bg" type="Sprite" parent="CanvasLayer"]
-modulate = Color( 1, 1, 1, 0.439216 )
-position = Vector2( 504, 315 )
-scale = Vector2( 1.67628, 2.27857 )
-texture = ExtResource( 2 )
+[node name="Sprite" type="Sprite" parent="CanvasLayer"]
+visible = false
+position = Vector2( 484, 275.65 )
+scale = Vector2( 10.0833, 10.2352 )
+texture = ExtResource( 4 )
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+visible = false
+margin_right = 96.0
+margin_bottom = 56.0
+rect_scale = Vector2( 10, 10 )
+texture = ExtResource( 4 )
+
+[node name="TextureButton" type="TextureButton" parent="."]
+visible = false
+margin_left = 712.0
+margin_top = 480.0
+margin_right = 744.0
+margin_bottom = 512.0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 2 )

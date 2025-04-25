@@ -12,11 +12,29 @@ __meta__ = {
 }
 
 [node name="restart" type="TextureButton" parent="."]
-margin_left = 896.0
-margin_right = 1032.0
+margin_left = 832.0
+margin_right = 968.0
 margin_bottom = 128.0
 texture_normal = ExtResource( 2 )
 texture_hover = ExtResource( 3 )
 expand = true
 
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 48.0
+margin_bottom = 576.0
+rect_pivot_offset = Vector2( 0, 320 )
+color = Color( 0.0862745, 0.768627, 0.498039, 1 )
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_left = 912.0
+margin_right = 960.0
+margin_bottom = 576.0
+rect_pivot_offset = Vector2( 0, 320 )
+color = Color( 0.0862745, 0.768627, 0.498039, 1 )
+
+[node name="Done" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="pressed" from="restart" to="." method="_on_restart_pressed"]
+[connection signal="timeout" from="Done" to="." method="_on_Done_timeout"]

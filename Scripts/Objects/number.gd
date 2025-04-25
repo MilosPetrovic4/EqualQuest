@@ -7,7 +7,7 @@ var dragging : bool
 var completed : bool
 var of = Vector2(0,0)
 var select_pos = -1
-const snap = 64
+const snap = 96
 
 const knob = 1
 const hole = 0
@@ -18,17 +18,19 @@ var RIGHT = hole
 var left = hole
 
 func _ready():
-#	selected = false
 	dragging = false
 	completed = false
-	
+	$Piece.animation = "default"
+
 func setCompleted():
 	completed = true
-	modulate = Color(1, 1, 1, 0.5)
+	$Piece.animation = "done"
+#	modulate = Color(1, 1, 1, 0.5)
 
 func setNotCompleted():
 	completed = false
-	modulate = Color(1, 1, 1, 1)
+	$Piece.animation = "default"
+#	modulate = Color(1, 1, 1, 1)
 	
 func getCompleted():
 	return completed

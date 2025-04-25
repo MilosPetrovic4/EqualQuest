@@ -5,7 +5,7 @@ signal operator_dropped
 var op_type = "NA";
 var dragging : bool
 var completed : bool
-var snap = 64
+var snap = 96
 var select_pos = -1
 var of = Vector2(0,0)
 
@@ -20,14 +20,17 @@ var left = knob
 func _ready():
 	dragging = false
 	completed = false
+	$Piece.animation = "default"
 
 func setCompleted():
 	completed = true
-	modulate = Color(1, 1, 1, 0.5)
+	$Piece.animation = "done"
+#	modulate = Color(1, 1, 1, 0.5)
 
 func setNotCompleted():
 	completed = false
-	modulate = Color(1, 1, 1, 1)
+	$Piece.animation = "default"
+#	modulate = Color(1, 1, 1, 1)
 
 func getCompleted():
 	return completed

@@ -5,7 +5,7 @@ var puzzle_pieces = []
 var selected_order = []
 var popup_menu : bool = false
 var menu : Node = null
-const TILE_SIZE = 64
+const TILE_SIZE = 96
 
 var level
 var level_data
@@ -13,25 +13,19 @@ var level_data
 # The number of characters in the level
 var total_chars
 
-# The number of characters that have been used in an equation
-var solved_chars = 0
-
-# Temporary variable representing number of currently selected characters
-var total_selected = 0
-
 #GRID
 func _draw() -> void:
-	for z in range(32, 576, 64):
+	for z in range(48, 576, 96):
 		draw_line(Vector2(0, z), Vector2(1024, z), Color(1, 0, 0), 1.0)
-		
-	for k in range(32, 1024, 64):
+
+	for k in range(48, 1024, 96):
 		draw_line(Vector2(k, 0), Vector2(k, 576), Color(1, 0, 0), 1.0)
 		
 	# Rules, TODO: Remove when done
-	#draw_line(Vector2(0, 128), Vector2(1024, 128), Color(1, 0, 0), 1.0)
-	#draw_line(Vector2(0, 448), Vector2(1024, 448), Color(1, 0, 0), 1.0)
-	#draw_line(Vector2(128, 0), Vector2(128, 576), Color(1, 0, 0), 1.0)
-	#draw_line(Vector2(896, 0), Vector2(896, 576), Color(1, 0, 0), 1.0)
+#	draw_line(Vector2(0, 96), Vector2(1024, 96), Color(1, 0, 0), 1.0)
+#	draw_line(Vector2(0, 448), Vector2(1024, 448), Color(1, 0, 0), 1.0)
+#	draw_line(Vector2(96, 0), Vector2(96, 576), Color(1, 0, 0), 1.0)
+#	draw_line(Vector2(896, 0), Vector2(896, 576), Color(1, 0, 0), 1.0)
 
 func _ready() -> void:
 	
@@ -49,8 +43,8 @@ func _ready() -> void:
 	for i in range(level_data[str(level)]["num_nums"]):
 		var num_instance = load("res://Scenes/Objects/number.tscn").instance()
 		num_instance.init_number(level_data[str(level)]["numbers"][i])
-		num_instance.position = Vector2(i * 64 + 192, 128)
-		Positions.add_position(i * 64 + 192, 128)
+		num_instance.position = Vector2(i * 96 + 192, 96)
+		Positions.add_position(i * 96 + 192, 96)
 		add_child(num_instance)
 		num_instance.connect("number_dropped", self, "_on_number_dropped")
 		puzzle_pieces.append(num_instance)
@@ -59,8 +53,8 @@ func _ready() -> void:
 	for j in range(level_data[str(level)]["num_ops"]):
 		var op_instance = load("res://Scenes/Objects/operator.tscn").instance()
 		op_instance.init_operator(level_data[str(level)]["operators"][j])
-		op_instance.position = Vector2(j * 64 + 192, 192)
-		Positions.add_position(j * 64 + 192, 192)
+		op_instance.position = Vector2(j * 96 + 192, 192)
+		Positions.add_position(j * 48 + 192, 192)
 		add_child(op_instance)
 		op_instance.connect("operator_dropped", self, "_on_operator_dropped")
 		puzzle_pieces.append(op_instance)
@@ -189,17 +183,8 @@ func evaluate(var piece) -> void:
 			if !obj.getCompleted():
 				return
 				
-		clear_level()
-		
-		# Increments current level
-		level += 2
-		Global.next_lvl()
-		
-		# Checks if we should unlock next level
-		if level > Global.unlkd:
-			Global.unlock()
-		
-		_ready()
+		$Done.start()
+
 	else:
 		for i in range(adjacent_objects.size()):
 			adjacent_objects[i].setNotCompleted()
@@ -207,16 +192,13 @@ func evaluate(var piece) -> void:
 # clear button
 func _on_clear_pressed() -> void:
 
-	total_selected = 0
-	solved_chars = 0
-
 	for j in range(puzzle_pieces.size()):
 		puzzle_pieces[j].clear()
 
 func clear_level() -> void:
 	# Iterates through every child in the scene and removes if not label or button
 	for child in get_children():
-		if child is TextureButton or child is Button or child is Label or child is CanvasLayer:
+		if child is TextureButton or child is Button or child is Label or child is CanvasLayer or child is ColorRect or child is Timer:
 			continue
 		else:
 			child.queue_free()
@@ -225,8 +207,6 @@ func clear_level() -> void:
 	puzzle_pieces.clear()
 	Positions.clear()
 	selected_order.clear()
-	total_selected = 0
-	solved_chars = 0
 
 func _on_restart_pressed() -> void:
 	clear_level()
@@ -241,4 +221,15 @@ func load_json(path: String):
 	if not parsed_json.error:
 		return parsed_json.result
 
-
+func _on_Done_timeout():
+	clear_level()
+	
+	# Increments current level
+	level += 2
+	Global.next_lvl()
+	
+	# Checks if we should unlock next level
+	if level > Global.unlkd:
+		Global.unlock()
+	
+	_ready()

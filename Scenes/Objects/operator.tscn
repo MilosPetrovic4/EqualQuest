@@ -1,16 +1,22 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Art/p1.png" type="Texture" id=1]
+[ext_resource path="res://Art/puzzle-pieces/op1.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Objects/operator.gd" type="Script" id=2]
+[ext_resource path="res://Art/puzzle-pieces/op_suc1.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 29.5, 31 )
+extents = Vector2( 48, 48 )
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 1 ) ],
 "loop": true,
 "name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "done",
 "speed": 5.0
 } ]
 
@@ -22,17 +28,18 @@ __meta__ = {
 }
 
 [node name="Shape" type="CollisionShape2D" parent="."]
-position = Vector2( 0.5, 0 )
 shape = SubResource( 2 )
 
-[node name="Sprite" type="AnimatedSprite" parent="."]
+[node name="Piece" type="AnimatedSprite" parent="."]
+scale = Vector2( 6, 6 )
 frames = SubResource( 1 )
+animation = "done"
 
 [node name="char" type="Label" parent="."]
-margin_left = -7.0
-margin_top = 30.0
-margin_right = 7.0
-margin_bottom = 47.0
+margin_left = -3.0
+margin_top = -5.0
+margin_right = 17.0
+margin_bottom = 12.0
 text = "1"
 
 [connection signal="input_event" from="." to="." method="_on_Operator_input_event"]

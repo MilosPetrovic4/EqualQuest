@@ -9,26 +9,42 @@ func create_level_buttons():
 	var grid = $grid
 	
 	var my_font = load("res://Font/PWPerspective.ttf")
+	var default_texture = load("res://Art/level-button/level-button.png")
+#	var hover_texture = load("res://textures/button_hover.png")
+	var pressed_texture = load("res://Art/level-button/level-button-clicked.png")
 	
-	var font = DynamicFont.new()
-	font.font_data = my_font
-	font.size = 24
-	
-	for level in range(1, num_lvls + 46): #(1, num_lvls + 1)
-		var button = Button.new()
-		button.name = str(level)
-		button.text = str(level)
+#	var font = DynamicFont.new()
+#	font.font_data = my_font
+#	font.size = 24
+#
+	for level in range(1, num_lvls + 41):
+#		var button = Button.new()
+		var button = TextureButton.new()
+		
+		# Assign the textures to the button
+		button.texture_normal = default_texture
+#		button.texture_hover = hover_texture
+		button.texture_pressed = pressed_texture
+		button.expand = true
+		button.stretch_mode = TextureButton.STRETCH_SCALE
+		
+
+		
+		button.rect_min_size = Vector2(96, 96)
+
+#		button.name = str(level)
+#		button.text = str(level)
 		button.connect("pressed", self, "_on_level_button_pressed", [level])
 		
-		button.rect_min_size = Vector2(90, 90) 
+#		button.rect_min_size = Vector2(64, 64) 
 		
-		button.add_font_override("font", font)
+#		button.add_font_override("font", font)
 		
 		# Check if the level is unlocked and set the font color
-		if level <= Global.unlkd:
-			button.add_color_override("font_color", Color(0, 1, 0))  # Green
-		else:
-			button.add_color_override("font_color", Color(1, 0, 0))  # Red
+#		if level <= Global.unlkd:
+#			button.add_color_override("font_color", Color(0, 1, 0))  # Green
+#		else:
+#			button.add_color_override("font_color", Color(1, 0, 0))  # Red
 		
 		grid.add_child(button)
 

@@ -21,14 +21,15 @@ Positions="*res://Scripts/Standalone/Positions.gd"
 
 [display]
 
-window/size/height=576
-window/size/resizable=false
-window/stretch/mode="viewport"
+window/size/width=960
+window/size/height=540
+window/stretch/mode="2d"
 
 [global]
 
 fulls=false
 fullscreen=false
+wind=false
 
 [gui]
 
