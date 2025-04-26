@@ -84,7 +84,7 @@ func _on_number_dropped(var pos: Vector2, var this):
 func validate_expression(equation : String) -> bool:
 	var equals_count = 0
 	var equals = ["=", ">", "<"]
-	var operators = ["=", ">", "+", "-", "*"]
+	var operators = ["=", "<", ">", "+", "-", "*"]
 	var digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 	var last_char_op = false
 	
@@ -157,6 +157,7 @@ func build_expression_from(start_piece: Node, adjacent_arr: Array) -> String:
 func evaluate(var piece) -> void:
 	var adjacent_objects = []
 	var eq = build_expression_from(piece, adjacent_objects)
+	print(eq)
 	
 	# stops the function if equation is not valid
 	var valid = validate_expression(eq)
@@ -165,25 +166,45 @@ func evaluate(var piece) -> void:
 			adjacent_objects[i].setNotCompleted()
 		return
 	
-	var equality_sides = eq.split("=") #ISSUE: using split(=) if we want to use > < 
-	var expression_ls = Expression.new()
-	var expression_rs = Expression.new()
-	
-	expression_ls.parse(equality_sides[0])
-	expression_rs.parse(equality_sides[1])
-	
-	# Expression holds true
-	if (expression_ls.execute() == expression_rs.execute()):
-		
-		for i in range(adjacent_objects.size()):
-			adjacent_objects[i].setCompleted()
-		
+	var equality_sides
 
-		for obj in puzzle_pieces:
-			if !obj.getCompleted():
-				return
-				
-		$Done.start()
+	if "=" in eq:
+		equality_sides = eq.split("=") #ISSUE: using split(=) if we want to use > < 
+		
+		var expression_ls = Expression.new()
+		var expression_rs = Expression.new()
+		
+		expression_ls.parse(equality_sides[0])
+		expression_rs.parse(equality_sides[1])
+		
+		# Expression holds true
+		if (expression_ls.execute() == expression_rs.execute()):
+			for i in range(adjacent_objects.size()):
+				adjacent_objects[i].setCompleted()
+			for obj in puzzle_pieces:
+				if !obj.getCompleted():
+					return
+					
+			$Done.start()
+			
+	elif "<" in eq:
+		equality_sides = eq.split("<")
+
+		var expression_ls = Expression.new()
+		var expression_rs = Expression.new()
+		
+		expression_ls.parse(equality_sides[0])
+		expression_rs.parse(equality_sides[1])
+		
+		# Expression holds true
+		if(expression_ls < expression_rs):
+			for i in range(adjacent_objects.size()):
+				adjacent_objects[i].setCompleted()
+			for obj in puzzle_pieces:
+				if !obj.getCompleted():
+					return
+					
+			$Done.start()
 
 	else:
 		for i in range(adjacent_objects.size()):

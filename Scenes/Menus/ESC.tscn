@@ -9,16 +9,16 @@ script = ExtResource( 1 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_left = 344.0
-margin_top = -8.0
+margin_top = 120.0
 margin_right = 676.0
-margin_bottom = 593.0
+margin_bottom = 480.0
 color = Color( 0.25098, 0.392157, 0.196078, 1 )
 
 [node name="Button" type="Button" parent="."]
-margin_left = 368.0
-margin_top = 128.0
-margin_right = 657.0
-margin_bottom = 191.0
+margin_left = 488.0
+margin_top = 200.0
+margin_right = 538.0
+margin_bottom = 247.0
 text = "levels"
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

@@ -33,12 +33,12 @@
 		"expected": "2+7=4+5"
     },
     "4" : {
-        "numbers" : [3, 5, 8],
-        "num_nums" : 3,
-        "operators" : ["+", "="],
-        "num_ops" : 2,
-        "num_chars": 5,
-		"expected": "3+5=8"
+        "numbers" : [1, 2, 3, 4],
+        "num_nums" : 4,
+        "operators" : ["+", "+", "="],
+        "num_ops" : 3,
+        "num_chars": 7,
+		"expected": "1+4=2+3"
     },
     "5" : {
         "numbers" : [1, 1, 1, 1],
