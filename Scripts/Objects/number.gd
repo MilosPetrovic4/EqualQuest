@@ -7,7 +7,7 @@ var dragging : bool
 var completed : bool
 var of = Vector2(0,0)
 var select_pos = -1
-const snap = 96
+const snap = 64
 
 const knob = 1
 const hole = 0
@@ -49,6 +49,19 @@ func init_number(var num):
 	var text = $char
 	text.set_text(value)
 	
+#func _process(delta):
+#	if dragging:
+#		var oldx: int = position.x
+#		var oldy: int = position.y
+#
+#		var mouse = get_global_mouse_position()
+#
+#		var moved: bool = Positions.move(oldx, oldy, stepify(mouse.x - of.x, snap), stepify(mouse.y - of.y, snap))
+#
+#		if (moved):
+#			position.x  = stepify(mouse.x - of.x, snap)
+#			position.y  = stepify(mouse.y - of.y, snap)
+			
 func _process(delta):
 	if dragging:
 		var oldx: int = position.x
@@ -56,11 +69,21 @@ func _process(delta):
 
 		var mouse = get_global_mouse_position()
 
-		var moved: bool = Positions.move(oldx, oldy, stepify(mouse.x - of.x, snap), stepify(mouse.y - of.y, snap))
-		
-		if (moved):
-			position.x  = stepify(mouse.x - of.x, snap)
-			position.y  = stepify(mouse.y - of.y, snap)
+		# Snap to grid
+		var new_x = stepify(mouse.x - of.x, snap)
+		var new_y = stepify(mouse.y - of.y, snap)
+
+		# Clamp within bounding box: (192, 128) to (768, 448)
+		new_x = clamp(new_x, 192, 768)
+		new_y = clamp(new_y, 128, 448)
+
+		var moved: bool = Positions.move(oldx, oldy, new_x, new_y)
+
+		if moved:
+			position.x = new_x
+			position.y = new_y
+
+			
 
 func _on_Number_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/operator normal.png-a723521047d20d63d069b073d3b01615.stex"
+path="res://.import/board-final.png-49c5a46f9aab8acc7fa937b7625f7e83.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Buttons/operator normal.png"
-dest_files=[ "res://.import/operator normal.png-a723521047d20d63d069b073d3b01615.stex" ]
+source_file="res://Art/Board/board-final.png"
+dest_files=[ "res://.import/board-final.png-49c5a46f9aab8acc7fa937b7625f7e83.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/operator clicked.png-decfc2345074d0c89a9038aa9a9a15a5.stex"
+path="res://.import/restart.png-0ec3670b6151f165e36fba33241d70ea.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Buttons/operator clicked.png"
-dest_files=[ "res://.import/operator clicked.png-decfc2345074d0c89a9038aa9a9a15a5.stex" ]
+source_file="res://Art/Buttons/restart.png"
+dest_files=[ "res://.import/restart.png-0ec3670b6151f165e36fba33241d70ea.stex" ]
 
 [params]
 

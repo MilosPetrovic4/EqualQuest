@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Menus/levels.gd" type="Script" id=1]
 [ext_resource path="res://Art/level-button/level-button-clicked.png" type="Texture" id=2]
 [ext_resource path="res://Art/level-button/level-button.png" type="Texture" id=3]
 [ext_resource path="res://Art/wp2.png" type="Texture" id=4]
+[ext_resource path="res://Art/Board/board-depth.png" type="Texture" id=5]
 
 [node name="levels" type="Control"]
 anchor_right = 1.0
@@ -31,7 +32,7 @@ color = Color( 0.0862745, 0.768627, 0.498039, 1 )
 visible = false
 position = Vector2( 484, 275.65 )
 scale = Vector2( 10.0833, 10.2352 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 visible = false

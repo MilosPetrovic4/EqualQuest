@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/operator hover.png-6e553a460c25d044f315469ad8828baf.stex"
+path="res://.import/restart-clicked.png-a1e2b3f733f5e7194727f6fd33f4f7e1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Buttons/operator hover.png"
-dest_files=[ "res://.import/operator hover.png-6e553a460c25d044f315469ad8828baf.stex" ]
+source_file="res://Art/Buttons/restart-clicked.png"
+dest_files=[ "res://.import/restart-clicked.png-a1e2b3f733f5e7194727f6fd33f4f7e1.stex" ]
 
 [params]
 

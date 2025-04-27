@@ -6,7 +6,8 @@
         "operators" : ["="],
         "num_ops" : 1,
         "num_chars": 3,
-		"expected": "1=1"
+		"expected": "1=1",
+        "name": "Baby Blocks"
     },
     "1" : {
         "numbers" : [1, 1, 2],
@@ -14,7 +15,8 @@
         "operators" : ["+", "="],
         "num_ops" : 2,
         "num_chars": 5,
-		"expected": "1+1=2"
+		"expected": "1+1=2",
+        "name": "Elementary Blocks"
     },
     "2" : {
         "numbers" : [3, 5, 8],
@@ -22,7 +24,8 @@
         "operators" : ["+", "="],
         "num_ops" : 2,
         "num_chars": 5,
-		"expected": "3+5=8"
+		"expected": "3+5=8",
+        "name": "Moving in The Positive Direction"
     },
     "3" : {
         "numbers" : [2, 4, 5, 7],
@@ -30,7 +33,8 @@
         "operators" : ["+", "+", "="],
         "num_ops" : 3,
         "num_chars": 7,
-		"expected": "2+7=4+5"
+		"expected": "2+7=4+5",
+        "name": "Addition Expert"
     },
     "4" : {
         "numbers" : [1, 2, 3, 4],
@@ -38,7 +42,8 @@
         "operators" : ["+", "+", "="],
         "num_ops" : 3,
         "num_chars": 7,
-		"expected": "1+4=2+3"
+		"expected": "1+4=2+3",
+        "name": "Addition Master"
     },
     "5" : {
         "numbers" : [1, 1, 1, 1],
@@ -46,7 +51,8 @@
         "operators" : ["="],
         "num_ops" : 1,
         "num_chars": 5,
-		"expected": "11=11"
+		"expected": "11=11",
+        "name": "Window Math"
     },
     "6" : {
         "numbers" : [0, 1, 5, 5],
@@ -54,7 +60,8 @@
         "operators" : ["+", "="],
         "num_ops" : 2,
         "num_chars": 6,
-		"expected": "10=5+5"
+		"expected": "10=5+5",
+        "name": "Hand Plus Hand"
     },
     "7" : {
         "numbers" : [1, 7, 8],
@@ -62,7 +69,8 @@
         "operators" : ["-", "="],
         "num_ops" : 2,
         "num_chars": 5,
-		"expected": "8-7=1"
+		"expected": "8-7=1",
+        "name": "Goodbye Addition"
     },
     "8" : {
         "numbers" : [1, 2, 3, 6],
@@ -70,7 +78,8 @@
         "operators" : ["+", "-", "="],
         "num_ops" : 3,
         "num_chars": 7,
-		"expected": "6-3=2+1"
+		"expected": "6-3=2+1",
+        "name": "Plus And Minus?"
     },
     "9" : {
         "numbers" : [0, 1, 3, 7],
@@ -78,15 +87,17 @@
         "operators" : ["-", "="],
         "num_ops" : 2,
         "num_chars": 6,
-		"expected": "10=7-3"
+		"expected": "10=7-3",
+        "name": "Subtraction Expert"
     },
     "10" : {
-        "numbers" : [2, 4, 8],
+        "numbers" : [2, 3, 6],
         "num_nums" : 3,
         "operators" : ["*", "="],
         "num_ops" : 2,
         "num_chars": 5,
-		"expected": "8=4*2"
+		"expected": "6=2*3",
+        "name": "Multiplication??"
     },
     "11" : {
         "numbers" : [1, 2, 4, 8],
@@ -94,7 +105,8 @@
         "operators" : ["*", "*", "="],
         "num_ops" : 3,
         "num_chars": 7,
-		"expected": "4*2=8*1"
+		"expected": "4*2=8*1",
+        "name": "No Multiplication Is An Island"
     },
     "12" : {
         "numbers" : [0, 1, 2, 3, 5],
@@ -102,7 +114,8 @@
         "operators" : ["-", "-", "="],
         "num_ops" : 3,
         "num_chars": 8,
-		"expected": "10-5-3=2"
+		"expected": "10-5-3=2",
+        "name": "Double Minus Minus"
     },
     "13" : {
         "numbers" : [4, 4, 8, 8],
@@ -110,7 +123,8 @@
         "operators" : ["+", "*", "="],
         "num_ops" : 3,
         "num_chars": 7,
-		"expected": "4*4=8+8"
+		"expected": "4*4=8+8",
+        "name": "Fourmidable Balance"
     },
     "14" : {
         "numbers" : [0, 0, 3, 5, 6],
@@ -119,7 +133,7 @@
         "num_ops" : 2,
         "num_chars": 7,
 		"expected": "0=0*356",
-        "name": "Trash Pit"
+        "name": "Bottomless Trash Pit"
     },
     "15" : {
         "numbers" : [1, 2],

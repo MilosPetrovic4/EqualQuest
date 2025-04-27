@@ -6,7 +6,7 @@
 [ext_resource path="res://Art/puzzle-pieces/num1.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 48, 48 )
+extents = Vector2( 32, 32 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -33,7 +33,7 @@ z_index = 3
 shape = SubResource( 1 )
 
 [node name="Piece" type="AnimatedSprite" parent="."]
-scale = Vector2( 6, 6 )
+scale = Vector2( 4, 4 )
 frames = SubResource( 2 )
 animation = "done"
 

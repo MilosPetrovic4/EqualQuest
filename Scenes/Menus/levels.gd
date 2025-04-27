@@ -12,6 +12,8 @@ func create_level_buttons():
 	var default_texture = load("res://Art/level-button/level-button.png")
 #	var hover_texture = load("res://textures/button_hover.png")
 	var pressed_texture = load("res://Art/level-button/level-button-clicked.png")
+	var locked_texture = load("res://Art/level-button/locked-default.png")
+	var locked_clicked_texture = load("res://Art/level-button/locked.png")
 	
 #	var font = DynamicFont.new()
 #	font.font_data = my_font
@@ -22,9 +24,13 @@ func create_level_buttons():
 		var button = TextureButton.new()
 		
 		# Assign the textures to the button
-		button.texture_normal = default_texture
-#		button.texture_hover = hover_texture
-		button.texture_pressed = pressed_texture
+		if level <= Global.unlkd:
+			button.texture_normal = default_texture
+			button.texture_pressed = pressed_texture
+		else:
+			button.texture_normal = locked_texture
+			button.texture_pressed = locked_clicked_texture
+			
 		button.expand = true
 		button.stretch_mode = TextureButton.STRETCH_SCALE
 		

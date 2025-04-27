@@ -5,7 +5,8 @@ var puzzle_pieces = []
 var selected_order = []
 var popup_menu : bool = false
 var menu : Node = null
-const TILE_SIZE = 96
+const TILE_SIZE = 64
+const persistent = "persist"
 
 var level
 var level_data
@@ -14,12 +15,12 @@ var level_data
 var total_chars
 
 #GRID
-func _draw() -> void:
-	for z in range(48, 576, 96):
-		draw_line(Vector2(0, z), Vector2(1024, z), Color(1, 0, 0), 1.0)
-
-	for k in range(48, 1024, 96):
-		draw_line(Vector2(k, 0), Vector2(k, 576), Color(1, 0, 0), 1.0)
+#func _draw() -> void:
+#	for z in range(16, 576, 64):
+#		draw_line(Vector2(0, z), Vector2(1024, z), Color(1, 0, 0), 1.0)
+#
+#	for k in range(32, 1024, 64):
+#		draw_line(Vector2(k, 0), Vector2(k, 576), Color(1, 0, 0), 1.0)
 		
 	# Rules, TODO: Remove when done
 #	draw_line(Vector2(0, 96), Vector2(1024, 96), Color(1, 0, 0), 1.0)
@@ -43,8 +44,8 @@ func _ready() -> void:
 	for i in range(level_data[str(level)]["num_nums"]):
 		var num_instance = load("res://Scenes/Objects/number.tscn").instance()
 		num_instance.init_number(level_data[str(level)]["numbers"][i])
-		num_instance.position = Vector2(i * 96 + 192, 96)
-		Positions.add_position(i * 96 + 192, 96)
+		num_instance.position = Vector2(i * 64 + 192, 128)
+		Positions.add_position(i * 64 + 192, 128)
 		add_child(num_instance)
 		num_instance.connect("number_dropped", self, "_on_number_dropped")
 		puzzle_pieces.append(num_instance)
@@ -53,11 +54,13 @@ func _ready() -> void:
 	for j in range(level_data[str(level)]["num_ops"]):
 		var op_instance = load("res://Scenes/Objects/operator.tscn").instance()
 		op_instance.init_operator(level_data[str(level)]["operators"][j])
-		op_instance.position = Vector2(j * 96 + 192, 192)
-		Positions.add_position(j * 48 + 192, 192)
+		op_instance.position = Vector2(j * 64 + 192, 448)
+		Positions.add_position(j * 64 + 192, 448)
 		add_child(op_instance)
 		op_instance.connect("operator_dropped", self, "_on_operator_dropped")
 		puzzle_pieces.append(op_instance)
+		
+	set_level_name(level_data[str(level)]["name"])
 		
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -157,7 +160,6 @@ func build_expression_from(start_piece: Node, adjacent_arr: Array) -> String:
 func evaluate(var piece) -> void:
 	var adjacent_objects = []
 	var eq = build_expression_from(piece, adjacent_objects)
-	print(eq)
 	
 	# stops the function if equation is not valid
 	var valid = validate_expression(eq)
@@ -169,7 +171,7 @@ func evaluate(var piece) -> void:
 	var equality_sides
 
 	if "=" in eq:
-		equality_sides = eq.split("=") #ISSUE: using split(=) if we want to use > < 
+		equality_sides = eq.split("=")
 		
 		var expression_ls = Expression.new()
 		var expression_rs = Expression.new()
@@ -219,7 +221,7 @@ func _on_clear_pressed() -> void:
 func clear_level() -> void:
 	# Iterates through every child in the scene and removes if not label or button
 	for child in get_children():
-		if child is TextureButton or child is Button or child is Label or child is CanvasLayer or child is ColorRect or child is Timer:
+		if child.is_in_group(persistent):
 			continue
 		else:
 			child.queue_free()
@@ -254,3 +256,22 @@ func _on_Done_timeout():
 		Global.unlock()
 	
 	_ready()
+
+
+func set_level_name(var name):
+	$"ui/name-str".set_text(name)
+	
+func del_level_name():
+	$"ui/name-str".set_text("")
+
+func _on_esc_pressed():
+	if menu:
+		menu.queue_free()
+		menu = null
+	else:
+		instance_popup_scene()
+
+func _on_menu_pressed():
+	Positions.clear()
+	var scene = load("res://Scenes/Menus/levels.tscn")
+	get_tree().change_scene_to(scene)
