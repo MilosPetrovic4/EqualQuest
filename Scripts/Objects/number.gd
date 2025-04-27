@@ -74,7 +74,7 @@ func _process(delta):
 		var new_y = stepify(mouse.y - of.y, snap)
 
 		# Clamp within bounding box: (192, 128) to (768, 448)
-		new_x = clamp(new_x, 192, 768)
+		new_x = clamp(new_x, 192, 832)
 		new_y = clamp(new_y, 128, 448)
 
 		var moved: bool = Positions.move(oldx, oldy, new_x, new_y)
