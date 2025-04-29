@@ -143,7 +143,7 @@
         "num_ops" : 2,
         "num_chars": 7,
 		"expected": "0=0*356",
-        "name": "Bottomless Trash Pit"
+        "name": "Garbage Bin"
     },
     "16" : {
         "numbers" : [1, 2],
@@ -228,19 +228,37 @@
         "name": "Thinking Outside"
     },
     "25" : {
-        "numbers" : [1, 2, 2, 3, 6],
+        "numbers" : [1, 1, 5, 5, 5],
         "num_nums" : 5,
-        "operators" : ["*", "="],
+        "operators" : ["/", "="],
         "num_ops" : 2,
         "num_chars": 7,
+		"expected": "55/5=11",
+        "name": "Full House"
+    },
+    "26" : {
+        "numbers" : [2, 6, 6, 8, 9],
+        "num_nums" : 5,
+        "operators" : ["/", "*", "="],
+        "num_ops" : 3,
+        "num_chars": 8,
+		"expected": "6*8=96/2",
+        "name": "Class Average"
+    },
+    "27" : {
+        "numbers" : [1, 2, 2, 2, 3, 6],
+        "num_nums" : 6,
+        "operators" : ["*", "="],
+        "num_ops" : 2,
+        "num_chars": 8,
 		"expected": "31*2=62",
-        "name": "Thinking Outside"
+        "name": "Thinking Outtttsside"
     },
 
 
 
 
-    "30" : {
+    "35" : {
 
         "numbers" : [1, 1, 1, 1, 2, 2, 3, 6, 7, 8],
         "num_nums" : 10,
@@ -257,23 +275,5 @@
         "num_ops" : 4,
         "num_chars": 11,
 		"expected": "15-6=9, 1+7=8"
-    },
-    "32" : {
-
-        "numbers" : [1, 1, 2],
-        "num_nums" : 3,
-        "operators" : ["+", "="],
-        "num_ops" : 2,
-        "num_chars": 5,
-		"expected": "1+1=2"
-    },
-    "33" : {
-
-        "numbers" : [1, 2, 4, 3],
-        "num_nums" : 4,
-        "operators" : ["/", "="],
-        "num_ops" : 2,
-        "num_chars": 6,
-		"expected": "12/4=3"
     }
 }

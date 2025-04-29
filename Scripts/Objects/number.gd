@@ -7,6 +7,8 @@ var dragging : bool
 var completed : bool
 var of = Vector2(0,0)
 var select_pos = -1
+var locked = false
+
 const snap = 64
 
 const knob = 1
@@ -27,13 +29,11 @@ func setCompleted():
 	completed = true
 	$Piece.animation = "done"
 	$Piece.frame = int(value)
-#	modulate = Color(1, 1, 1, 0.5)
 
 func setNotCompleted():
 	completed = false
 	$Piece.animation = "default"
 	$Piece.frame = int(value)
-#	modulate = Color(1, 1, 1, 1)
 	
 func getCompleted():
 	return completed
@@ -73,9 +73,16 @@ func _process(delta):
 			position.x = new_x
 			position.y = new_y
 
-			
-
 func _on_Number_input_event(viewport, event, shape_idx):
+	
+	# locking mechanism to prevent user from interacting with piece if in esc menu
+	if(locked): 
+		dragging = false
+		var mouse = get_global_mouse_position()
+		position.x  = stepify(mouse.x - of.x, snap)
+		position.y  = stepify(mouse.y - of.y, snap)
+		return
+	
 	if event is InputEventMouseButton:
 		var mouse_button = event.button_index
 		if event.pressed && (mouse_button == BUTTON_RIGHT || mouse_button == BUTTON_LEFT):
@@ -87,3 +94,19 @@ func _on_Number_input_event(viewport, event, shape_idx):
 					var mouse = get_global_mouse_position()
 					position.x  = stepify(mouse.x - of.x, snap)
 					position.y  = stepify(mouse.y - of.y, snap)
+
+func emit_green():
+	$success.color = Color(0, 255, 0)
+	$success.emitting = true
+	$success.restart()
+	
+func emit_red():
+	$success.color = Color(255, 0, 0)
+	$success.emitting = true
+	$success.restart()
+	
+func lock_piece():
+	locked = true
+	
+func unlock_piece():
+	locked = false

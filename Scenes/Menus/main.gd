@@ -7,6 +7,9 @@ var popup_menu : bool = false
 var menu : Node = null
 const TILE_SIZE = 64
 const persistent = "persist"
+const equals = ["=", "<"]
+const operators = ["=", "<", "+", "-", "*"]
+const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 var level
 var level_data
@@ -50,11 +53,7 @@ func _ready() -> void:
 		
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		if menu:
-			menu.queue_free()
-			menu = null
-		else:
-			instance_popup_scene()
+		_on_esc_pressed()
 
 func instance_popup_scene() -> void:
 	var popup: PackedScene = preload("res://Scenes/Menus/ESC.tscn")
@@ -72,9 +71,6 @@ func _on_number_dropped(var pos: Vector2, var this):
 # Checks that expression is valid
 func validate_expression(equation : String) -> bool:
 	var equals_count = 0
-	var equals = ["=", ">", "<"]
-	var operators = ["=", "<", ">", "+", "-", "*"]
-	var digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 	var last_char_op = false
 	
 	if equation.length() == 0:
@@ -151,7 +147,9 @@ func evaluate(var piece) -> void:
 	var valid = validate_expression(eq)
 	if !valid:
 		for i in range(adjacent_objects.size()):
-			adjacent_objects[i].setNotCompleted()
+			if adjacent_objects[i].getCompleted():
+				adjacent_objects[i].setNotCompleted()
+				adjacent_objects[i].emit_red()
 		return
 	
 	var equality_sides
@@ -168,12 +166,19 @@ func evaluate(var piece) -> void:
 		# Expression holds true
 		if (expression_ls.execute() == expression_rs.execute()):
 			for i in range(adjacent_objects.size()):
-				adjacent_objects[i].setCompleted()
+				if !adjacent_objects[i].getCompleted(): # was false before, becomes true
+					adjacent_objects[i].setCompleted()
+					adjacent_objects[i].emit_green()
 			for obj in puzzle_pieces:
 				if !obj.getCompleted():
 					return
 					
 			$Done.start()
+		else:
+			for i in range(adjacent_objects.size()):
+				if adjacent_objects[i].getCompleted():
+					adjacent_objects[i].setNotCompleted()
+					adjacent_objects[i].emit_red()
 			
 	elif "<" in eq:
 		equality_sides = eq.split("<")
@@ -185,14 +190,21 @@ func evaluate(var piece) -> void:
 		expression_rs.parse(equality_sides[1])
 		
 		# Expression holds true
-		if(expression_ls < expression_rs):
+		if(expression_ls.execute() < expression_rs.execute()):
 			for i in range(adjacent_objects.size()):
-				adjacent_objects[i].setCompleted()
+				if !adjacent_objects[i].getCompleted(): # was false before, becomes true
+					adjacent_objects[i].setCompleted()
+					adjacent_objects[i].emit_green()
 			for obj in puzzle_pieces:
 				if !obj.getCompleted():
 					return
 					
 			$Done.start()
+		else:
+			for i in range(adjacent_objects.size()):
+				if adjacent_objects[i].getCompleted():
+					adjacent_objects[i].setNotCompleted()
+					adjacent_objects[i].emit_red()
 
 	else:
 		for i in range(adjacent_objects.size()):
@@ -254,8 +266,21 @@ func _on_esc_pressed():
 	if menu:
 		menu.queue_free()
 		menu = null
+		$Buttons/esc.disabled = false
+		$Buttons/restart.disabled = false
+		$Buttons/menu.disabled = false
+		
+		for obj in puzzle_pieces:
+			obj.unlock_piece()
+		
 	else:
 		instance_popup_scene()
+		$Buttons/esc.disabled = true
+		$Buttons/restart.disabled = true
+		$Buttons/menu.disabled = true
+		
+		for obj in puzzle_pieces:
+			obj.lock_piece()
 
 func _on_menu_pressed():
 	Positions.clear()

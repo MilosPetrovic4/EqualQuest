@@ -11,7 +11,7 @@ func _ready() -> void:
 	cur_lvl = 1
 	
 func unlock() -> void:
-	unlkd += 25
+	unlkd += 27
 	
 func next_lvl() -> void:
 	cur_lvl += 1

@@ -1,8 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/Menus/levels.gd" type="Script" id=1]
-[ext_resource path="res://Art/level-button/level-button-clicked.png" type="Texture" id=2]
-[ext_resource path="res://Art/level-button/level-button.png" type="Texture" id=3]
 [ext_resource path="res://Art/starting-menu.png" type="Texture" id=4]
 
 [node name="levels" type="Control"]
@@ -25,13 +23,3 @@ margin_top = 24.0
 margin_right = 944.0
 margin_bottom = 536.0
 columns = 9
-
-[node name="TextureButton" type="TextureButton" parent="."]
-visible = false
-margin_left = 96.0
-margin_top = 328.0
-margin_right = 128.0
-margin_bottom = 360.0
-rect_scale = Vector2( 5, 5 )
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 2 )
