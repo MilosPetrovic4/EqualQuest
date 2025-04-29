@@ -21,15 +21,18 @@ func _ready():
 	dragging = false
 	completed = false
 	$Piece.animation = "default"
+	$Piece.frame = int(value)
 
 func setCompleted():
 	completed = true
 	$Piece.animation = "done"
+	$Piece.frame = int(value)
 #	modulate = Color(1, 1, 1, 0.5)
 
 func setNotCompleted():
 	completed = false
 	$Piece.animation = "default"
+	$Piece.frame = int(value)
 #	modulate = Color(1, 1, 1, 1)
 	
 func getCompleted():
@@ -46,21 +49,8 @@ func setSelectedPos(pos : int):
 
 func init_number(var num):
 	value = str(num)
-	var text = $char
-	text.set_text(value)
-	
-#func _process(delta):
-#	if dragging:
-#		var oldx: int = position.x
-#		var oldy: int = position.y
-#
-#		var mouse = get_global_mouse_position()
-#
-#		var moved: bool = Positions.move(oldx, oldy, stepify(mouse.x - of.x, snap), stepify(mouse.y - of.y, snap))
-#
-#		if (moved):
-#			position.x  = stepify(mouse.x - of.x, snap)
-#			position.y  = stepify(mouse.y - of.y, snap)
+#	var text = $char
+
 			
 func _process(delta):
 	if dragging:
@@ -89,6 +79,7 @@ func _on_Number_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		var mouse_button = event.button_index
 		if event.pressed && (mouse_button == BUTTON_RIGHT || mouse_button == BUTTON_LEFT):
+					
 				dragging = !dragging
 				if !dragging:
 					emit_signal("number_dropped", position, self)

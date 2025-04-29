@@ -12,6 +12,19 @@ var of = Vector2(0,0)
 const knob = 1
 const hole = 0
 
+const add = "plus"
+const minus = "minus"
+const mult = "times"
+const div = "divide"
+const lessthan = "lessthan"
+const equal = "equal"
+
+const done = "-g"
+const notdone = "-r"
+
+var notdoneframe
+var doneframe
+
 var UP = knob
 var DOWN = knob
 var RIGHT = knob
@@ -20,17 +33,14 @@ var left = knob
 func _ready():
 	dragging = false
 	completed = false
-	$Piece.animation = "default"
 
 func setCompleted():
 	completed = true
-	$Piece.animation = "done"
-#	modulate = Color(1, 1, 1, 0.5)
+	$Piece.animation = doneframe
 
 func setNotCompleted():
 	completed = false
-	$Piece.animation = "default"
-#	modulate = Color(1, 1, 1, 1)
+	$Piece.animation = notdoneframe
 
 func getCompleted():
 	return completed
@@ -46,22 +56,30 @@ func setSelectedPos(pos : int):
 
 func init_operator(var op):
 	op_type = op
-	var text = $char
-	text.set_text(op_type)
+#	var text = $char
 
-#func _process(delta):
-#	if dragging:
-#		var oldx: int = position.x
-#		var oldy: int = position.y
-#
-#		var mouse = get_global_mouse_position()
-#
-#		var moved: bool = Positions.move(oldx, oldy, stepify(mouse.x - of.x, snap), stepify(mouse.y - of.y, snap))
-#
-#		if (moved):
-#			position.x  = stepify(mouse.x - of.x, snap)
-#			position.y  = stepify(mouse.y - of.y, snap)
+	match op_type:
+		"=":
+			notdoneframe = equal + notdone
+			doneframe = equal + done
+		"+":
+			notdoneframe = add + notdone
+			doneframe = add + done
+		"-":
+			notdoneframe = minus + notdone
+			doneframe = minus + done
+		"*":
+			notdoneframe = mult + notdone
+			doneframe = mult + done
+		"/":
+			notdoneframe = div + notdone
+			doneframe = div + done
+		"<":
+			notdoneframe = lessthan + notdone
+			doneframe = lessthan + done
 			
+	$Piece.animation = notdoneframe
+
 func _process(delta):
 	if dragging:
 		var oldx: int = position.x

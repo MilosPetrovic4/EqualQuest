@@ -14,20 +14,6 @@ var level_data
 # The number of characters in the level
 var total_chars
 
-#GRID
-#func _draw() -> void:
-#	for z in range(16, 576, 64):
-#		draw_line(Vector2(0, z), Vector2(1024, z), Color(1, 0, 0), 1.0)
-#
-#	for k in range(32, 1024, 64):
-#		draw_line(Vector2(k, 0), Vector2(k, 576), Color(1, 0, 0), 1.0)
-		
-	# Rules, TODO: Remove when done
-#	draw_line(Vector2(0, 96), Vector2(1024, 96), Color(1, 0, 0), 1.0)
-#	draw_line(Vector2(0, 448), Vector2(1024, 448), Color(1, 0, 0), 1.0)
-#	draw_line(Vector2(96, 0), Vector2(96, 576), Color(1, 0, 0), 1.0)
-#	draw_line(Vector2(896, 0), Vector2(896, 576), Color(1, 0, 0), 1.0)
-
 func _ready() -> void:
 	
 	level = Global.cur_lvl

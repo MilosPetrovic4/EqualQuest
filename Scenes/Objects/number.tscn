@@ -1,28 +1,42 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://Art/puzzle-pieces/num_suc1.png" type="Texture" id=1]
+[ext_resource path="res://Art/puzzle-pieces/9done.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Objects/number.gd" type="Script" id=2]
-[ext_resource path="res://Font/PWPerspective.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://Art/puzzle-pieces/num1.png" type="Texture" id=4]
+[ext_resource path="res://Art/puzzle-pieces/7.png" type="Texture" id=4]
+[ext_resource path="res://Art/puzzle-pieces/test-piece.png" type="Texture" id=5]
+[ext_resource path="res://Art/puzzle-pieces/8done.png" type="Texture" id=6]
+[ext_resource path="res://Art/puzzle-pieces/1done.png" type="Texture" id=7]
+[ext_resource path="res://Art/puzzle-pieces/3done.png" type="Texture" id=8]
+[ext_resource path="res://Art/puzzle-pieces/5done.png" type="Texture" id=9]
+[ext_resource path="res://Art/puzzle-pieces/6done.png" type="Texture" id=10]
+[ext_resource path="res://Art/puzzle-pieces/7done.png" type="Texture" id=11]
+[ext_resource path="res://Art/puzzle-pieces/2done.png" type="Texture" id=12]
+[ext_resource path="res://Art/puzzle-pieces/4done.png" type="Texture" id=13]
+[ext_resource path="res://Art/puzzle-pieces/0done.png" type="Texture" id=14]
+[ext_resource path="res://Art/puzzle-pieces/9.png" type="Texture" id=15]
+[ext_resource path="res://Art/puzzle-pieces/8.png" type="Texture" id=16]
+[ext_resource path="res://Art/puzzle-pieces/5.png" type="Texture" id=17]
+[ext_resource path="res://Art/puzzle-pieces/6.png" type="Texture" id=18]
+[ext_resource path="res://Art/puzzle-pieces/3.png" type="Texture" id=19]
+[ext_resource path="res://Art/puzzle-pieces/4.png" type="Texture" id=20]
+[ext_resource path="res://Art/puzzle-pieces/0.png" type="Texture" id=21]
+[ext_resource path="res://Art/puzzle-pieces/2.png" type="Texture" id=22]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 4 ) ],
+"frames": [ ExtResource( 21 ), ExtResource( 5 ), ExtResource( 22 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 4 ), ExtResource( 16 ), ExtResource( 15 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 1 ) ],
+"frames": [ ExtResource( 14 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 8 ), ExtResource( 13 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 6 ), ExtResource( 1 ) ],
 "loop": true,
 "name": "done",
 "speed": 5.0
 } ]
-
-[sub_resource type="DynamicFont" id=3]
-font_data = ExtResource( 3 )
 
 [node name="Number" type="StaticBody2D" groups=["piece"]]
 input_pickable = true
@@ -35,12 +49,5 @@ shape = SubResource( 1 )
 [node name="Piece" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = SubResource( 2 )
-animation = "done"
-
-[node name="char" type="Label" parent="."]
-margin_right = 10.0
-margin_bottom = 17.0
-custom_fonts/font = SubResource( 3 )
-text = "9"
 
 [connection signal="input_event" from="." to="." method="_on_Number_input_event"]

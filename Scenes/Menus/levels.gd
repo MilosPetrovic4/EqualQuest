@@ -53,6 +53,8 @@ func create_level_buttons():
 #			button.add_color_override("font_color", Color(1, 0, 0))  # Red
 		
 		grid.add_child(button)
+		
+
 
 func _on_level_button_pressed(lvl_num):
 	# Checks if level is unlocked	

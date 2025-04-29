@@ -97,18 +97,28 @@
         "num_ops" : 2,
         "num_chars": 5,
 		"expected": "6=2*3",
-        "name": "Multiplication??"
+        "name": "New Challenges"
     },
     "11" : {
-        "numbers" : [1, 2, 4, 8],
+        "numbers" : [1, 2, 3, 6],
         "num_nums" : 4,
         "operators" : ["*", "*", "="],
         "num_ops" : 3,
         "num_chars": 7,
-		"expected": "4*2=8*1",
+		"expected": "2*3=6*1",
         "name": "No Multiplication Is An Island"
     },
     "12" : {
+
+        "numbers" : [1, 2, 4, 3],
+        "num_nums" : 4,
+        "operators" : ["/", "="],
+        "num_ops" : 2,
+        "num_chars": 6,
+		"expected": "12/4=3",
+        "name": "Here Are Your Dividends"
+    },
+    "13" : {
         "numbers" : [0, 1, 2, 3, 5],
         "num_nums" : 5,
         "operators" : ["-", "-", "="],
@@ -117,7 +127,7 @@
 		"expected": "10-5-3=2",
         "name": "Double Minus Minus"
     },
-    "13" : {
+    "14" : {
         "numbers" : [4, 4, 8, 8],
         "num_nums" : 4,
         "operators" : ["+", "*", "="],
@@ -126,7 +136,7 @@
 		"expected": "4*4=8+8",
         "name": "Fourmidable Balance"
     },
-    "14" : {
+    "15" : {
         "numbers" : [0, 0, 3, 5, 6],
         "num_nums" : 5,
         "operators" : ["*", "="],
@@ -135,15 +145,6 @@
 		"expected": "0=0*356",
         "name": "Bottomless Trash Pit"
     },
-    "15" : {
-        "numbers" : [1, 2],
-        "num_nums" : 2,
-        "operators" : ["<"],
-        "num_ops" : 1,
-        "num_chars": 3,
-		"expected": "1<2",
-        "name": "Pacman"
-    },
     "16" : {
         "numbers" : [1, 2],
         "num_nums" : 2,
@@ -151,17 +152,95 @@
         "num_ops" : 1,
         "num_chars": 3,
 		"expected": "1<2",
-        "name": ""
+        "name": "Pacmen Assemble"
+    },
+    "17" : {
+        "numbers" : [3, 5, 6, 7],
+        "num_nums" : 4,
+        "operators" : ["+", "-", "<"],
+        "num_ops" : 3,
+        "num_chars": 7,
+		"expected": "3<7-6+5",
+        "name": "Number Doctor"
+    },
+    "18" : {
+        "numbers" : [0, 1, 4, 6, 7, 7],
+        "num_nums" : 6,
+        "operators" : ["+", "-", "<", "="],
+        "num_ops" : 4,
+        "num_chars": 10,
+		"expected": "7=7,0<6-4+1",
+        "name": "Number Manipulator"
+    },
+    "19" : {
+        "numbers" : [3, 5, 6, 7, 9],
+        "num_nums" : 5,
+        "operators" : ["-", "=", "<"],
+        "num_ops" : 3,
+        "num_chars": 8,
+		"expected": "6=9-3,5<7",
+        "name": "Lightning In A Bottle"
+    },
+    "20" : {
+
+        "numbers" : [0, 2, 3, 5, 5],
+        "num_nums" : 5,
+        "operators" : ["-", "*", "="],
+        "num_ops" : 3,
+        "num_chars": 8,
+		"expected": "20-5*3=5",
+        "name": "The First Crux"
+    },
+    "21" : {
+        "numbers" : [3, 4, 4, 5, 7, 9],
+        "num_nums" : 6,
+        "operators" : ["+", "-", "=", "="],
+        "num_ops" : 4,
+        "num_chars": 10,
+		"expected": "7-4=3,5+4=9",
+        "name": "Double Equals? Isn't That Just Equals?"
+    },
+    "22" : {
+        "numbers" : [2, 4, 8, 8, 8],
+        "num_nums" : 5,
+        "operators" : ["*", "*", "*", "="],
+        "num_ops" : 4,
+        "num_chars": 9,
+		"expected": "8*8=8*4*2",
+        "name": "888 Can't Take Your Call Right Now"
+    },
+    "23" : {
+        "numbers" : [3, 3, 6, 6, 9],
+        "num_nums" : 5,
+        "operators" : ["*", "/", "/", "="],
+        "num_ops" : 4,
+        "num_chars": 9,
+		"expected": "6/3=6*3/9",
+        "name": "Mod 3 Anyone?"
+    },
+    "24" : {
+        "numbers" : [1, 2, 2, 3, 6],
+        "num_nums" : 5,
+        "operators" : ["*", "="],
+        "num_ops" : 2,
+        "num_chars": 7,
+		"expected": "31*2=62",
+        "name": "Thinking Outside"
+    },
+    "25" : {
+        "numbers" : [1, 2, 2, 3, 6],
+        "num_nums" : 5,
+        "operators" : ["*", "="],
+        "num_ops" : 2,
+        "num_chars": 7,
+		"expected": "31*2=62",
+        "name": "Thinking Outside"
     },
 
 
 
 
-
-
-
-
-    "20" : {
+    "30" : {
 
         "numbers" : [1, 1, 1, 1, 2, 2, 3, 6, 7, 8],
         "num_nums" : 10,
@@ -170,7 +249,7 @@
         "num_chars": 14,
 		"expected": "18-7=11, 31x2=62"
     },
-    "21" : {
+    "31" : {
 
         "numbers" : [1, 1, 5, 6, 7, 8, 9],
         "num_nums" : 7,
@@ -179,7 +258,7 @@
         "num_chars": 11,
 		"expected": "15-6=9, 1+7=8"
     },
-    "22" : {
+    "32" : {
 
         "numbers" : [1, 1, 2],
         "num_nums" : 3,
@@ -188,32 +267,13 @@
         "num_chars": 5,
 		"expected": "1+1=2"
     },
-    "23" : {
+    "33" : {
 
         "numbers" : [1, 2, 4, 3],
         "num_nums" : 4,
-        "operators" : ["*", "="],
+        "operators" : ["/", "="],
         "num_ops" : 2,
         "num_chars": 6,
-		"expected": "4x3=12"
-    },
-    "24" : {
-
-        "numbers" : [1, 1, 1, 1],
-        "num_nums" : 4,
-        "operators" : ["="],
-        "num_ops" : 1,
-        "num_chars": 5,
-		"expected": "11=11"
-
-    },
-    "25" : {
-
-        "numbers" : [0, 2, 3, 5, 5],
-        "num_nums" : 5,
-        "operators" : ["-", "*", "="],
-        "num_ops" : 3,
-        "num_chars": 8,
-		"expected": "20-5x3=5"
+		"expected": "12/4=3"
     }
 }
