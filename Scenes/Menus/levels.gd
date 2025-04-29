@@ -1,6 +1,7 @@
 extends Control
 
 var num_lvls = 5
+var scroll_speed := Vector2(50, 0)
 
 func _ready():
 	create_level_buttons()
@@ -39,3 +40,7 @@ func _on_level_button_pressed(lvl_num):
 		Global.set_lvl(lvl_num)
 		var next_scene = preload("res://Scenes/Menus/main.tscn")
 		get_tree().change_scene_to(next_scene)
+
+
+func _process(delta):
+	$parallax_bg.scroll_offset += scroll_speed * delta
