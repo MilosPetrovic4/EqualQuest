@@ -14,42 +14,70 @@ const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 var level
 var level_data
 
-# The number of characters in the level
-var total_chars
-
 func _ready() -> void:
 	
 	level = Global.cur_lvl
 	
+	if level >= Global.num_lvls:
+		var scene = load("res://Scenes/Menus/levels.tscn")
+		get_tree().change_scene_to(scene)
+		return
+		
 	# To line up variable with array , the first element is at pos 0
 	if level:
 		level -= 1
 	
 	# load the json file
 	var level_data = load_json(level_path)
-	total_chars = level_data[str(level)]["num_chars"]
 	
-	# Based on level data generate number characters
-	for i in range(level_data[str(level)]["num_nums"]):
-		var num_instance = load("res://Scenes/Objects/number.tscn").instance()
-		num_instance.init_number(level_data[str(level)]["numbers"][i])
-		num_instance.position = Vector2(i * 64 + 192, 128)
-		Positions.add_position(i * 64 + 192, 128)
-		add_child(num_instance)
-		num_instance.connect("number_dropped", self, "_on_number_dropped")
-		puzzle_pieces.append(num_instance)
+	# Locked Characters
+	if level_data[str(level)].has("locked_chars"):
+		var pos = 0 # used for placing the piece
+		for i in level_data[str(level)]["locked_chars"]:
+			if str(i) in digits:
+				var num_instance = create_number(i, Vector2(pos * 64 + 192, 256))
+				num_instance.lock_piece()
+				pos += 1
+			else: # Operator characters (NOT INT -> String)
+				var op_instance = create_op(i, Vector2(pos * 64 + 192, 256))
+				op_instance.lock_piece()
+				pos += 1
+
+	# THIS CODE DOES NOT USES THE NUMBER OF OPERATORS AND NUMBER OF NUMBERS FROM JSON
+	var count = 0
+	for i in level_data[str(level)]["numbers"]:
+		create_number(i, Vector2(count * 64 + 192, 128))
+		count += 1
 	
 	# Based on level data generate operator characters
-	for j in range(level_data[str(level)]["num_ops"]):
-		var op_instance = load("res://Scenes/Objects/operator.tscn").instance()
-		op_instance.init_operator(level_data[str(level)]["operators"][j])
-		op_instance.position = Vector2(j * 64 + 192, 448)
-		Positions.add_position(j * 64 + 192, 448)
-		add_child(op_instance)
-		op_instance.connect("operator_dropped", self, "_on_operator_dropped")
-		puzzle_pieces.append(op_instance)
+	count = 0
+	for j in level_data[str(level)]["operators"]:
+		create_op(j, Vector2(count * 64 + 192, 448))
+		count += 1
 		
 	set_level_name(level_data[str(level)]["name"])
+	
+# The function that instances a number piece object
+func create_number(var num, var pos_vec):
+	var num_instance = load("res://Scenes/Objects/number.tscn").instance()
+	num_instance.init_number(num)
+	num_instance.position = pos_vec
+	Positions.add_position(pos_vec.x, pos_vec.y)
+	add_child(num_instance)
+	num_instance.connect("number_dropped", self, "_on_number_dropped")
+	puzzle_pieces.append(num_instance)
+	return num_instance
+
+# The function that instances an operator piece object
+func create_op(var op, var pos_vec):
+	var op_instance = load("res://Scenes/Objects/operator.tscn").instance()
+	op_instance.init_operator(op)
+	op_instance.position = pos_vec
+	Positions.add_position(pos_vec.x, pos_vec.y)
+	add_child(op_instance)
+	op_instance.connect("operator_dropped", self, "_on_operator_dropped")
+	puzzle_pieces.append(op_instance)
+	return op_instance
 		
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -245,7 +273,7 @@ func load_json(path: String):
 func _on_Done_timeout():
 	clear_level()
 	
-	# Increments current level
+	# Increments current level, +2 because previously did -1 to align number with array 1 -> 0th array pos
 	level += 2
 	Global.next_lvl()
 	

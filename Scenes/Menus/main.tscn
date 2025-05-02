@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/Menus/main.gd" type="Script" id=1]
 [ext_resource path="res://Art/Buttons/restart.png" type="Texture" id=2]
@@ -9,6 +9,12 @@
 [ext_resource path="res://Art/Buttons/menu.png" type="Texture" id=7]
 [ext_resource path="res://Art/Buttons/menu-clicked.png" type="Texture" id=8]
 [ext_resource path="res://Art/Board/level-name.png" type="Texture" id=9]
+[ext_resource path="res://Font/public-pixel-font/PublicPixel-rv0pA.ttf" type="DynamicFontData" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+outline_size = 3
+outline_color = Color( 0.0431373, 0.207843, 0.137255, 1 )
+font_data = ExtResource( 10 )
 
 [node name="game" type="Node2D"]
 script = ExtResource( 1 )
@@ -16,21 +22,6 @@ __meta__ = {
 "_edit_horizontal_guides_": [ 128.0, 448.0 ],
 "_edit_vertical_guides_": [ 128.0, 896.0 ]
 }
-
-[node name="ColorRect" type="ColorRect" parent="."]
-visible = false
-margin_right = 48.0
-margin_bottom = 576.0
-rect_pivot_offset = Vector2( 0, 320 )
-color = Color( 0.0862745, 0.768627, 0.498039, 1 )
-
-[node name="ColorRect2" type="ColorRect" parent="."]
-visible = false
-margin_left = 912.0
-margin_right = 960.0
-margin_bottom = 576.0
-rect_pivot_offset = Vector2( 0, 320 )
-color = Color( 0.0862745, 0.768627, 0.498039, 1 )
 
 [node name="Done" type="Timer" parent="." groups=["persist"]]
 wait_time = 0.5
@@ -88,8 +79,10 @@ margin_left = 312.0
 margin_top = 16.0
 margin_right = 712.0
 margin_bottom = 56.0
+custom_fonts/font = SubResource( 1 )
 align = 1
 valign = 1
+autowrap = true
 
 [connection signal="timeout" from="Done" to="." method="_on_Done_timeout"]
 [connection signal="pressed" from="Buttons/esc" to="." method="_on_esc_pressed"]
