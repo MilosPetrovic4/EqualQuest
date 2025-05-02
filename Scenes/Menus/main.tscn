@@ -31,7 +31,7 @@ one_shot = true
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="esc" type="TextureButton" parent="Buttons"]
+[node name="esc" type="TextureButton" parent="Buttons" groups=["persistent"]]
 margin_left = 24.0
 margin_top = 136.0
 margin_right = 40.0

@@ -36,10 +36,12 @@ func _ready() -> void:
 		for i in level_data[str(level)]["locked_chars"]:
 			if str(i) in digits:
 				var num_instance = create_number(i, Vector2(pos * 64 + 192, 256))
+				num_instance.set_perma_locked()
 				num_instance.lock_piece()
 				pos += 1
 			else: # Operator characters (NOT INT -> String)
 				var op_instance = create_op(i, Vector2(pos * 64 + 192, 256))
+				op_instance.set_perma_locked()
 				op_instance.lock_piece()
 				pos += 1
 
@@ -249,6 +251,12 @@ func clear_level() -> void:
 	for child in get_children():
 		if child.is_in_group(persistent):
 			continue
+		elif child.is_in_group("esc"):
+			child.queue_free()
+			menu = null
+			$Buttons/esc.disabled = false
+			$Buttons/restart.disabled = false
+			$Buttons/menu.disabled = false
 		else:
 			child.queue_free()
 	

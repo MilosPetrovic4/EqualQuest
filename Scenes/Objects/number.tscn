@@ -1,7 +1,8 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://Art/puzzle-pieces/9done.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Objects/number.gd" type="Script" id=2]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/7locked.png" type="Texture" id=3]
 [ext_resource path="res://Art/puzzle-pieces/7.png" type="Texture" id=4]
 [ext_resource path="res://Art/puzzle-pieces/test-piece.png" type="Texture" id=5]
 [ext_resource path="res://Art/puzzle-pieces/8done.png" type="Texture" id=6]
@@ -21,6 +22,25 @@
 [ext_resource path="res://Art/puzzle-pieces/4.png" type="Texture" id=20]
 [ext_resource path="res://Art/puzzle-pieces/0.png" type="Texture" id=21]
 [ext_resource path="res://Art/puzzle-pieces/2.png" type="Texture" id=22]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/2locked.png" type="Texture" id=23]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/6donelocked.png" type="Texture" id=24]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/0locked.png" type="Texture" id=25]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/8locked.png" type="Texture" id=26]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/4locked.png" type="Texture" id=27]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/9locked.png" type="Texture" id=28]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/0donelocked.png" type="Texture" id=29]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/5locked.png" type="Texture" id=30]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/4donelocked.png" type="Texture" id=31]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/7donelocked.png" type="Texture" id=32]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/6locked.png" type="Texture" id=33]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/1locked.png" type="Texture" id=34]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/8donelocked.png" type="Texture" id=35]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/2donelocked.png" type="Texture" id=36]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/3locked.png" type="Texture" id=37]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/3donelocked.png" type="Texture" id=38]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/5donelocked.png" type="Texture" id=39]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/9donelocked.png" type="Texture" id=40]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/1donelocked.png" type="Texture" id=41]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
@@ -35,6 +55,16 @@ animations = [ {
 "frames": [ ExtResource( 14 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 8 ), ExtResource( 13 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 6 ), ExtResource( 1 ) ],
 "loop": true,
 "name": "done",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 25 ), ExtResource( 34 ), ExtResource( 23 ), ExtResource( 37 ), ExtResource( 27 ), ExtResource( 30 ), ExtResource( 33 ), ExtResource( 3 ), ExtResource( 26 ), ExtResource( 28 ) ],
+"loop": true,
+"name": "locked",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 29 ), ExtResource( 41 ), ExtResource( 36 ), ExtResource( 38 ), ExtResource( 31 ), ExtResource( 39 ), ExtResource( 24 ), ExtResource( 32 ), ExtResource( 35 ), ExtResource( 40 ) ],
+"loop": true,
+"name": "locked-done",
 "speed": 5.0
 } ]
 
@@ -52,6 +82,7 @@ shape = SubResource( 1 )
 [node name="Piece" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = SubResource( 2 )
+animation = "locked-done"
 
 [node name="success" type="CPUParticles2D" parent="."]
 emitting = false

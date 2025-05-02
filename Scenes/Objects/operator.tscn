@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Art/puzzle-pieces/lessthandone.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Objects/operator.gd" type="Script" id=2]
@@ -13,6 +13,18 @@
 [ext_resource path="res://Art/puzzle-pieces/xdone.png" type="Texture" id=11]
 [ext_resource path="res://Art/puzzle-pieces/x.png" type="Texture" id=12]
 [ext_resource path="res://Art/puzzle-pieces/dividedone.png" type="Texture" id=13]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/=locked.png" type="Texture" id=14]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/dividedonelocked.png" type="Texture" id=15]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/timesdonelocked.png" type="Texture" id=16]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/timeslocked.png" type="Texture" id=17]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/-locked.png" type="Texture" id=18]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/dividelocked.png" type="Texture" id=19]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/lessthanlocked.png" type="Texture" id=20]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/+donelocked.png" type="Texture" id=21]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/-donelocked.png" type="Texture" id=22]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/=donelocked.png" type="Texture" id=23]
+[ext_resource path="res://Art/puzzle-pieces-locked/red/+locked.png" type="Texture" id=24]
+[ext_resource path="res://Art/puzzle-pieces-locked/green/lessthandonelocked.png" type="Texture" id=25]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 32, 32 )
@@ -24,9 +36,19 @@ animations = [ {
 "name": "divide-g",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 15 ) ],
+"loop": true,
+"name": "divide-g-l",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
 "name": "divide-r",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 19 ) ],
+"loop": true,
+"name": "divide-r-l",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
@@ -34,9 +56,19 @@ animations = [ {
 "name": "equal-g",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 23 ) ],
+"loop": true,
+"name": "equal-g-l",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "equal-r",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 14 ) ],
+"loop": true,
+"name": "equal-r-l",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 1 ) ],
@@ -44,9 +76,19 @@ animations = [ {
 "name": "lessthan-g",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 25 ) ],
+"loop": true,
+"name": "lessthan-g-l",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "lessthan-r",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 20 ) ],
+"loop": true,
+"name": "lessthan-r-l",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 6 ) ],
@@ -54,9 +96,19 @@ animations = [ {
 "name": "minus-g",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 22 ) ],
+"loop": true,
+"name": "minus-g-l",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "minus-r",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 18 ) ],
+"loop": true,
+"name": "minus-r-l",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 9 ) ],
@@ -64,9 +116,19 @@ animations = [ {
 "name": "plus-g",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 21 ) ],
+"loop": true,
+"name": "plus-g-l",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
 "name": "plus-r",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 24 ) ],
+"loop": true,
+"name": "plus-r-l",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 11 ) ],
@@ -74,9 +136,19 @@ animations = [ {
 "name": "times-g",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 16 ) ],
+"loop": true,
+"name": "times-g-l",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 12 ) ],
 "loop": true,
 "name": "times-r",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 17 ) ],
+"loop": true,
+"name": "times-r-l",
 "speed": 5.0
 } ]
 
@@ -96,7 +168,7 @@ shape = SubResource( 2 )
 [node name="Piece" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
-animation = "divide-g"
+animation = "times-r-l"
 
 [node name="success" type="CPUParticles2D" parent="."]
 emitting = false

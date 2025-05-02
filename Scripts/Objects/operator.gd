@@ -6,6 +6,7 @@ var op_type = "NA";
 var dragging : bool
 var completed : bool
 var locked = false
+var perma_locked = false
 
 var snap = 64
 var select_pos = -1
@@ -23,6 +24,7 @@ const equal = "equal"
 
 const done = "-g"
 const notdone = "-r"
+const locked_str = "-l"
 
 var notdoneframe
 var doneframe
@@ -58,27 +60,37 @@ func setSelectedPos(pos : int):
 
 func init_operator(var op):
 	op_type = op
-
+	choose_frame()
+	
+func choose_frame():
 	match op_type:
 		"=":
-			notdoneframe = equal + notdone
-			doneframe = equal + done
+			notdoneframe = equal #+ notdone
+			doneframe = equal #+ done
 		"+":
-			notdoneframe = add + notdone
-			doneframe = add + done
+			notdoneframe = add #+ notdone
+			doneframe = add #+ done
 		"-":
-			notdoneframe = minus + notdone
-			doneframe = minus + done
+			notdoneframe = minus #+ notdone
+			doneframe = minus #+ done
 		"*":
-			notdoneframe = mult + notdone
-			doneframe = mult + done
+			notdoneframe = mult #+ notdone
+			doneframe = mult #+ done
 		"/":
-			notdoneframe = div + notdone
-			doneframe = div + done
+			notdoneframe = div #+ notdone
+			doneframe = div #+ done
 		"<":
-			notdoneframe = lessthan + notdone
-			doneframe = lessthan + done
+			notdoneframe = lessthan #+ notdone
+			doneframe = lessthan #+ done
 			
+	doneframe += done
+	notdoneframe += notdone
+	
+	if locked:
+		doneframe += "-l"
+		notdoneframe += "-l"
+			
+	$Piece.animation = notdoneframe
 	$Piece.animation = notdoneframe
 
 func _process(delta):
@@ -136,7 +148,18 @@ func emit_red():
 func lock_piece():
 	locked = true
 	
+	if perma_locked:
+		if completed:
+			return
+		else:
+			choose_frame()
+	
 func unlock_piece():
-	locked = false
+	if !perma_locked:
+		locked = false
+#		choose_frame()
+	
+func set_perma_locked():
+	perma_locked = true
 
 

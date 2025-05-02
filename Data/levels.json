@@ -7,9 +7,9 @@
         "name": "Baby Blocks"
     },
     "0" : {
-        "numbers" : [1, 1, 5],
-        "operators" : [],
-        "locked_chars": [1, 2, 3, "<"],
+        "numbers" : [4, 4],
+        "operators" : ["="],
+        "locked_chars": [2, 3, "<"],
 		"expected": "1=1",
         "name": "Locked Test"
     },
@@ -26,16 +26,16 @@
         "name": "Moving in The Positive Direction"
     },
     "3" : {
-        "numbers" : [2, 4, 5, 7],
-        "operators" : ["+", "+", "="],
-		"expected": "2+7=4+5",
-        "name": "Addition Expert"
-    },
-    "4" : {
         "numbers" : [1, 2, 3, 4],
         "operators" : ["+", "+", "="],
 		"expected": "1+4=2+3",
-        "name": "Addition Master"
+        "name": "Addition Expert"
+    },
+    "4" : {
+        "numbers" : [2, 4, 5, 7],
+        "operators" : ["+", "+", "="],
+		"expected": "2+7=4+5",
+        "name": "Addition master"
     },
     "5" : {
         "numbers" : [1, 1, 1, 1],

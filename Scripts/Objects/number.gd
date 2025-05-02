@@ -8,6 +8,7 @@ var completed : bool
 var of = Vector2(0,0)
 var select_pos = -1
 var locked = false
+var perma_locked = false
 
 const snap = 64
 
@@ -27,12 +28,24 @@ func _ready():
 
 func setCompleted():
 	completed = true
-	$Piece.animation = "done"
-	$Piece.frame = int(value)
+	setGreenSprite()
 
 func setNotCompleted():
 	completed = false
-	$Piece.animation = "default"
+	setRedSprite()
+	
+func setGreenSprite():
+	if perma_locked:
+		$Piece.animation = "locked-done"
+	else:
+		$Piece.animation = "done"
+	$Piece.frame = int(value)
+
+func setRedSprite():
+	if perma_locked:
+		$Piece.animation = "locked"
+	else:
+		$Piece.animation = "default"
 	$Piece.frame = int(value)
 	
 func getCompleted():
@@ -107,6 +120,14 @@ func emit_red():
 	
 func lock_piece():
 	locked = true
+	if completed:
+		setGreenSprite()
+	else:
+		setRedSprite()
 	
 func unlock_piece():
-	locked = false
+	if !perma_locked:
+		locked = false
+
+func set_perma_locked():
+	perma_locked = true
