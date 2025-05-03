@@ -35,5 +35,12 @@
         "num_chars": 3,
 		"expected": "1=1",
         "name": "Locked Test"
+    },
+    "10" : {
+        "numbers" : [4, 4],
+        "operators" : [],
+        "locked_chars": [2, 3, "<"],
+		"expected": "1=1",
+        "name": "Locked Test"
     }
 }

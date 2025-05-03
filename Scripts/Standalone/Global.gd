@@ -5,14 +5,14 @@ var unlkd
 
 # current level
 var cur_lvl
-const num_lvls = 32
+const num_lvls = 42
 
 func _ready() -> void:
 	unlkd = 1
 	cur_lvl = 1
 	
 func unlock() -> void:
-	unlkd += 30
+	unlkd += 45
 	
 func next_lvl() -> void:
 	cur_lvl += 1

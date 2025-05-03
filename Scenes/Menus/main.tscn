@@ -23,6 +23,20 @@ __meta__ = {
 "_edit_vertical_guides_": [ 128.0, 896.0 ]
 }
 
+[node name="lower" type="ColorRect" parent="." groups=["persist"]]
+visible = false
+margin_top = 480.0
+margin_right = 960.0
+margin_bottom = 544.0
+mouse_filter = 2
+color = Color( 1, 0.615686, 0.137255, 1 )
+
+[node name="higher" type="ColorRect" parent="." groups=["persist"]]
+margin_right = 960.0
+margin_bottom = 544.0
+mouse_filter = 2
+color = Color( 1, 0.615686, 0.137255, 1 )
+
 [node name="Done" type="Timer" parent="." groups=["persist"]]
 wait_time = 0.5
 one_shot = true
