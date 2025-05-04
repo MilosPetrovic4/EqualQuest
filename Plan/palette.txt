@@ -1,5 +1,0 @@
-Green:  #16C47F
-Yellow: #FFD65A
-Orange: #FF9D23
-Red:    #F93827
-Blue:   #305CDE

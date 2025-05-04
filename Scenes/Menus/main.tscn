@@ -1,13 +1,13 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Scenes/Menus/main.gd" type="Script" id=1]
-[ext_resource path="res://Art/Buttons/restart.png" type="Texture" id=2]
-[ext_resource path="res://Art/Buttons/restart-clicked.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/Menus/main.gd" type="Script" id=1]
+[ext_resource path="res://Art/Buttons/Restart/restart.png" type="Texture" id=2]
+[ext_resource path="res://Art/Buttons/Restart/restart-clicked.png" type="Texture" id=3]
 [ext_resource path="res://Art/Board/board-final.png" type="Texture" id=4]
 [ext_resource path="res://Art/Buttons/Audio/audio1.png" type="Texture" id=5]
 [ext_resource path="res://Art/Buttons/Audio/audio1-pressed.png" type="Texture" id=6]
-[ext_resource path="res://Art/Buttons/menu.png" type="Texture" id=7]
-[ext_resource path="res://Art/Buttons/menu-clicked.png" type="Texture" id=8]
+[ext_resource path="res://Art/Buttons/Menu/menu-clicked.png" type="Texture" id=7]
+[ext_resource path="res://Art/Buttons/Menu/menu.png" type="Texture" id=8]
 [ext_resource path="res://Art/Board/level-name.png" type="Texture" id=9]
 [ext_resource path="res://Font/public-pixel-font/PublicPixel-rv0pA.ttf" type="DynamicFontData" id=10]
 [ext_resource path="res://Art/Audio/success-1-6297.wav" type="AudioStream" id=11]
@@ -25,7 +25,7 @@ __meta__ = {
 }
 bus_name = "Master"
 
-[node name="higher" type="ColorRect" parent="." groups=["persist"]]
+[node name="bg" type="ColorRect" parent="." groups=["persist"]]
 margin_right = 960.0
 margin_bottom = 544.0
 mouse_filter = 2
@@ -54,8 +54,8 @@ margin_top = 352.0
 margin_right = 40.0
 margin_bottom = 368.0
 rect_scale = Vector2( 6, 6 )
-texture_normal = ExtResource( 7 )
-texture_pressed = ExtResource( 8 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 7 )
 
 [node name="audio" type="TextureButton" parent="Buttons"]
 margin_left = 24.0
