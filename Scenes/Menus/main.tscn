@@ -1,15 +1,16 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/Menus/main.gd" type="Script" id=1]
 [ext_resource path="res://Art/Buttons/restart.png" type="Texture" id=2]
 [ext_resource path="res://Art/Buttons/restart-clicked.png" type="Texture" id=3]
 [ext_resource path="res://Art/Board/board-final.png" type="Texture" id=4]
-[ext_resource path="res://Art/Buttons/esc.png" type="Texture" id=5]
-[ext_resource path="res://Art/Buttons/esc-clicked.png" type="Texture" id=6]
+[ext_resource path="res://Art/Buttons/Audio/audio1.png" type="Texture" id=5]
+[ext_resource path="res://Art/Buttons/Audio/audio1-pressed.png" type="Texture" id=6]
 [ext_resource path="res://Art/Buttons/menu.png" type="Texture" id=7]
 [ext_resource path="res://Art/Buttons/menu-clicked.png" type="Texture" id=8]
 [ext_resource path="res://Art/Board/level-name.png" type="Texture" id=9]
 [ext_resource path="res://Font/public-pixel-font/PublicPixel-rv0pA.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Art/Audio/success-1-6297.wav" type="AudioStream" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 outline_size = 3
@@ -22,14 +23,7 @@ __meta__ = {
 "_edit_horizontal_guides_": [ 128.0, 448.0 ],
 "_edit_vertical_guides_": [ 128.0, 896.0 ]
 }
-
-[node name="lower" type="ColorRect" parent="." groups=["persist"]]
-visible = false
-margin_top = 480.0
-margin_right = 960.0
-margin_bottom = 544.0
-mouse_filter = 2
-color = Color( 1, 0.615686, 0.137255, 1 )
+bus_name = "Master"
 
 [node name="higher" type="ColorRect" parent="." groups=["persist"]]
 margin_right = 960.0
@@ -45,15 +39,6 @@ one_shot = true
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="esc" type="TextureButton" parent="Buttons" groups=["persistent"]]
-margin_left = 24.0
-margin_top = 136.0
-margin_right = 40.0
-margin_bottom = 152.0
-rect_scale = Vector2( 6, 6 )
-texture_normal = ExtResource( 5 )
-texture_pressed = ExtResource( 6 )
-
 [node name="restart" type="TextureButton" parent="Buttons"]
 margin_left = 24.0
 margin_top = 240.0
@@ -65,12 +50,21 @@ texture_pressed = ExtResource( 3 )
 
 [node name="menu" type="TextureButton" parent="Buttons"]
 margin_left = 24.0
-margin_top = 344.0
+margin_top = 352.0
 margin_right = 40.0
-margin_bottom = 360.0
+margin_bottom = 368.0
 rect_scale = Vector2( 6, 6 )
 texture_normal = ExtResource( 7 )
 texture_pressed = ExtResource( 8 )
+
+[node name="audio" type="TextureButton" parent="Buttons"]
+margin_left = 24.0
+margin_top = 128.0
+margin_right = 40.0
+margin_bottom = 144.0
+rect_scale = Vector2( 6, 6 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 6 )
 
 [node name="ui" type="Control" parent="." groups=["persist"]]
 margin_right = 24.0
@@ -98,7 +92,10 @@ align = 1
 valign = 1
 autowrap = true
 
+[node name="success" type="AudioStreamPlayer" parent="." groups=["persist"]]
+stream = ExtResource( 11 )
+
 [connection signal="timeout" from="Done" to="." method="_on_Done_timeout"]
-[connection signal="pressed" from="Buttons/esc" to="." method="_on_esc_pressed"]
 [connection signal="pressed" from="Buttons/restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="Buttons/menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="Buttons/audio" to="." method="_on_audio_pressed"]

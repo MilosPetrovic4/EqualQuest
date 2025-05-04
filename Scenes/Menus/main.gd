@@ -3,6 +3,22 @@ extends Node2D
 var level_path = "res://Data/levels.json"
 var puzzle_pieces = []
 var selected_order = []
+
+export var bus_name: String
+var bus_index: int
+
+var audio0 = load("res://Art/Buttons/Audio/mute.png")
+var audio0p = load("res://Art/Buttons/Audio/mute-pressed.png")
+
+var audio1 = load("res://Art/Buttons/Audio/audio1.png")
+var audio1p = load("res://Art/Buttons/Audio/audio1-pressed.png")
+
+var audio2 = load("res://Art/Buttons/Audio/audio2.png")
+var audio2p = load("res://Art/Buttons/Audio/audio2-pressed.png")
+
+var audio3 = load("res://Art/Buttons/Audio/audio3.png")
+var audio3p = load("res://Art/Buttons/Audio/audio3-pressed.png")
+
 var popup_menu : bool = false
 var menu : Node = null
 const TILE_SIZE = 64
@@ -13,9 +29,11 @@ const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 var level
 var level_data
+var audio_state = 2
 
 func _ready() -> void:
 	
+	bus_index = AudioServer.get_bus_index(bus_name)
 	level = Global.cur_lvl
 	
 	if level >= Global.num_lvls:
@@ -81,9 +99,9 @@ func create_op(var op, var pos_vec):
 	puzzle_pieces.append(op_instance)
 	return op_instance
 		
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		_on_esc_pressed()
+#func _input(event: InputEvent) -> void:
+#	if event.is_action_pressed("ui_cancel"):
+#		_on_esc_pressed()
 
 func instance_popup_scene() -> void:
 	var popup: PackedScene = preload("res://Scenes/Menus/ESC.tscn")
@@ -195,6 +213,9 @@ func evaluate(var piece) -> void:
 		
 		# Expression holds true
 		if (expression_ls.execute() == expression_rs.execute()):
+			
+			$success.play()
+			
 			for i in range(adjacent_objects.size()):
 				if !adjacent_objects[i].getCompleted(): # was false before, becomes true
 					adjacent_objects[i].setCompleted()
@@ -298,27 +319,58 @@ func set_level_name(var name):
 func del_level_name():
 	$"ui/name-str".set_text("")
 
-func _on_esc_pressed():
-	if menu:
-		menu.queue_free()
-		menu = null
-		$Buttons/esc.disabled = false
-		$Buttons/restart.disabled = false
-		$Buttons/menu.disabled = false
-		
-		for obj in puzzle_pieces:
-			obj.unlock_piece()
-		
-	else:
-		instance_popup_scene()
-		$Buttons/esc.disabled = true
-		$Buttons/restart.disabled = true
-		$Buttons/menu.disabled = true
-		
-		for obj in puzzle_pieces:
-			obj.lock_piece()
+#func _on_esc_pressed():
+#	if menu:
+#		menu.queue_free()
+#		menu = null
+#		$Buttons/esc.disabled = false
+#		$Buttons/restart.disabled = false
+#		$Buttons/menu.disabled = false
+#
+#		for obj in puzzle_pieces:
+#			obj.unlock_piece()
+#
+#	else:
+#		instance_popup_scene()
+#		$Buttons/esc.disabled = true
+#		$Buttons/restart.disabled = true
+#		$Buttons/menu.disabled = true
+#
+#		for obj in puzzle_pieces:
+#			obj.lock_piece()
 
 func _on_menu_pressed():
 	Positions.clear()
 	var scene = load("res://Scenes/Menus/levels.tscn")
 	get_tree().change_scene_to(scene)
+
+
+func _on_audio_pressed():
+	
+	match(audio_state):
+		0:
+			$Buttons/audio.texture_normal = audio0
+			$Buttons/audio.texture_pressed = audio0p
+			audio_state += 1
+			updateAudio(0)
+		1:
+			$Buttons/audio.texture_normal = audio1
+			$Buttons/audio.texture_pressed = audio1p
+			audio_state += 1
+			updateAudio(0.25)
+		2:
+			$Buttons/audio.texture_normal = audio2
+			$Buttons/audio.texture_pressed = audio2p
+			audio_state += 1
+			updateAudio(0.5)
+		3:
+			$Buttons/audio.texture_normal = audio3
+			$Buttons/audio.texture_pressed = audio3p
+			audio_state = 0
+			updateAudio(0.75)
+			
+func updateAudio(var setting):
+	AudioServer.set_bus_volume_db(
+		bus_index,
+		linear2db(setting)
+	)

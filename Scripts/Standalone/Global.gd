@@ -5,7 +5,7 @@ var unlkd
 
 # current level
 var cur_lvl
-const num_lvls = 42
+const num_lvls = 46
 
 func _ready() -> void:
 	unlkd = 1
