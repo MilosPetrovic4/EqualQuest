@@ -6,6 +6,15 @@ var buttons = []
 
 func _ready():
 	create_level_buttons()
+	
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		return
+#		_on_esc_pressed()
+		
+func _on_esc_pressed():
+	var scene = load("res://Scenes/Menus/Menu.tscn")
+	get_tree().change_scene_to(scene)
 
 func create_level_buttons():
 	var grid = $grid

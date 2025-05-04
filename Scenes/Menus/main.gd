@@ -54,16 +54,13 @@ func _ready() -> void:
 		for i in level_data[str(level)]["locked_chars"]:
 			if str(i) in digits:
 				var num_instance = create_number(i, Vector2(pos * 64 + 192, 256))
-				num_instance.set_perma_locked()
 				num_instance.lock_piece()
 				pos += 1
 			else: # Operator characters (NOT INT -> String)
 				var op_instance = create_op(i, Vector2(pos * 64 + 192, 256))
-				op_instance.set_perma_locked()
 				op_instance.lock_piece()
 				pos += 1
 
-	# THIS CODE DOES NOT USES THE NUMBER OF OPERATORS AND NUMBER OF NUMBERS FROM JSON
 	var count = 0
 	for i in level_data[str(level)]["numbers"]:
 		create_number(i, Vector2(count * 64 + 192, 128))

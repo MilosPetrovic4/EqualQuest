@@ -8,7 +8,6 @@ var completed : bool
 var of = Vector2(0,0)
 var select_pos = -1
 var locked = false
-var perma_locked = false
 
 const snap = 64
 
@@ -35,14 +34,14 @@ func setNotCompleted():
 	setRedSprite()
 	
 func setGreenSprite():
-	if perma_locked:
+	if locked:
 		$Piece.animation = "locked-done"
 	else:
 		$Piece.animation = "done"
 	$Piece.frame = int(value)
 
 func setRedSprite():
-	if perma_locked:
+	if locked:
 		$Piece.animation = "locked"
 	else:
 		$Piece.animation = "default"
@@ -88,12 +87,13 @@ func _process(delta):
 
 func _on_Number_input_event(viewport, event, shape_idx):
 	
-	# locking mechanism to prevent user from interacting with piece if in esc menu
+	if(!dragging && Global.selected):
+		return
+	
+	# locking mechanism to prevent user from interacting with piece
 	if(locked): 
 		dragging = false
-		var mouse = get_global_mouse_position()
-		position.x  = stepify(mouse.x - of.x, snap)
-		position.y  = stepify(mouse.y - of.y, snap)
+		snapPosition()
 		return
 	
 	if event is InputEventMouseButton:
@@ -103,10 +103,16 @@ func _on_Number_input_event(viewport, event, shape_idx):
 				dragging = !dragging
 				if !dragging:
 					emit_signal("number_dropped", position, self)
+					Global.selected = false
 				else: # smooth out the selection so it doesn't matter where you click the object
-					var mouse = get_global_mouse_position()
-					position.x  = stepify(mouse.x - of.x, snap)
-					position.y  = stepify(mouse.y - of.y, snap)
+					snapPosition()
+					Global.selected = true
+					
+					
+func snapPosition():
+	var mouse = get_global_mouse_position()
+	position.x  = stepify(mouse.x - of.x, snap)
+	position.y  = stepify(mouse.y - of.y, snap)
 
 func emit_green():
 	$success.color = Color(0, 255, 0)
@@ -125,9 +131,9 @@ func lock_piece():
 	else:
 		setRedSprite()
 	
-func unlock_piece():
-	if !perma_locked:
-		locked = false
-
-func set_perma_locked():
-	perma_locked = true
+#func unlock_piece():
+#	if !perma_locked:
+#		locked = false
+#
+#func set_perma_locked():
+#	perma_locked = true
