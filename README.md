@@ -1,1 +1,1 @@
-# coolmathgames-puzzle
+# Equal Quest
