@@ -4,13 +4,13 @@
         "numbers" : [1, 1],
         "operators" : ["="],
 		"expected": "1=1",
-        "name": "Baby Blocks"
+        "name": "First Step"
     },
     "1" : {
         "numbers" : [1, 1, 2],
         "operators" : ["+", "="],
 		"expected": "1+1=2",
-        "name": "Elementary Blocks"
+        "name": "Elementary Step"
     },
     "2" : {
         "numbers" : [3, 5, 8],
@@ -52,7 +52,7 @@
         "numbers" : [1, 7, 8],
         "operators" : ["-", "="],
 		"expected": "8-7=1",
-        "name": "Goodbye Addition (For Now)"
+        "name": "Goodbye Addition"
     },
     "9" : {
         "numbers" : [1, 2, 3, 6],
@@ -82,7 +82,7 @@
         "numbers" : [1, 2, 3, 6],
         "operators" : ["*", "*", "="],
 		"expected": "2*3=6*1",
-        "name": "No Multiplication Is An Island"
+        "name": "Multiplication Island"
     },
     "14" : {
         "numbers" : [2, 3, 5, 7],
@@ -188,13 +188,13 @@
         "numbers" : [3, 4, 4, 5, 7, 9],
         "operators" : ["+", "-", "=", "="],
 		"expected": "7-4=3,5+4=9",
-        "name": "Double Equals? Isn't That Just Equals?"
+        "name": "Two Expressions??"
     },
     "31" : {
         "numbers" : [2, 4, 8, 8, 8],
         "operators" : ["*", "*", "*", "="],
 		"expected": "8*8=8*4*2",
-        "name": "888 Can't Take Your Call Right Now"
+        "name": "888 Brain Cells"
     },
     "32" : {
         "numbers" : [0, 1, 2, 2, 3, 4, 5],
@@ -206,7 +206,7 @@
         "numbers" : [3, 3, 6, 6, 9],
         "operators" : ["*", "/", "/", "="],
 		"expected": "6/3=6*3/9",
-        "name": "Mod 3 Would Instantly Fix This?"
+        "name": "Mod 3 Would Come Handy"
     },
     "34" : {
         "numbers" : [1, 2, 2, 3, 6],
@@ -225,7 +225,7 @@
         "operators" : ["*", "<"],
         "locked_chars": [7, 2, 0, "="],
 		"expected": "720=90*8,4<5",
-        "name": "Everyone's Favourite Number"
+        "name": "Your Favourite Number"
     },
     "37" : {
         "numbers" : [0, 2, 4, 6, 7, 8],
@@ -266,17 +266,17 @@
         "name": "Six Ways To Solve"
     },
     "43" : {
-        "numbers" : [1, 3, 5, 6, 7, 7, 8, 9],
-        "operators" : ["+", "-", "*", "/", "=", "="],
-        "locked_chars": [2, 4],
-		"expected": "8x7=65-9,24/3=7+1",
+        "numbers" : [1, 2, 2, 3, 4, 5, 6, 7, 9],
+        "operators" : ["+", "-", "/", "=", "="],
+        "locked_chars": [8, "*"],
+		"expected": "8x7=56,24/3=9+1-2",
         "name": "Generational Team Up"
     },
     "44" : {
         "numbers" : [0, 1, 2, 8, 8, 9],
         "operators" : ["/", "="],
         "locked_chars": [1, 6],
-		"expected": "1618/2=809 OR 1628/90=18",
+		"expected": "1618/2=809",
         "name": "Golden Opportunity"
     }
 }

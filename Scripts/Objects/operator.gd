@@ -6,6 +6,7 @@ var op_type = "NA";
 var dragging : bool
 var completed : bool
 var locked = false
+var tween
 
 var snap = 64
 var select_pos = -1
@@ -36,6 +37,11 @@ var left = knob
 func _ready():
 	dragging = false
 	completed = false
+	
+func resetTween():
+	if tween:
+		tween.kill()
+	tween = create_tween()
 
 func setCompleted():
 	completed = true
@@ -92,10 +98,10 @@ func choose_frame():
 	$Piece.animation = notdoneframe
 	$Piece.animation = notdoneframe
 
-func _process(delta):
+func _process(_delta):
 	if dragging:
-		var oldx: int = position.x
-		var oldy: int = position.y
+		var oldx: float = position.x
+		var oldy: float = position.y
 
 		var mouse = get_global_mouse_position()
 
@@ -113,7 +119,7 @@ func _process(delta):
 			position.x = new_x
 			position.y = new_y
 
-func _on_Operator_input_event(viewport, event, shape_idx):
+func _on_Operator_input_event(_viewport, event, _shape_idx):
 	
 	if(!dragging && Global.selected):
 		return
@@ -128,12 +134,21 @@ func _on_Operator_input_event(viewport, event, shape_idx):
 		if event.pressed && (mouse_button == BUTTON_RIGHT || mouse_button == BUTTON_LEFT):
 			dragging = !dragging
 			if !dragging:
-				emit_signal("operator_dropped", position, self)
+				emit_signal("operator_dropped")
 				Global.selected = false
+				
+				resetTween()
+				tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+				tween.tween_property(self, "scale", Vector2.ONE, 0.4)
+				
 			else: # smooth out the selection so it doesn't matter where you click the object
 				snapPosition()
 				Global.selected = true
 				
+				resetTween()
+				tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+				tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.4)
+			
 func snapPosition():
 	var mouse = get_global_mouse_position()
 	position.x  = stepify(mouse.x - of.x, snap)
@@ -151,19 +166,10 @@ func emit_red():
 	
 func lock_piece():
 	locked = true
-#
-#	if perma_locked:
+
 	if completed:
 		return
 	else:
 		choose_frame()
-	
-#func unlock_piece():
-#	if !perma_locked:
-#		locked = false
-##		choose_frame()
-#
-#func set_perma_locked():
-#	perma_locked = true
 
 

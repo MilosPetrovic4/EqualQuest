@@ -8,6 +8,7 @@ var completed : bool
 var of = Vector2(0,0)
 var select_pos = -1
 var locked = false
+var tween
 
 const snap = 64
 
@@ -24,6 +25,11 @@ func _ready():
 	completed = false
 	$Piece.animation = "default"
 	$Piece.frame = int(value)
+	
+func resetTween():
+	if tween:
+		tween.kill()
+	tween = create_tween()
 
 func setCompleted():
 	completed = true
@@ -64,10 +70,10 @@ func init_number(var num):
 #	var text = $char
 
 			
-func _process(delta):
+func _process(_delta):
 	if dragging:
-		var oldx: int = position.x
-		var oldy: int = position.y
+		var oldx: float = position.x
+		var oldy: float = position.y
 
 		var mouse = get_global_mouse_position()
 
@@ -85,30 +91,38 @@ func _process(delta):
 			position.x = new_x
 			position.y = new_y
 
-func _on_Number_input_event(viewport, event, shape_idx):
+func _on_Number_input_event(_viewport, event, _shape_idx):
 	
+	# not being currently dragged and there is a selected block, no selection allowed
 	if(!dragging && Global.selected):
 		return
 	
 	# locking mechanism to prevent user from interacting with piece
 	if(locked): 
 		dragging = false
-		snapPosition()
 		return
-	
+
 	if event is InputEventMouseButton:
 		var mouse_button = event.button_index
 		if event.pressed && (mouse_button == BUTTON_RIGHT || mouse_button == BUTTON_LEFT):
-					
+
 				dragging = !dragging
 				if !dragging:
-					emit_signal("number_dropped", position, self)
+					emit_signal("number_dropped")
 					Global.selected = false
+					
+					resetTween()
+					tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+					tween.tween_property(self, "scale", Vector2.ONE, 0.4)
+					
 				else: # smooth out the selection so it doesn't matter where you click the object
 					snapPosition()
 					Global.selected = true
 					
-					
+					resetTween()
+					tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+					tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.4)
+
 func snapPosition():
 	var mouse = get_global_mouse_position()
 	position.x  = stepify(mouse.x - of.x, snap)
@@ -130,10 +144,3 @@ func lock_piece():
 		setGreenSprite()
 	else:
 		setRedSprite()
-	
-#func unlock_piece():
-#	if !perma_locked:
-#		locked = false
-#
-#func set_perma_locked():
-#	perma_locked = true

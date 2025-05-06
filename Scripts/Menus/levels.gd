@@ -9,8 +9,7 @@ func _ready():
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		return
-#		_on_esc_pressed()
+		_on_esc_pressed()
 		
 func _on_esc_pressed():
 	var scene = load("res://Scenes/Menus/Menu.tscn")
@@ -18,15 +17,15 @@ func _on_esc_pressed():
 
 func create_level_buttons():
 	var grid = $grid
-	var my_font = load("res://Font/PWPerspective.ttf")
+#	var my_font = load("res://Font/edit-undo/editundo.ttf")
 	var default_texture = load("res://Art/Buttons/Level-Button/level-button.png")
 	var pressed_texture = load("res://Art/Buttons/Level-Button/level-button-clicked.png")
 	var locked_texture = load("res://Art/Buttons/Level-Button/locked-default.png")
 	var locked_clicked_texture = load("res://Art/Buttons/Level-Button/locked.png")
 	
 	var font = DynamicFont.new()
-	font.font_data = load("res://Font/public-pixel-font/PublicPixel-rv0pA.ttf")
-	font.size = 24
+	font.font_data = load("res://Font/edit-undo/editundo.ttf")
+	font.size = 48
 	font.outline_size = 2
 	font.outline_color = Color(0, 0, 0)
 
@@ -47,11 +46,9 @@ func create_level_buttons():
 			label.rect_size = Vector2(96, 96)
 			label.rect_position = Vector2.ZERO
 			label.mouse_filter = Control.MOUSE_FILTER_IGNORE  # So the label doesn't block button clicks
-			label.rect_position = Vector2(0, -5)
+			label.rect_position = Vector2(2, -5)
 
 			label.add_font_override("font", font)
-
-			
 			button.add_child(label)
 			
 			# Store label reference for animation
@@ -74,11 +71,11 @@ func create_level_buttons():
 		
 func _on_button_down(button):
 	var label = button.get_meta("label")
-	label.rect_position = Vector2(0, 1)  # Move label down a bit (adjust as needed)
+	label.rect_position = Vector2(2, 1)  # Move label down a bit (adjust as needed)
 
 func _on_button_up(button):
 	var label = button.get_meta("label")
-	label.rect_position = Vector2(0, -5) # Reset label position
+	label.rect_position = Vector2(2, -5) # Reset label position
 
 func _on_level_button_pressed(lvl_num):
 	# Checks if level is unlocked	

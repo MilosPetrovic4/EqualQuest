@@ -27,7 +27,7 @@ func get_positions() -> Array:
 func clear_positions():
 	positions.clear()
 	
-func move(oldx: int, oldy: int, newx: int, newy: int):
+func move(oldx: float, oldy: float, newx: float, newy: float):
 	
 	if (!is_occupied(newx, newy)):
 		remove_position(oldx, oldy)

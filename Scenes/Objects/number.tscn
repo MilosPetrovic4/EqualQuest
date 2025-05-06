@@ -74,6 +74,9 @@ _data = [ Vector2( 0.0855615, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.652406, 0.211364 )
 [node name="Number" type="StaticBody2D" groups=["piece"]]
 input_pickable = true
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 z_index = 3

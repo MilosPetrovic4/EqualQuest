@@ -10,8 +10,11 @@ config_version=4
 
 [application]
 
-config/name="coolmathgames-game-godot"
+config/name="Equal Quest"
 run/main_scene="res://Scenes/Menus/Menu.tscn"
+boot_splash/show_image=false
+boot_splash/image="res://Art/Loading Screens/Boot Splash/loading.png"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://Art/Icon/icon.png"
 
 [autoload]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Scripts/Menus/main.gd" type="Script" id=1]
 [ext_resource path="res://Art/Buttons/Restart/restart.png" type="Texture" id=2]
@@ -9,13 +9,28 @@
 [ext_resource path="res://Art/Buttons/Menu/menu-clicked.png" type="Texture" id=7]
 [ext_resource path="res://Art/Buttons/Menu/menu.png" type="Texture" id=8]
 [ext_resource path="res://Art/Board/level-name.png" type="Texture" id=9]
-[ext_resource path="res://Font/public-pixel-font/PublicPixel-rv0pA.ttf" type="DynamicFontData" id=10]
-[ext_resource path="res://Art/Audio/success-1-6297.wav" type="AudioStream" id=11]
+[ext_resource path="res://Art/Buttons/Prev/prev1.png" type="Texture" id=10]
+[ext_resource path="res://Art/Audio/fail.wav" type="AudioStream" id=11]
+[ext_resource path="res://Art/Board/level-num.png" type="Texture" id=12]
+[ext_resource path="res://Font/edit-undo/editundo.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://Art/Buttons/Prev/prev2.png" type="Texture" id=14]
+[ext_resource path="res://Art/Buttons/Next/next2.png" type="Texture" id=15]
+[ext_resource path="res://Art/Buttons/Next/next1.png" type="Texture" id=16]
+[ext_resource path="res://Art/Audio/click.wav" type="AudioStream" id=17]
+[ext_resource path="res://Art/Audio/done.wav" type="AudioStream" id=18]
+[ext_resource path="res://Scripts/Buttons/restart.gd" type="Script" id=19]
+[ext_resource path="res://Scripts/Buttons/menu.gd" type="Script" id=20]
+[ext_resource path="res://Scripts/Buttons/audio.gd" type="Script" id=21]
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+extra_spacing_space = -7
+font_data = ExtResource( 13 )
 
 [sub_resource type="DynamicFont" id=1]
-outline_size = 3
-outline_color = Color( 0.0431373, 0.207843, 0.137255, 1 )
-font_data = ExtResource( 10 )
+size = 32
+outline_color = Color( 0.121569, 0.352941, 0.12549, 1 )
+font_data = ExtResource( 13 )
 
 [node name="game" type="Node2D"]
 script = ExtResource( 1 )
@@ -40,31 +55,57 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="restart" type="TextureButton" parent="Buttons"]
-margin_left = 24.0
-margin_top = 240.0
-margin_right = 40.0
-margin_bottom = 256.0
+margin_left = 64.0
+margin_top = 288.0
+margin_right = 80.0
+margin_bottom = 304.0
 rect_scale = Vector2( 6, 6 )
+rect_pivot_offset = Vector2( 8, 8 )
 texture_normal = ExtResource( 2 )
 texture_pressed = ExtResource( 3 )
+script = ExtResource( 19 )
 
 [node name="menu" type="TextureButton" parent="Buttons"]
-margin_left = 24.0
-margin_top = 352.0
-margin_right = 40.0
-margin_bottom = 368.0
+margin_left = 64.0
+margin_top = 392.0
+margin_right = 80.0
+margin_bottom = 408.0
 rect_scale = Vector2( 6, 6 )
+rect_pivot_offset = Vector2( 8, 8 )
 texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 7 )
+script = ExtResource( 20 )
 
 [node name="audio" type="TextureButton" parent="Buttons"]
-margin_left = 24.0
-margin_top = 128.0
-margin_right = 40.0
-margin_bottom = 144.0
+margin_left = 64.0
+margin_top = 184.0
+margin_right = 80.0
+margin_bottom = 200.0
 rect_scale = Vector2( 6, 6 )
+rect_pivot_offset = Vector2( 8, 8 )
 texture_normal = ExtResource( 5 )
 texture_pressed = ExtResource( 6 )
+script = ExtResource( 21 )
+
+[node name="prev" type="TextureButton" parent="Buttons"]
+margin_left = 236.0
+margin_top = 8.0
+margin_right = 247.0
+margin_bottom = 24.0
+rect_scale = Vector2( 4, 4 )
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 14 )
+texture_disabled = ExtResource( 10 )
+
+[node name="next" type="TextureButton" parent="Buttons"]
+margin_left = 744.0
+margin_top = 8.0
+margin_right = 755.0
+margin_bottom = 24.0
+rect_scale = Vector2( 4, 4 )
+texture_normal = ExtResource( 16 )
+texture_pressed = ExtResource( 15 )
+texture_disabled = ExtResource( 16 )
 
 [node name="ui" type="Control" parent="." groups=["persist"]]
 margin_right = 24.0
@@ -87,15 +128,55 @@ margin_left = 312.0
 margin_top = 16.0
 margin_right = 712.0
 margin_bottom = 56.0
-custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.0588235, 0.309804, 0.207843, 1 )
+custom_fonts/font = SubResource( 2 )
 align = 1
 valign = 1
 autowrap = true
 
+[node name="counter" type="TextureRect" parent="ui"]
+margin_left = 162.0
+margin_top = 8.0
+margin_right = 178.0
+margin_bottom = 24.0
+rect_scale = Vector2( 4, 4 )
+texture = ExtResource( 12 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="level-num" type="Label" parent="ui"]
+margin_left = 164.0
+margin_top = 8.0
+margin_right = 227.0
+margin_bottom = 64.0
+custom_colors/font_color = Color( 0.0588235, 0.309804, 0.207843, 1 )
+custom_fonts/font = SubResource( 1 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_group_": true
+}
+
 [node name="success" type="AudioStreamPlayer" parent="." groups=["persist"]]
+stream = ExtResource( 18 )
+
+[node name="click" type="AudioStreamPlayer" parent="." groups=["persist"]]
+stream = ExtResource( 17 )
+
+[node name="fail" type="AudioStreamPlayer" parent="." groups=["persist"]]
 stream = ExtResource( 11 )
 
 [connection signal="timeout" from="Done" to="." method="_on_Done_timeout"]
+[connection signal="mouse_entered" from="Buttons/restart" to="Buttons/restart" method="_on_restart_mouse_entered"]
+[connection signal="mouse_exited" from="Buttons/restart" to="Buttons/restart" method="_on_restart_mouse_exited"]
 [connection signal="pressed" from="Buttons/restart" to="." method="_on_restart_pressed"]
+[connection signal="mouse_entered" from="Buttons/menu" to="Buttons/menu" method="_on_menu_mouse_entered"]
+[connection signal="mouse_exited" from="Buttons/menu" to="Buttons/menu" method="_on_menu_mouse_exited"]
 [connection signal="pressed" from="Buttons/menu" to="." method="_on_menu_pressed"]
+[connection signal="mouse_entered" from="Buttons/audio" to="Buttons/audio" method="_on_audio_mouse_entered"]
+[connection signal="mouse_exited" from="Buttons/audio" to="Buttons/audio" method="_on_audio_mouse_exited"]
 [connection signal="pressed" from="Buttons/audio" to="." method="_on_audio_pressed"]
+[connection signal="pressed" from="Buttons/prev" to="." method="_on_prev_pressed"]
+[connection signal="pressed" from="Buttons/next" to="." method="_on_next_pressed"]

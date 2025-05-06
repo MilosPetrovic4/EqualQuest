@@ -24,8 +24,9 @@ var menu : Node = null
 const TILE_SIZE = 64
 const persistent = "persist"
 const equals = ["=", "<"]
-const operators = ["=", "<", "+", "-", "*"]
+const operators = ["=", "<", "+", "-", "*", "/"]
 const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+const epsilon = 0.0001
 
 var level
 var level_data
@@ -73,6 +74,17 @@ func _ready() -> void:
 		count += 1
 		
 	set_level_name(level_data[str(level)]["name"])
+	set_level_num(str((level + 1)))
+	
+	if (Global.cur_lvl >= Global.unlkd || Global.cur_lvl == Global.num_lvls - 1):
+		disable_next()
+	else:
+		enable_next()
+		
+	if (Global.cur_lvl <= 1):
+		disable_prev()
+	else:
+		enable_prev()
 	
 # The function that instances a number piece object
 func create_number(var num, var pos_vec):
@@ -95,21 +107,14 @@ func create_op(var op, var pos_vec):
 	op_instance.connect("operator_dropped", self, "_on_operator_dropped")
 	puzzle_pieces.append(op_instance)
 	return op_instance
-		
-#func _input(event: InputEvent) -> void:
-#	if event.is_action_pressed("ui_cancel"):
-#		_on_esc_pressed()
-
-#func instance_popup_scene() -> void:
-#	var popup: PackedScene = preload("res://Scenes/Menus/ESC.tscn")
-#	menu = popup.instance()
-#	add_child(menu)
 	
-func _on_operator_dropped(var pos: Vector2, var this):
+func _on_operator_dropped():
+	$click.play()
 	for obj in puzzle_pieces:
 		evaluate(obj)
 	
-func _on_number_dropped(var pos: Vector2, var this):
+func _on_number_dropped():
+	$click.play()
 	for obj in puzzle_pieces:
 		evaluate(obj)
 
@@ -195,28 +200,45 @@ func evaluate(var piece) -> void:
 			if adjacent_objects[i].getCompleted():
 				adjacent_objects[i].setNotCompleted()
 				adjacent_objects[i].emit_red()
+				$fail.play()
 		return
 	
+	var result := ""
+	# This code appends .0 to every number to avoid flooring
+	for i in range(eq.length()):
+		var char_ = eq[i]
+		if char_ in operators:
+			result += ".0"
+			result += char_
+		else:
+			# Handle unexpected characters (you can skip or raise error)
+			result += char_
+	result += ".0"
+	eq = result
+	
 	var equality_sides
-
+	
 	if "=" in eq:
 		equality_sides = eq.split("=")
-		
+#		print(equality_sides[0], "=", equality_sides[1])
 		var expression_ls = Expression.new()
 		var expression_rs = Expression.new()
 		
 		expression_ls.parse(equality_sides[0])
 		expression_rs.parse(equality_sides[1])
 		
+		
+		var result_ls = expression_ls.execute()
+		var result_rs = expression_rs.execute()
+		
 		# Expression holds true
-		if (expression_ls.execute() == expression_rs.execute()):
-			
-			$success.play()
-			
+		if(abs(result_ls - result_rs) < epsilon):
 			for i in range(adjacent_objects.size()):
 				if !adjacent_objects[i].getCompleted(): # was false before, becomes true
 					adjacent_objects[i].setCompleted()
 					adjacent_objects[i].emit_green()
+					$success.play()
+					
 			for obj in puzzle_pieces:
 				if !obj.getCompleted():
 					return
@@ -227,6 +249,7 @@ func evaluate(var piece) -> void:
 				if adjacent_objects[i].getCompleted():
 					adjacent_objects[i].setNotCompleted()
 					adjacent_objects[i].emit_red()
+					$fail.play()
 			
 	elif "<" in eq:
 		equality_sides = eq.split("<")
@@ -243,6 +266,7 @@ func evaluate(var piece) -> void:
 				if !adjacent_objects[i].getCompleted(): # was false before, becomes true
 					adjacent_objects[i].setCompleted()
 					adjacent_objects[i].emit_green()
+					$success.play()
 			for obj in puzzle_pieces:
 				if !obj.getCompleted():
 					return
@@ -253,6 +277,7 @@ func evaluate(var piece) -> void:
 				if adjacent_objects[i].getCompleted():
 					adjacent_objects[i].setNotCompleted()
 					adjacent_objects[i].emit_red()
+					$fail.play()
 
 	else:
 		for i in range(adjacent_objects.size()):
@@ -285,6 +310,7 @@ func clear_level() -> void:
 
 func _on_restart_pressed() -> void:
 	clear_level()
+	Global.selected = false
 	_ready()
 	
 func load_json(path: String):
@@ -308,36 +334,16 @@ func _on_Done_timeout():
 		Global.unlock()
 	
 	_ready()
-
-
+	
 func set_level_name(var name):
 	$"ui/name-str".set_text(name)
 	
-func del_level_name():
-	$"ui/name-str".set_text("")
-
-#func _on_esc_pressed():
-#	if menu:
-#		menu.queue_free()
-#		menu = null
-#		$Buttons/esc.disabled = false
-#		$Buttons/restart.disabled = false
-#		$Buttons/menu.disabled = false
-#
-#		for obj in puzzle_pieces:
-#			obj.unlock_piece()
-#
-#	else:
-#		instance_popup_scene()
-#		$Buttons/esc.disabled = true
-#		$Buttons/restart.disabled = true
-#		$Buttons/menu.disabled = true
-#
-#		for obj in puzzle_pieces:
-#			obj.lock_piece()
+func set_level_num(var num):
+	$"ui/level-num".set_text(num)
 
 func _on_menu_pressed():
 	Positions.clear()
+	Global.selected = false
 	var scene = load("res://Scenes/Menus/levels.tscn")
 	get_tree().change_scene_to(scene)
 
@@ -371,3 +377,27 @@ func updateAudio(var setting):
 		bus_index,
 		linear2db(setting)
 	)
+
+func _on_prev_pressed():
+	Global.cur_lvl -= 1
+	_on_restart_pressed()
+
+func _on_next_pressed():
+	Global.cur_lvl += 1
+	_on_restart_pressed()
+	
+func disable_prev():
+	$Buttons/prev.disabled = true
+	$Buttons/prev.modulate.a = 0.5
+	
+func enable_prev():
+	$Buttons/prev.disabled = false
+	$Buttons/prev.modulate.a = 1
+	
+func disable_next():
+	$Buttons/next.disabled = true
+	$Buttons/next.modulate.a = 0.5
+	
+func enable_next():
+	$Buttons/next.disabled = false
+	$Buttons/next.modulate.a = 1
