@@ -130,6 +130,7 @@ func _on_Operator_input_event(_viewport, event, _shape_idx):
 		return
 	
 	if event is InputEventMouseButton:
+		self.raise()
 		var mouse_button = event.button_index
 		if event.pressed && (mouse_button == BUTTON_RIGHT || mouse_button == BUTTON_LEFT):
 			dragging = !dragging

@@ -30,10 +30,9 @@ const epsilon = 0.0001
 
 var level
 var level_data
-var audio_state = 2
 
 func _ready() -> void:
-	
+	set_audio()
 	bus_index = AudioServer.get_bus_index(bus_name)
 	level = Global.cur_lvl
 	
@@ -347,29 +346,50 @@ func _on_menu_pressed():
 	var scene = load("res://Scenes/Menus/levels.tscn")
 	get_tree().change_scene_to(scene)
 
-
-func _on_audio_pressed():
-	
-	match(audio_state):
+func set_audio():
+	match(Global.audio_state):
 		0:
 			$Buttons/audio.texture_normal = audio0
 			$Buttons/audio.texture_pressed = audio0p
-			audio_state += 1
 			updateAudio(0)
 		1:
 			$Buttons/audio.texture_normal = audio1
 			$Buttons/audio.texture_pressed = audio1p
-			audio_state += 1
 			updateAudio(0.25)
 		2:
 			$Buttons/audio.texture_normal = audio2
 			$Buttons/audio.texture_pressed = audio2p
-			audio_state += 1
 			updateAudio(0.5)
 		3:
 			$Buttons/audio.texture_normal = audio3
 			$Buttons/audio.texture_pressed = audio3p
-			audio_state = 0
+			updateAudio(0.75)
+			
+func _on_audio_pressed():
+	
+	
+	
+	if (Global.audio_state == 3):
+		Global.audio_state = 0
+	else:
+		Global.audio_state += 1
+	
+	match(Global.audio_state):
+		0:
+			$Buttons/audio.texture_normal = audio0
+			$Buttons/audio.texture_pressed = audio0p
+			updateAudio(0)
+		1:
+			$Buttons/audio.texture_normal = audio1
+			$Buttons/audio.texture_pressed = audio1p
+			updateAudio(0.25)
+		2:
+			$Buttons/audio.texture_normal = audio2
+			$Buttons/audio.texture_pressed = audio2p
+			updateAudio(0.5)
+		3:
+			$Buttons/audio.texture_normal = audio3
+			$Buttons/audio.texture_pressed = audio3p
 			updateAudio(0.75)
 			
 func updateAudio(var setting):
