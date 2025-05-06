@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Scripts/Menus/main.gd" type="Script" id=1]
 [ext_resource path="res://Art/Buttons/Restart/restart.png" type="Texture" id=2]
@@ -21,6 +21,8 @@
 [ext_resource path="res://Scripts/Buttons/restart.gd" type="Script" id=19]
 [ext_resource path="res://Scripts/Buttons/menu.gd" type="Script" id=20]
 [ext_resource path="res://Scripts/Buttons/audio.gd" type="Script" id=21]
+[ext_resource path="res://Scripts/Buttons/prev.gd" type="Script" id=22]
+[ext_resource path="res://Scripts/Buttons/next.gd" type="Script" id=23]
 
 [sub_resource type="DynamicFont" id=2]
 size = 32
@@ -88,24 +90,28 @@ texture_pressed = ExtResource( 6 )
 script = ExtResource( 21 )
 
 [node name="prev" type="TextureButton" parent="Buttons"]
-margin_left = 236.0
-margin_top = 8.0
-margin_right = 247.0
-margin_bottom = 24.0
+margin_left = 260.0
+margin_top = 32.0
+margin_right = 271.0
+margin_bottom = 48.0
 rect_scale = Vector2( 4, 4 )
+rect_pivot_offset = Vector2( 8, 8 )
 texture_normal = ExtResource( 10 )
 texture_pressed = ExtResource( 14 )
 texture_disabled = ExtResource( 10 )
+script = ExtResource( 22 )
 
 [node name="next" type="TextureButton" parent="Buttons"]
-margin_left = 744.0
-margin_top = 8.0
-margin_right = 755.0
-margin_bottom = 24.0
+margin_left = 768.0
+margin_top = 32.0
+margin_right = 779.0
+margin_bottom = 48.0
 rect_scale = Vector2( 4, 4 )
+rect_pivot_offset = Vector2( 8, 8 )
 texture_normal = ExtResource( 16 )
 texture_pressed = ExtResource( 15 )
 texture_disabled = ExtResource( 16 )
+script = ExtResource( 23 )
 
 [node name="ui" type="Control" parent="." groups=["persist"]]
 margin_right = 24.0
@@ -178,5 +184,9 @@ stream = ExtResource( 11 )
 [connection signal="mouse_entered" from="Buttons/audio" to="Buttons/audio" method="_on_audio_mouse_entered"]
 [connection signal="mouse_exited" from="Buttons/audio" to="Buttons/audio" method="_on_audio_mouse_exited"]
 [connection signal="pressed" from="Buttons/audio" to="." method="_on_audio_pressed"]
+[connection signal="mouse_entered" from="Buttons/prev" to="Buttons/prev" method="_on_prev_mouse_entered"]
+[connection signal="mouse_exited" from="Buttons/prev" to="Buttons/prev" method="_on_prev_mouse_exited"]
 [connection signal="pressed" from="Buttons/prev" to="." method="_on_prev_pressed"]
+[connection signal="mouse_entered" from="Buttons/next" to="Buttons/next" method="_on_next_mouse_entered"]
+[connection signal="mouse_exited" from="Buttons/next" to="Buttons/next" method="_on_next_mouse_exited"]
 [connection signal="pressed" from="Buttons/next" to="." method="_on_next_pressed"]
