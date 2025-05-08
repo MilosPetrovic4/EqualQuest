@@ -22,14 +22,68 @@ var audio3p = load("res://Art/Buttons/Audio/audio3-pressed.png")
 var popup_menu : bool = false
 var menu : Node = null
 const TILE_SIZE = 64
+const snap = 64
 const persistent = "persist"
 const equals = ["=", "<"]
 const operators = ["=", "<", "+", "-", "*", "/"]
 const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 const epsilon = 0.0001
+const MIN_X = 192
+const MAX_X = 832
+const MIN_Y = 128
+const MAX_Y = 448
+const tut1_pos = [Vector2(192, 256), Vector2(320, 256), Vector2(256, 256)]
 
 var level
 var level_data
+
+var dragging_piece = null
+var of = Vector2(0,0)
+
+func _on_num_piece_pressed(var piece):
+	dragging_piece = piece
+	piece.select_tween()
+	piece.raise()
+
+func _on_op_piece_pressed(var piece):
+	dragging_piece = piece
+	piece.select_tween()
+	piece.raise()
+
+func _input(event):
+	if dragging_piece and event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.pressed:
+		snapPosition()
+		dragging_piece.deselect_tween()
+
+		if dragging_piece.is_in_group("piece_num"):
+			dragging_piece.emit_signal("number_dropped")
+		elif dragging_piece.is_in_group("piece_op"):
+			dragging_piece.emit_signal("operator_dropped")
+			
+		dragging_piece = null
+
+func _process(_delta):
+	if dragging_piece:
+		snapPosition()
+	
+func snapPosition():
+	var mouse = get_global_mouse_position()
+	
+	var oldx: float = dragging_piece.position.x
+	var oldy: float = dragging_piece.position.y
+
+	# Snap to grid
+	var new_x = stepify(mouse.x - of.x, snap)
+	var new_y = stepify(mouse.y - of.y, snap)
+
+	# Clamp to bounding box
+	new_x = clamp(new_x, MIN_X, MAX_X)
+	new_y = clamp(new_y, MIN_Y, MAX_Y)
+
+	var moved: bool = Positions.move(oldx, oldy, new_x, new_y)
+
+	if moved:
+		dragging_piece.global_position = Vector2(new_x, new_y)
 
 func _ready() -> void:
 	set_audio()
@@ -37,7 +91,7 @@ func _ready() -> void:
 	level = Global.cur_lvl
 	
 	if level >= Global.num_lvls:
-		var scene = load("res://Scenes/Menus/levels.tscn")
+		var scene = load("res://Scenes/Menus/Menu.tscn") 
 		get_tree().change_scene_to(scene)
 		return
 		
@@ -60,17 +114,24 @@ func _ready() -> void:
 				var op_instance = create_op(i, Vector2(pos * 64 + 192, 256))
 				op_instance.lock_piece()
 				pos += 1
-
+				
 	var count = 0
 	for i in level_data[str(level)]["numbers"]:
 		create_number(i, Vector2(count * 64 + 192, 128))
 		count += 1
 	
-	# Based on level data generate operator characters
 	count = 0
 	for j in level_data[str(level)]["operators"]:
 		create_op(j, Vector2(count * 64 + 192, 448))
 		count += 1
+		
+	for piece in get_tree().get_nodes_in_group("piece_num"):
+		if not piece.is_connected("num_piece_pressed", self, "_on_num_piece_pressed"):
+			piece.connect("num_piece_pressed", self, "_on_num_piece_pressed")
+		
+	for piece in get_tree().get_nodes_in_group("piece_op"):
+		if not piece.is_connected("op_piece_pressed", self, "_on_op_piece_pressed"):
+			piece.connect("op_piece_pressed", self, "_on_op_piece_pressed")
 		
 	set_level_name(level_data[str(level)]["name"])
 	set_level_num(str((level + 1)))
@@ -84,7 +145,33 @@ func _ready() -> void:
 		disable_prev()
 	else:
 		enable_prev()
-	
+		
+	#tutorial code
+	if(Global.lvl_one_tut && Global.cur_lvl == 1):		
+		var pos = 0
+		for piece in puzzle_pieces:
+			if (piece.is_in_group("piece_num")):
+				var shadow = load("res://Scenes/Objects/shadow.tscn").instance()
+				shadow.setFrame(piece.getValue())
+				shadow.position = piece.position
+				add_child(shadow)
+				
+				var tween = get_tree().create_tween()#.set_loops()
+				var target_pos = tut1_pos[pos]
+				tween.tween_property(shadow, "position", target_pos, 2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).from_current()
+				pos += 1
+				
+			elif(piece.is_in_group("piece_op")):
+				var shadow = load("res://Scenes/Objects/shadow.tscn").instance()
+				shadow.setFrame(piece.getValue())
+				shadow.position = piece.position
+				add_child(shadow)
+				
+				var tween = get_tree().create_tween()#.set_loops()
+				var target_pos = tut1_pos[pos]
+				tween.tween_property(shadow, "position", target_pos, 2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).from_current()
+				pos += 1
+
 # The function that instances a number piece object
 func create_number(var num, var pos_vec):
 	var num_instance = load("res://Scenes/Objects/number.tscn").instance()
@@ -114,6 +201,7 @@ func _on_operator_dropped():
 	
 func _on_number_dropped():
 	$click.play()
+	
 	for obj in puzzle_pieces:
 		evaluate(obj)
 
@@ -152,7 +240,7 @@ func validate_expression(equation : String) -> bool:
 
 # utility method to get puzzle piece at certain position
 func get_piece_at_position(pos: Vector2) -> Node:
-	for obj in get_tree().get_nodes_in_group("piece"):
+	for obj in get_tree().get_nodes_in_group("piece_num") + get_tree().get_nodes_in_group("piece_op"):
 		if obj.global_position.distance_to(pos) < 1.0:
 			return obj
 	return null
@@ -225,7 +313,6 @@ func evaluate(var piece) -> void:
 		
 		expression_ls.parse(equality_sides[0])
 		expression_rs.parse(equality_sides[1])
-		
 		
 		var result_ls = expression_ls.execute()
 		var result_rs = expression_rs.execute()
@@ -331,6 +418,9 @@ func _on_Done_timeout():
 	# Checks if we should unlock next level
 	if level > Global.unlkd:
 		Global.unlock()
+		
+#	if Global.cur_lvl == 1 && Global.lvl_one_tut:
+	Global.lvl_one_tut = false
 	
 	_ready()
 	

@@ -4,7 +4,14 @@ var scroll_speed := Vector2(50, 0)
 var buttons = []
 
 func _ready():
+	var tween1 = get_node("Tween")
+	var bg = $parallax_bg/ParallaxLayer/bg
+	var grid = $grid
+	bg.modulate.a = 0.0
 	create_level_buttons()
+	tween1.interpolate_property(grid, "modulate:a", 0.0, 1.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween1.interpolate_property(bg, "modulate:a", 0.0, 1.0, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween1.start()
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):

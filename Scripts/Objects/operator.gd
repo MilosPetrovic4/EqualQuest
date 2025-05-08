@@ -34,6 +34,8 @@ var DOWN = knob
 var RIGHT = knob
 var left = knob
 
+signal op_piece_pressed(piece)
+
 func _ready():
 	dragging = false
 	completed = false
@@ -119,42 +121,21 @@ func _process(_delta):
 			position.x = new_x
 			position.y = new_y
 
+func select_tween():
+	resetTween()
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.4)
+	
+func deselect_tween():
+	resetTween()
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.4)
+	
 func _on_Operator_input_event(_viewport, event, _shape_idx):
-	
-	if(!dragging && Global.selected):
-		return
-	
-	# locking mechanism to prevent user from interacting with piece if in esc menu
-	if(locked):
-		dragging = false
-		return
-	
-	if event is InputEventMouseButton:
-		self.raise()
-		var mouse_button = event.button_index
-		if event.pressed && (mouse_button == BUTTON_RIGHT || mouse_button == BUTTON_LEFT):
-			dragging = !dragging
-			if !dragging:
-				emit_signal("operator_dropped")
-				Global.selected = false
-				
-				resetTween()
-				tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-				tween.tween_property(self, "scale", Vector2.ONE, 0.4)
-				
-			else: # smooth out the selection so it doesn't matter where you click the object
-				snapPosition()
-				Global.selected = true
-				
-				resetTween()
-				tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-				tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.4)
-			
-func snapPosition():
-	var mouse = get_global_mouse_position()
-	position.x  = stepify(mouse.x - of.x, snap)
-	position.y  = stepify(mouse.y - of.y, snap)
-				
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+		if event.pressed:
+			emit_signal("op_piece_pressed", self)  # Tell main scene this piece was clicked
+
 func emit_green():
 	$success.color = Color(0, 255, 0)
 	$success.emitting = true

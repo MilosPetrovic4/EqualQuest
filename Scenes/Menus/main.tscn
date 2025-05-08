@@ -58,9 +58,9 @@ margin_bottom = 40.0
 
 [node name="restart" type="TextureButton" parent="Buttons"]
 margin_left = 64.0
-margin_top = 288.0
+margin_top = 280.0
 margin_right = 80.0
-margin_bottom = 304.0
+margin_bottom = 296.0
 rect_scale = Vector2( 6, 6 )
 rect_pivot_offset = Vector2( 8, 8 )
 texture_normal = ExtResource( 2 )
@@ -69,9 +69,9 @@ script = ExtResource( 19 )
 
 [node name="menu" type="TextureButton" parent="Buttons"]
 margin_left = 64.0
-margin_top = 392.0
+margin_top = 384.0
 margin_right = 80.0
-margin_bottom = 408.0
+margin_bottom = 400.0
 rect_scale = Vector2( 6, 6 )
 rect_pivot_offset = Vector2( 8, 8 )
 texture_normal = ExtResource( 8 )
@@ -80,9 +80,9 @@ script = ExtResource( 20 )
 
 [node name="audio" type="TextureButton" parent="Buttons"]
 margin_left = 64.0
-margin_top = 184.0
+margin_top = 176.0
 margin_right = 80.0
-margin_bottom = 200.0
+margin_bottom = 192.0
 rect_scale = Vector2( 6, 6 )
 rect_pivot_offset = Vector2( 8, 8 )
 texture_normal = ExtResource( 5 )
