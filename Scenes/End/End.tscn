@@ -144,6 +144,7 @@ position = Vector2( 480, 270 )
 scale = Vector2( 11, 11 )
 frames = SubResource( 13 )
 animation = "red"
+frame = 6
 playing = true
 
 [node name="Shake" type="Timer" parent="."]
