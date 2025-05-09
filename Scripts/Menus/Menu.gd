@@ -2,14 +2,23 @@ extends Control
 
 var scroll_speed := Vector2(50, 0)
 
+var rect
+var timer
+var play
+var title
+var scenery
+
 func _ready():
-	var rect = $bg2
 	var target_color = Color(17/255.0, 20/255.0, 51/255.0, 1)
-	var timer = $tween_bg
-	var play = $Play
+	rect = $bg2
+	timer = $timers/tween_bg
+	play = $Play
+	title = $Title
+	scenery = $Scenery
 	
-	$Scenery.modulate.a = 0.0
+	scenery.modulate.a = 0.0
 	play.modulate.a = 0.0
+	title.modulate.a = 0.0
 	play.disabled = true
 	rect.color = Color(0, 0, 0, 1)
 	
@@ -26,40 +35,57 @@ func start_game():
 	get_tree().change_scene_to(next_scene)
 
 func _on_Play_pressed():
+	$timers/wait.start()
+	play.disabled = true
+	
+	var tween = get_node("Tween")
+	
+	tween.interpolate_property(title, "modulate:a",
+	1.0, 0.0, 1,
+	Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	
+	tween.interpolate_property(play, "modulate:a",
+	1.0, 0.0, 1,
+	Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+
+	tween.start()
+
+func _on_tween_bg_timeout():
+	var tween = get_node("Tween")
+
+	tween.interpolate_property(scenery, "modulate:a",
+	0.0, 1.0, 1,
+	Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	
+	tween.start()
+	$timers/tween_play.start()
+
+func _on_tween_play_timeout():
+	var tween = get_node("Tween")
+	
+	tween.interpolate_property(play, "modulate:a",
+	0.0, 1.0, 1,
+	Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	
+	tween.interpolate_property(title, "modulate:a",
+	0.0, 1.0, 1,
+	Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	
+	tween.start()
+	play.disabled = false
+
+func _on_transition_timeout():
+	start_game()
+
+func _on_wait_timeout():
 	var tween = create_tween()
 	var camera = $camera
 	var target_position = Vector2(495, 456)
 	var target_zoom = Vector2(0.01, 0.01)  # Smaller values = zoom in
 
-	# Interpolate position
 	tween.parallel().tween_property(camera, "global_position", target_position, 3.0).set_trans(Tween.EASE_IN).set_ease(Tween.EASE_OUT)
-	# Interpolate zoom
 	tween.parallel().tween_property(camera, "zoom", target_zoom, 3.0).set_trans(Tween.EASE_IN).set_ease(Tween.EASE_OUT)
-	$transition.start()
+	$timers/transition.start()
 
 
-func _on_tween_bg_timeout():
-	var tween = get_node("Tween")
-	var sprite = $Scenery
-	
-	tween.interpolate_property(sprite, "modulate:a",
-	0.0, 1.0, 1,
-	Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 
-	tween.start()
-	$tween_play.start()
-
-func _on_tween_play_timeout():
-	var tween = get_node("Tween")
-	var play = $Play
-	
-	tween.interpolate_property(play, "modulate:a",
-	0.0, 1.0, 1,
-	Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-
-	tween.start()
-	play.disabled = false
-	
-
-func _on_transition_timeout():
-	start_game()

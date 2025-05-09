@@ -33,6 +33,7 @@ const MAX_X = 832
 const MIN_Y = 128
 const MAX_Y = 448
 const tut1_pos = [Vector2(192, 256), Vector2(320, 256), Vector2(256, 256)]
+const tut2_pos = [Vector2(192, 256), Vector2(320, 256), Vector2(192, 320), Vector2(320, 320), Vector2(256, 256), Vector2(256, 320)]
 
 var level
 var level_data
@@ -54,7 +55,7 @@ func _input(event):
 	if dragging_piece and event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.pressed:
 		snapPosition()
 		dragging_piece.deselect_tween()
-
+		
 		if dragging_piece.is_in_group("piece_num"):
 			dragging_piece.emit_signal("number_dropped")
 		elif dragging_piece.is_in_group("piece_op"):
@@ -147,30 +148,37 @@ func _ready() -> void:
 		enable_prev()
 		
 	#tutorial code
-	if(Global.lvl_one_tut && Global.cur_lvl == 1):		
-		var pos = 0
-		for piece in puzzle_pieces:
-			if (piece.is_in_group("piece_num")):
-				var shadow = load("res://Scenes/Objects/shadow.tscn").instance()
-				shadow.setFrame(piece.getValue())
-				shadow.position = piece.position
-				add_child(shadow)
-				
-				var tween = get_tree().create_tween()#.set_loops()
-				var target_pos = tut1_pos[pos]
-				tween.tween_property(shadow, "position", target_pos, 2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).from_current()
-				pos += 1
-				
-			elif(piece.is_in_group("piece_op")):
-				var shadow = load("res://Scenes/Objects/shadow.tscn").instance()
-				shadow.setFrame(piece.getValue())
-				shadow.position = piece.position
-				add_child(shadow)
-				
-				var tween = get_tree().create_tween()#.set_loops()
-				var target_pos = tut1_pos[pos]
-				tween.tween_property(shadow, "position", target_pos, 2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).from_current()
-				pos += 1
+	if(Global.cur_lvl == 1):
+		tutorial(tut1_pos)
+		
+	if(Global.cur_lvl == 2):
+		tutorial(tut2_pos)
+
+func tutorial(var shadow_pos):
+	var pos = 0
+	for piece in puzzle_pieces:
+		if (piece.is_in_group("piece_num")):
+			var shadow = load("res://Scenes/Objects/shadow.tscn").instance()
+			shadow.setFrame(piece.getValue())
+			shadow.position = piece.position
+			add_child(shadow)
+			
+			var tween = get_tree().create_tween()#.set_loops()
+			var target_pos = shadow_pos[pos]
+			tween.tween_property(shadow, "position", target_pos, 2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).from_current()
+			pos += 1
+			
+		elif(piece.is_in_group("piece_op")):
+			var shadow = load("res://Scenes/Objects/shadow.tscn").instance()
+			shadow.setFrame(piece.getValue())
+			shadow.position = piece.position
+			add_child(shadow)
+			
+			var tween = get_tree().create_tween()#.set_loops()
+			var target_pos = shadow_pos[pos]
+			tween.tween_property(shadow, "position", target_pos, 2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).from_current()
+			pos += 1
+
 
 # The function that instances a number piece object
 func create_number(var num, var pos_vec):
@@ -418,9 +426,6 @@ func _on_Done_timeout():
 	# Checks if we should unlock next level
 	if level > Global.unlkd:
 		Global.unlock()
-		
-#	if Global.cur_lvl == 1 && Global.lvl_one_tut:
-	Global.lvl_one_tut = false
 	
 	_ready()
 	
