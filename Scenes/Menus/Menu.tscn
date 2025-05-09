@@ -71,7 +71,7 @@ script = ExtResource( 1 )
 position = Vector2( 480, 270 )
 scale = Vector2( 10, 10 )
 frames = SubResource( 13 )
-frame = 6
+frame = 4
 playing = true
 
 [node name="bg2" type="ColorRect" parent="."]
