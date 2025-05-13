@@ -28,8 +28,8 @@ func _on_Shake_timeout():
 	shake()
 	
 func shake():
-	var shake_strength = 60
-	var shake_duration = 0.7
+	var shake_strength = 20
+	var shake_duration = 0.5
 	var shake_times = 5
 	var interval = shake_duration / shake_times
 

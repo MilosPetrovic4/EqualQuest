@@ -153,5 +153,8 @@ func lock_piece():
 		return
 	else:
 		choose_frame()
+		
+func get_locked():
+	return locked
 
 

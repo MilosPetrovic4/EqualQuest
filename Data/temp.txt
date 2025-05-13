@@ -1,0 +1,24 @@
+    "39" : {
+        "numbers" : [1, 3, 4, 5, 7],
+        "operators" : ["+", "="],
+	"locked_chars" : [9]
+		"expected": "91=37+54",
+        "name": "Carry The One"
+    },
+
+"Carry The One"
+
+
+Digits: 3, 1, 3, 9
+Operators: /, =
+
+Solution: 93 / 3 = 31
+
+
+- Add PI
+- Add Gravity
+- REDO Generational Team Up
+- Fix Yellow Lines, every thirds column
+- Wild Card
+- Timer
+- Eulers

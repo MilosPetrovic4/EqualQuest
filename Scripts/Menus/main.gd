@@ -32,7 +32,7 @@ const MIN_X = 192
 const MAX_X = 832
 const MIN_Y = 128
 const MAX_Y = 448
-const tut1_pos = [Vector2(192, 256), Vector2(320, 256), Vector2(256, 256)]
+const tut1_pos = [Vector2(192, 256), Vector2(320, 256), Vector2(448, 256),  Vector2(256, 256),  Vector2(384, 256)]
 const tut2_pos = [Vector2(192, 256), Vector2(320, 256), Vector2(192, 320), Vector2(320, 320), Vector2(256, 256), Vector2(256, 320)]
 
 var level
@@ -42,11 +42,18 @@ var dragging_piece = null
 var of = Vector2(0,0)
 
 func _on_num_piece_pressed(var piece):
+	if piece.get_locked():
+		return
+	
 	dragging_piece = piece
 	piece.select_tween()
 	piece.raise()
 
 func _on_op_piece_pressed(var piece):
+	
+	if piece.get_locked():
+		return
+	
 	dragging_piece = piece
 	piece.select_tween()
 	piece.raise()
@@ -92,7 +99,7 @@ func _ready() -> void:
 	level = Global.cur_lvl
 	
 	if level >= Global.num_lvls:
-		var scene = load("res://Scenes/Menus/Menu.tscn") 
+		var scene = load("res://Scenes/End/End.tscn") 
 		get_tree().change_scene_to(scene)
 		return
 		
@@ -151,7 +158,7 @@ func _ready() -> void:
 	if(Global.cur_lvl == 1):
 		tutorial(tut1_pos)
 		
-	if(Global.cur_lvl == 2):
+	if(Global.cur_lvl == 30):
 		tutorial(tut2_pos)
 
 func tutorial(var shadow_pos):

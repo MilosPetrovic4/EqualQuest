@@ -1,95 +1,94 @@
 
 {
     "0" : {
-        "numbers" : [1, 1],
-        "operators" : ["="],
-		"expected": "1=1",
-        "name": "First Step"
-    },
-    "1" : {
-        "numbers" : [1, 1, 2, 2],
-        "operators" : ["=", "="],
-		"expected": "1=1,2=2",
-        "name": "Equal And Conquer"
-    },
-    "2" : {
         "numbers" : [1, 1, 2],
         "operators" : ["+", "="],
 		"expected": "1+1=2",
-        "name": "Elementary Step"
+        "name": "First Step"
     },
-    "3" : {
+    "1" : {
         "numbers" : [3, 5, 8],
         "operators" : ["+", "="],
 		"expected": "3+5=8",
         "name": "Positively Glowing"
     },
-    "4" : {
+    "2" : {
         "numbers" : [1, 2, 3, 4],
         "operators" : ["+", "+", "="],
 		"expected": "1+4=2+3",
-        "name": "Addition Expert"
+        "name": "Balancing Act"
     },
-    "5" : {
+    "3" : {
         "numbers" : [2, 4, 5, 7],
         "operators" : ["+", "+", "="],
 		"expected": "2+7=4+5",
-        "name": "Addition master"
+        "name": "Tightrope Act"
     },
-    "6" : {
+    "4" : {
         "numbers" : [2, 2, 2, 2, 8],
         "operators" : ["+", "+", "+", "="],
 		"expected": "2+2+2+2=8",
         "name": "Ducks In A Row"
     },
-    "7" : {
+    "5" : {
         "numbers" : [1, 1, 1, 1],
         "operators" : ["="],
 		"expected": "11=11",
-        "name": "Window Math"
+        "name": "Eleven Up"
     },
-    "8" : {
+    "6" : {
         "numbers" : [1, 3, 5, 8],
         "operators" : ["+", "="],
 		"expected": "5+8=13",
         "name": "Fib(7)"
     },
-    "9" : {
+    "7" : {
         "numbers" : [1, 7, 8],
         "operators" : ["-", "="],
 		"expected": "8-7=1",
         "name": "Goodbye Addition"
     },
-    "10" : {
-        "numbers" : [1, 2, 3, 6],
-        "operators" : ["+", "-", "="],
-		"expected": "6-3=2+1",
-        "name": "Plus And Minus?"
-    },
-    "11" : {
+    "8" : {
         "numbers" : [0, 1, 3, 7],
         "operators" : ["-", "="],
 		"expected": "10=7-3",
         "name": "Subtraction Expert"
     },
-
+    "9" : {
+        "numbers" : [1, 2, 3, 6],
+        "operators" : ["+", "-", "="],
+		"expected": "6-3=2+1",
+        "name": "Paper Thin Balance"
+    },
+    "10" : {
+        "numbers" : [1, 1, 3, 4, 5],
+        "operators" : ["+", "+", "-", "="],
+		"expected": "3-1+4=1+5",
+        "name": "A Massive PI"
+    },
+    "11" : {
+        "numbers" : [1, 2, 5, 6, 9],
+        "operators" : ["+", "="],
+		"expected": "9+16=25",
+        "name": "Perfect Squares"
+    },
     "12" : {
-        "numbers" : [2, 3, 6],
-        "operators" : ["*", "="],
-		"expected": "6=2*3",
+        "numbers" : [1, 2, 3, 6],
+        "operators" : ["*", "*", "="],
+		"expected": "1*6=2*3",
         "name": "New Challenges"
     },
     "13" : {
-        "numbers" : [1, 2, 3, 6],
-        "operators" : ["*", "*", "="],
-		"expected": "2*3=6*1",
-        "name": "Multiplication Island"
-    },
-    "14" : {
         "numbers" : [2, 3, 5, 7],
         "operators" : ["-", "*", "="],
 		"expected": "5*2-7=3",
-        "name": "Subtract First?"
+        "name": "Order Of Operations"
+    },
+    "14" : {
+        "numbers" : [0, 0, 3, 5, 6],
+        "operators" : ["*", "="],
+		"expected": "0=0*356",
+        "name": "Garbage Bin"
     },
     "15" : {
         "numbers" : [1, 1, 1, 1, 1, 1, 2],
@@ -102,100 +101,102 @@
         "numbers" : [2, 3, 6],
         "operators" : ["/", "="],
 		"expected": "6/2=3",
-        "name": "Equal Parts Feeble Hearts"
+        "name": "Newest Challenges"
     },
     "17" : {
 
         "numbers" : [1, 2, 4, 3],
         "operators" : ["/", "="],
 		"expected": "12/4=3",
-        "name": "Here Are Your Dividends"
+        "name": "Quarter Dozen"
     },
     "18" : {
-        "numbers" : [0, 1, 2, 3, 5],
-        "operators" : ["-", "-", "="],
-		"expected": "10-5-3=2",
-        "name": "Double Subtraction"
+        "numbers" : [4, 4, 4, 5, 5, 5],
+        "operators" : ["/", "/", "="],
+		"expected": "55/5=44/4",
+        "name": "Divided Fairly"
     },
     "19" : {
-        "numbers" : [1, 3, 3, 4, 5],
-        "operators" : ["-", "-", "-", "="],
-		"expected": "5-4-1=3-3 OR 4-5=3-3-1",
-        "name": "Triple Subtraction"
-    },
-    "20" : {
         "numbers" : [4, 4, 8, 8],
         "operators" : ["+", "*", "="],
 		"expected": "4*4=8+8",
         "name": "Fourmidable Balance"
     },
+    "20" : {
+        "numbers" : [0, 4, 6, 8, 8],
+        "operators" : ["/", "="],
+		"expected": "48/8=06",
+        "name": "Silent Partner"
+    },
     "21" : {
-        "numbers" : [0, 0, 3, 5, 6],
-        "operators" : ["*", "="],
-		"expected": "0=0*356",
-        "name": "Garbage Bin"
+        "numbers" : [0, 1, 2, 3, 5],
+        "operators" : ["-", "-", "="],
+		"expected": "10-5-3=2",
+        "name": "Double Subtraction"
     },
     "22" : {
+        "numbers" : [1, 3, 3, 4, 5],
+        "operators" : ["-", "-", "-", "="],
+		"expected": "5-4-1=3-3 OR 4-5=3-3-1",
+        "name": "Balancing on Atoms"
+    },
+    "23" : {
         "numbers" : [1, 2],
         "operators" : ["<"],
 		"expected": "1<2",
         "name": "Pacnum"
     },
-    "23" : {
+    "24" : {
         "numbers" : [3, 5, 6, 7],
         "operators" : ["+", "-", "<"],
 		"expected": "3<7-6+5",
-        "name": "Number Cruncher"
+        "name": "Less Is More"
     },
-    "24" : {
+    "25" : {
         "numbers" : [2, 3],
         "operators" : [],
         "locked_chars": [2, 5, "<"],
 		"expected": "25<32",
         "name": "No More Freedom"
     },
-    "25" : {
-        "numbers" : [0, 1, 4, 6, 7, 7],
-        "operators" : ["+", "-", "<", "="],
-		"expected": "7=7,0<6-4+1",
-        "name": "Number Manipulator"
-    },
     "26" : {
-        "numbers" : [3, 5, 6, 7, 9],
-        "operators" : ["-", "=", "<"],
-		"expected": "6=9-3,5<7",
-        "name": "Light In A Bottle"
+        "numbers" : [2, 4, 8, 8],
+        "operators" : ["*", "*", "*", "="],
+        "locked_chars": [8],
+		"expected": "8*8=8*4*2",
+        "name": "Dealing Eights"
     },
     "27" : {
         "numbers" : [0, 2, 3, 5, 5],
         "operators" : ["-", "*", "="],
 		"expected": "20-5*3=5",
-        "name": "The First Crux"
+        "name": "Thinking In Fives"
     },
+
     "28" : {
-        "numbers" : [1, 1, 5, 5, 5],
-        "operators" : ["/", "="],
-		"expected": "55/5=11",
-        "name": "Full House"
-    },
-    "29" : {
         "numbers" : [2, 2, 3, 3, 4],
         "operators" : ["*", "/"],
         "locked_chars": [6, 8, 7, "<"],
 		"expected": "687<43x32/2",
         "name": "Maximizing Profits"
     },
+    "29" : {
+        "numbers" : [1, 1, 2, 2],
+        "operators" : ["=", "="],
+		"expected": "1=1,2=2",
+        "name": "Two Expressions??"
+    },
     "30" : {
         "numbers" : [3, 4, 4, 5, 7, 9],
         "operators" : ["+", "-", "=", "="],
 		"expected": "7-4=3,5+4=9",
-        "name": "Two Expressions??"
+        "name": "Digit-ized"
     },
     "31" : {
-        "numbers" : [2, 4, 8, 8, 8],
-        "operators" : ["*", "*", "*", "="],
-		"expected": "8*8=8*4*2",
-        "name": "888 Brain Cells"
+        "numbers" : [3, 5, 6, 7, 9],
+        "operators" : ["-", "=", "<"],
+		"expected": "6=9-3,5<7",
+        "name": "Priorities"
     },
     "32" : {
         "numbers" : [0, 1, 2, 2, 3, 4, 5],
@@ -204,80 +205,83 @@
         "name": "Exclamation Mark"
     },
     "33" : {
+        "numbers" : [0, 4, 5, 8, 9],
+        "operators" : ["*", "<"],
+        "locked_chars": [7, 2, 0, "="],
+		"expected": "720=90*8,4<5",
+        "name": "72 With A 0"
+    },
+    "34" : {
         "numbers" : [3, 3, 6, 6, 9],
         "operators" : ["*", "/", "/", "="],
 		"expected": "6/3=6*3/9",
         "name": "Mod 3 Would Come Handy"
     },
-    "34" : {
+    "35" : {
         "numbers" : [1, 2, 2, 3, 6],
         "operators" : ["*", "="],
-		"expected": "31*2=62",
-        "name": "Thinking Outside"
-    },
-    "35" : {
-        "numbers" : [1, 2, 4, 6, 8],
-        "operators" : ["*", "/", "="],
-		"expected": "16*2/4=8",
-        "name": "American Math"
+		"expected": "31*2=62, 13*2=26",
+        "name": "Double The Difficulty"
     },
     "36" : {
-        "numbers" : [0, 4, 5, 8, 9],
-        "operators" : ["*", "<"],
-        "locked_chars": [7, 2, 0, "="],
-		"expected": "720=90*8,4<5",
-        "name": "Your Favourite Number"
+        "numbers" : [2, 4, 5, 7, 7],
+        "operators" : ["*", "-", "="],
+		"expected": "42-7=7*5",
+        "name": "Meaning Of Life"
     },
     "37" : {
-        "numbers" : [0, 2, 4, 6, 7, 8],
-        "operators" : ["-", "-", "-", "*", "="],
-		"expected": "7*0-8=2-6-4",
-        "name": "One Bad Apple"
+        "numbers" : [0, 0, 1, 9, 9, 9],
+        "operators" : ["+", "*", "="],
+        "locked_chars": [9, 8],
+		"expected": "981=900+9*9",
+        "name": "Building Gravity"
     },
     "38" : {
-        "numbers" : [2, 6, 6, 8, 9],
-        "operators" : ["/", "*", "="],
-		"expected": "6*8=96/2",
-        "name": "Class Average"
+        "numbers" : [1, 3, 4, 4],
+        "operators" : ["*"],
+        "locked_chars": [1, 2, 5, 6, "="],
+		"expected": "1256=314*4",
+        "name": "Full Circle"
     },
     "39" : {
-        "numbers" : [1, 3, 4, 5, 7, 9],
-        "operators" : ["+", "="],
-		"expected": "91=37+54",
-        "name": "Simple Yet Complicated"
+        "numbers" : [0, 2, 4, 6, 7, 8],
+        "operators" : ["-", "-", "-", "*", "="],
+		"expected": "7*0-8=2-6-4, 8-2-7*0=6-4",
+        "name": "One Bad Apple"
     },
     "40" : {
-        "numbers" : [0, 1, 2, 3, 7, 8, 9],
-        "operators" : ["*", "<", "="],
-		"expected": "81=27*3,0<9",
-        "name": "Freebie"
+        "numbers" : [1, 3, 4, 5, 7],
+        "operators" : ["+", "="],
+	    "locked_chars" : [9],
+		"expected": "91=37+54",
+        "name": "Carry The One"
     },
     "41" : {
+        "numbers" : [2, 3, 4, 6],
+        "operators" : ["-", "/"],
+        "locked_chars": [1, "-", 8, "="],
+		"expected": "1-8=2-36/4",
+        "name": "Below The Surface"
+    },
+    "42" : {
         "numbers" : [1, 1, 2, 4, 6],
         "operators" : ["*", "/"],
         "locked_chars": [7, "="],
 		"expected": "7=14x6/12",
-        "name": "Division Is Just A Fraction"
+        "name": "Just Halve It"
     },
-    "42" : {
+    "43" : {
         "numbers" : [6, 6, 6, 6, 6, 6],
         "operators" : ["-", "-", "*", "="],
         "locked_chars": [3],
 		"expected": "36-6=66-6*6",
-        "name": "Six Ways To Solve"
-    },
-    "43" : {
-        "numbers" : [1, 2, 2, 3, 4, 5, 6, 7, 9],
-        "operators" : ["+", "-", "/", "=", "="],
-        "locked_chars": [8, "*"],
-		"expected": "8x7=56,24/3=9+1-2",
-        "name": "Generational Team Up"
+        "name": "Thirty Day Challenge"
     },
     "44" : {
         "numbers" : [0, 1, 2, 8, 8, 9],
         "operators" : ["/", "="],
         "locked_chars": [1, 6],
 		"expected": "1618/2=809",
-        "name": "Golden Opportunity"
+        "name": "Golden Ration"
     }
 }

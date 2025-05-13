@@ -101,3 +101,6 @@ func lock_piece():
 		setGreenSprite()
 	else:
 		setRedSprite()
+		
+func get_locked():
+	return locked
